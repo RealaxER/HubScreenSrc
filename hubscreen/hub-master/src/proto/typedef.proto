@@ -7,6 +7,12 @@ message Led_t{
     bool status = 18;
 }
 
+message Sw_t{
+    string name = 16;
+    string mac = 17;
+    bool status = 18;
+}
+
 message Ota_t {
     bool check_ota = 16;
     bool status = 17;
@@ -40,6 +46,7 @@ message Buffer {
     Ota_t ota = 16;
     Vpn_t vpn = 17;
     repeated Led_t led = 18;
+    repeated Sw_t  sw = 19;
 }
 
 message Vpn_t {
