@@ -75,7 +75,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Zigbee_t, led_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Zigbee_t, sw_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Zigbee_t, sync_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::SwZb_t, _internal_metadata_),
@@ -117,13 +117,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014zigbee.proto\".\n\010Zigbee_t\022\024\n\003led\030\001 \001(\0132"
-      "\007.SwZb_t\022\014\n\004sync\030\002 \001(\010\"<\n\006SwZb_t\022\020\n\010devi"
-      "ceID\030\001 \001(\r\022\020\n\010endpoint\030\002 \001(\004\022\016\n\006status\030\003"
-      " \001(\010b\006proto3"
+      "\n\014zigbee.proto\"-\n\010Zigbee_t\022\023\n\002sw\030\001 \001(\0132\007"
+      ".SwZb_t\022\014\n\004sync\030\002 \001(\010\"<\n\006SwZb_t\022\020\n\010devic"
+      "eID\030\001 \001(\004\022\020\n\010endpoint\030\002 \001(\r\022\016\n\006status\030\003 "
+      "\001(\010b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 132);
+      descriptor, 131);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "zigbee.proto", &protobuf_RegisterTypes);
 }
@@ -143,11 +143,11 @@ struct StaticDescriptorInitializer {
 // ===================================================================
 
 void Zigbee_t::InitAsDefaultInstance() {
-  ::_Zigbee_t_default_instance_._instance.get_mutable()->led_ = const_cast< ::SwZb_t*>(
+  ::_Zigbee_t_default_instance_._instance.get_mutable()->sw_ = const_cast< ::SwZb_t*>(
       ::SwZb_t::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int Zigbee_t::kLedFieldNumber;
+const int Zigbee_t::kSwFieldNumber;
 const int Zigbee_t::kSyncFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -162,19 +162,19 @@ Zigbee_t::Zigbee_t(const Zigbee_t& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from.has_led()) {
-    led_ = new ::SwZb_t(*from.led_);
+  if (from.has_sw()) {
+    sw_ = new ::SwZb_t(*from.sw_);
   } else {
-    led_ = NULL;
+    sw_ = NULL;
   }
   sync_ = from.sync_;
   // @@protoc_insertion_point(copy_constructor:Zigbee_t)
 }
 
 void Zigbee_t::SharedCtor() {
-  ::memset(&led_, 0, static_cast<size_t>(
+  ::memset(&sw_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&sync_) -
-      reinterpret_cast<char*>(&led_)) + sizeof(sync_));
+      reinterpret_cast<char*>(&sw_)) + sizeof(sync_));
 }
 
 Zigbee_t::~Zigbee_t() {
@@ -183,7 +183,7 @@ Zigbee_t::~Zigbee_t() {
 }
 
 void Zigbee_t::SharedDtor() {
-  if (this != internal_default_instance()) delete led_;
+  if (this != internal_default_instance()) delete sw_;
 }
 
 void Zigbee_t::SetCachedSize(int size) const {
@@ -206,10 +206,10 @@ void Zigbee_t::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaNoVirtual() == NULL && led_ != NULL) {
-    delete led_;
+  if (GetArenaNoVirtual() == NULL && sw_ != NULL) {
+    delete sw_;
   }
-  led_ = NULL;
+  sw_ = NULL;
   sync_ = false;
   _internal_metadata_.Clear();
 }
@@ -224,12 +224,12 @@ bool Zigbee_t::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .SwZb_t led = 1;
+      // .SwZb_t sw = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_led()));
+               input, mutable_sw()));
         } else {
           goto handle_unusual;
         }
@@ -276,10 +276,10 @@ void Zigbee_t::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .SwZb_t led = 1;
-  if (this->has_led()) {
+  // .SwZb_t sw = 1;
+  if (this->has_sw()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->_internal_led(), output);
+      1, this->_internal_sw(), output);
   }
 
   // bool sync = 2;
@@ -301,11 +301,11 @@ void Zigbee_t::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .SwZb_t led = 1;
-  if (this->has_led()) {
+  // .SwZb_t sw = 1;
+  if (this->has_sw()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        1, this->_internal_led(), deterministic, target);
+        1, this->_internal_sw(), deterministic, target);
   }
 
   // bool sync = 2;
@@ -330,11 +330,11 @@ size_t Zigbee_t::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // .SwZb_t led = 1;
-  if (this->has_led()) {
+  // .SwZb_t sw = 1;
+  if (this->has_sw()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *led_);
+        *sw_);
   }
 
   // bool sync = 2;
@@ -369,8 +369,8 @@ void Zigbee_t::MergeFrom(const Zigbee_t& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.has_led()) {
-    mutable_led()->::SwZb_t::MergeFrom(from.led());
+  if (from.has_sw()) {
+    mutable_sw()->::SwZb_t::MergeFrom(from.sw());
   }
   if (from.sync() != 0) {
     set_sync(from.sync());
@@ -401,7 +401,7 @@ void Zigbee_t::Swap(Zigbee_t* other) {
 }
 void Zigbee_t::InternalSwap(Zigbee_t* other) {
   using std::swap;
-  swap(led_, other->led_);
+  swap(sw_, other->sw_);
   swap(sync_, other->sync_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -433,16 +433,16 @@ SwZb_t::SwZb_t(const SwZb_t& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&endpoint_, &from.endpoint_,
+  ::memcpy(&deviceid_, &from.deviceid_,
     static_cast<size_t>(reinterpret_cast<char*>(&status_) -
-    reinterpret_cast<char*>(&endpoint_)) + sizeof(status_));
+    reinterpret_cast<char*>(&deviceid_)) + sizeof(status_));
   // @@protoc_insertion_point(copy_constructor:SwZb_t)
 }
 
 void SwZb_t::SharedCtor() {
-  ::memset(&endpoint_, 0, static_cast<size_t>(
+  ::memset(&deviceid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&status_) -
-      reinterpret_cast<char*>(&endpoint_)) + sizeof(status_));
+      reinterpret_cast<char*>(&deviceid_)) + sizeof(status_));
 }
 
 SwZb_t::~SwZb_t() {
@@ -473,9 +473,9 @@ void SwZb_t::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&endpoint_, 0, static_cast<size_t>(
+  ::memset(&deviceid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&status_) -
-      reinterpret_cast<char*>(&endpoint_)) + sizeof(status_));
+      reinterpret_cast<char*>(&deviceid_)) + sizeof(status_));
   _internal_metadata_.Clear();
 }
 
@@ -489,13 +489,13 @@ bool SwZb_t::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 deviceID = 1;
+      // uint64 deviceID = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &deviceid_)));
         } else {
           goto handle_unusual;
@@ -503,13 +503,13 @@ bool SwZb_t::MergePartialFromCodedStream(
         break;
       }
 
-      // uint64 endpoint = 2;
+      // uint32 endpoint = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &endpoint_)));
         } else {
           goto handle_unusual;
@@ -557,14 +557,14 @@ void SwZb_t::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 deviceID = 1;
+  // uint64 deviceID = 1;
   if (this->deviceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->deviceid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->deviceid(), output);
   }
 
-  // uint64 endpoint = 2;
+  // uint32 endpoint = 2;
   if (this->endpoint() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->endpoint(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->endpoint(), output);
   }
 
   // bool status = 3;
@@ -586,14 +586,14 @@ void SwZb_t::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 deviceID = 1;
+  // uint64 deviceID = 1;
   if (this->deviceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->deviceid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->deviceid(), target);
   }
 
-  // uint64 endpoint = 2;
+  // uint32 endpoint = 2;
   if (this->endpoint() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->endpoint(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->endpoint(), target);
   }
 
   // bool status = 3;
@@ -618,18 +618,18 @@ size_t SwZb_t::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // uint64 endpoint = 2;
-  if (this->endpoint() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->endpoint());
-  }
-
-  // uint32 deviceID = 1;
+  // uint64 deviceID = 1;
   if (this->deviceid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->deviceid());
+  }
+
+  // uint32 endpoint = 2;
+  if (this->endpoint() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->endpoint());
   }
 
   // bool status = 3;
@@ -664,11 +664,11 @@ void SwZb_t::MergeFrom(const SwZb_t& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.endpoint() != 0) {
-    set_endpoint(from.endpoint());
-  }
   if (from.deviceid() != 0) {
     set_deviceid(from.deviceid());
+  }
+  if (from.endpoint() != 0) {
+    set_endpoint(from.endpoint());
   }
   if (from.status() != 0) {
     set_status(from.status());
@@ -699,8 +699,8 @@ void SwZb_t::Swap(SwZb_t* other) {
 }
 void SwZb_t::InternalSwap(SwZb_t* other) {
   using std::swap;
-  swap(endpoint_, other->endpoint_);
   swap(deviceid_, other->deviceid_);
+  swap(endpoint_, other->endpoint_);
   swap(status_, other->status_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }

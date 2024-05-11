@@ -1,7 +1,9 @@
+use std::fmt::Debug;
+
 use crate::error::BridgeIpErr;
 use crate::logic::TickLogicOut;
 use crate::logic::{BrLogic, BrLogicIn, BrLogicOut};
-use crate::proto::typedef::{Buffer, User_t, Vpn_t};
+use crate::proto::typedef::{Buffer, Sw_t, User_t, Vpn_t};
 use crate::transport::mqtt::MqttDriver;
 use crate::master::Master;
 use protobuf::Message;
@@ -48,7 +50,35 @@ impl SystemIntergration {
     }
 
     pub async fn init(&mut self) {
-        self.logic.init();
+        // let mut buffer = Buffer::new();
+
+        // let topic =  "hub/zigbee".to_string();
+        // buffer.sender = User_t::Hub.into();
+        // buffer.receiver = User_t::Zigbee.into();
+        
+        // let mut sw = Sw_t::new();
+        // sw.mac = 0xaaaa;
+        // sw.status = true;
+        // sw.ep = 1;
+        // buffer.sw.push(sw);
+
+        // let mut sw = Sw_t::new();
+        // sw.mac = 0xaaaa;
+        // sw.status = true;
+        // sw.ep = 2;
+        // buffer.sw.push(sw);
+
+        // let message = buffer.write_to_bytes().unwrap();
+        // let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+
+        // let topic =  "hub/zigbee".to_string();
+        // let mut buffer = Buffer::new();
+        // buffer.sender = User_t::Hub.into();
+        // buffer.receiver = User_t::Zigbee.into();
+
+        // let message = buffer.write_to_bytes().unwrap();
+        // let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+        //self.logic.init();
     }
 
     pub async fn recv(&mut self) -> Result<(), BridgeIpErr> {

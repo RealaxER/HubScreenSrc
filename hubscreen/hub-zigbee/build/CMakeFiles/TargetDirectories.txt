@@ -1,0 +1,3 @@
+/home/bhien/hubscreen_src/hubscreen/hub-zigbee/build/CMakeFiles/rebuild_cache.dir
+/home/bhien/hubscreen_src/hubscreen/hub-zigbee/build/CMakeFiles/edit_cache.dir
+/home/bhien/hubscreen_src/hubscreen/hub-zigbee/build/CMakeFiles/hub-zigbee.dir

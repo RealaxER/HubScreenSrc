@@ -1,5 +1,4 @@
 #include <uart.hh>
-#include <stdint.h>
 
 #define MAX_DATA_LENGTH 255
 uint8_t buffer[MAX_DATA_LENGTH];

@@ -210,33 +210,25 @@ class Led_t : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // string mac = 17;
-  void clear_mac();
-  static const int kMacFieldNumber = 17;
-  const ::std::string& mac() const;
-  void set_mac(const ::std::string& value);
-  #if LANG_CXX11
-  void set_mac(::std::string&& value);
-  #endif
-  void set_mac(const char* value);
-  void set_mac(const char* value, size_t size);
-  ::std::string* mutable_mac();
-  ::std::string* release_mac();
-  void set_allocated_mac(::std::string* mac);
-
   // bool status = 18;
   void clear_status();
   static const int kStatusFieldNumber = 18;
   bool status() const;
   void set_status(bool value);
 
+  // uint64 mac = 17;
+  void clear_mac();
+  static const int kMacFieldNumber = 17;
+  ::google::protobuf::uint64 mac() const;
+  void set_mac(::google::protobuf::uint64 value);
+
   // @@protoc_insertion_point(class_scope:Led_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
-  ::google::protobuf::internal::ArenaStringPtr mac_;
   bool status_;
+  ::google::protobuf::uint64 mac_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_typedef_2eproto::TableStruct;
 };
@@ -343,23 +335,21 @@ class Sw_t : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // string mac = 17;
+  // uint64 mac = 18;
   void clear_mac();
-  static const int kMacFieldNumber = 17;
-  const ::std::string& mac() const;
-  void set_mac(const ::std::string& value);
-  #if LANG_CXX11
-  void set_mac(::std::string&& value);
-  #endif
-  void set_mac(const char* value);
-  void set_mac(const char* value, size_t size);
-  ::std::string* mutable_mac();
-  ::std::string* release_mac();
-  void set_allocated_mac(::std::string* mac);
+  static const int kMacFieldNumber = 18;
+  ::google::protobuf::uint64 mac() const;
+  void set_mac(::google::protobuf::uint64 value);
 
-  // bool status = 18;
+  // uint32 ep = 17;
+  void clear_ep();
+  static const int kEpFieldNumber = 17;
+  ::google::protobuf::uint32 ep() const;
+  void set_ep(::google::protobuf::uint32 value);
+
+  // bool status = 19;
   void clear_status();
-  static const int kStatusFieldNumber = 18;
+  static const int kStatusFieldNumber = 19;
   bool status() const;
   void set_status(bool value);
 
@@ -368,7 +358,8 @@ class Sw_t : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
-  ::google::protobuf::internal::ArenaStringPtr mac_;
+  ::google::protobuf::uint64 mac_;
+  ::google::protobuf::uint32 ep_;
   bool status_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_typedef_2eproto::TableStruct;
@@ -1092,57 +1083,18 @@ inline void Led_t::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Led_t.name)
 }
 
-// string mac = 17;
+// uint64 mac = 17;
 inline void Led_t::clear_mac() {
-  mac_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  mac_ = GOOGLE_ULONGLONG(0);
 }
-inline const ::std::string& Led_t::mac() const {
+inline ::google::protobuf::uint64 Led_t::mac() const {
   // @@protoc_insertion_point(field_get:Led_t.mac)
-  return mac_.GetNoArena();
+  return mac_;
 }
-inline void Led_t::set_mac(const ::std::string& value) {
+inline void Led_t::set_mac(::google::protobuf::uint64 value) {
   
-  mac_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  mac_ = value;
   // @@protoc_insertion_point(field_set:Led_t.mac)
-}
-#if LANG_CXX11
-inline void Led_t::set_mac(::std::string&& value) {
-  
-  mac_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Led_t.mac)
-}
-#endif
-inline void Led_t::set_mac(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  mac_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Led_t.mac)
-}
-inline void Led_t::set_mac(const char* value, size_t size) {
-  
-  mac_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Led_t.mac)
-}
-inline ::std::string* Led_t::mutable_mac() {
-  
-  // @@protoc_insertion_point(field_mutable:Led_t.mac)
-  return mac_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* Led_t::release_mac() {
-  // @@protoc_insertion_point(field_release:Led_t.mac)
-  
-  return mac_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void Led_t::set_allocated_mac(::std::string* mac) {
-  if (mac != NULL) {
-    
-  } else {
-    
-  }
-  mac_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), mac);
-  // @@protoc_insertion_point(field_set_allocated:Led_t.mac)
 }
 
 // bool status = 18;
@@ -1216,60 +1168,35 @@ inline void Sw_t::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Sw_t.name)
 }
 
-// string mac = 17;
-inline void Sw_t::clear_mac() {
-  mac_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// uint32 ep = 17;
+inline void Sw_t::clear_ep() {
+  ep_ = 0u;
 }
-inline const ::std::string& Sw_t::mac() const {
-  // @@protoc_insertion_point(field_get:Sw_t.mac)
-  return mac_.GetNoArena();
+inline ::google::protobuf::uint32 Sw_t::ep() const {
+  // @@protoc_insertion_point(field_get:Sw_t.ep)
+  return ep_;
 }
-inline void Sw_t::set_mac(const ::std::string& value) {
+inline void Sw_t::set_ep(::google::protobuf::uint32 value) {
   
-  mac_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Sw_t.mac)
-}
-#if LANG_CXX11
-inline void Sw_t::set_mac(::std::string&& value) {
-  
-  mac_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Sw_t.mac)
-}
-#endif
-inline void Sw_t::set_mac(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  mac_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Sw_t.mac)
-}
-inline void Sw_t::set_mac(const char* value, size_t size) {
-  
-  mac_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Sw_t.mac)
-}
-inline ::std::string* Sw_t::mutable_mac() {
-  
-  // @@protoc_insertion_point(field_mutable:Sw_t.mac)
-  return mac_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* Sw_t::release_mac() {
-  // @@protoc_insertion_point(field_release:Sw_t.mac)
-  
-  return mac_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void Sw_t::set_allocated_mac(::std::string* mac) {
-  if (mac != NULL) {
-    
-  } else {
-    
-  }
-  mac_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), mac);
-  // @@protoc_insertion_point(field_set_allocated:Sw_t.mac)
+  ep_ = value;
+  // @@protoc_insertion_point(field_set:Sw_t.ep)
 }
 
-// bool status = 18;
+// uint64 mac = 18;
+inline void Sw_t::clear_mac() {
+  mac_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 Sw_t::mac() const {
+  // @@protoc_insertion_point(field_get:Sw_t.mac)
+  return mac_;
+}
+inline void Sw_t::set_mac(::google::protobuf::uint64 value) {
+  
+  mac_ = value;
+  // @@protoc_insertion_point(field_set:Sw_t.mac)
+}
+
+// bool status = 19;
 inline void Sw_t::clear_status() {
   status_ = false;
 }

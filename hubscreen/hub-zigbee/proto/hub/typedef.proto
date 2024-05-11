@@ -3,14 +3,15 @@ syntax = "proto3";
 
 message Led_t{
     string name = 16;
-    string mac = 17;
+    uint64 mac = 17;
     bool status = 18;
 }
 
 message Sw_t{
     string name = 16;
-    string mac = 17;
-    bool status = 18;
+    uint32 ep = 17;
+    uint64 mac = 18;
+    bool status = 19;
 }
 
 message Ota_t {

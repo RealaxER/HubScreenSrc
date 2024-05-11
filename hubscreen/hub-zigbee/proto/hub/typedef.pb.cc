@@ -191,6 +191,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Sw_t, name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Sw_t, ep_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Sw_t, mac_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Sw_t, status_),
   ~0u,  // no _has_bits_
@@ -239,11 +240,11 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Led_t)},
   { 8, -1, sizeof(::Sw_t)},
-  { 16, -1, sizeof(::Ota_t)},
-  { 24, -1, sizeof(::KeepAlive_t)},
-  { 30, -1, sizeof(::Buffer)},
-  { 43, -1, sizeof(::Vpn_t)},
-  { 50, -1, sizeof(::Vendor_t)},
+  { 17, -1, sizeof(::Ota_t)},
+  { 25, -1, sizeof(::KeepAlive_t)},
+  { 31, -1, sizeof(::Buffer)},
+  { 44, -1, sizeof(::Vpn_t)},
+  { 51, -1, sizeof(::Vendor_t)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -278,24 +279,24 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\rtypedef.proto\"2\n\005Led_t\022\014\n\004name\030\020 \001(\t\022\013"
-      "\n\003mac\030\021 \001(\t\022\016\n\006status\030\022 \001(\010\"1\n\004Sw_t\022\014\n\004n"
-      "ame\030\020 \001(\t\022\013\n\003mac\030\021 \001(\t\022\016\n\006status\030\022 \001(\010\"7"
-      "\n\005Ota_t\022\021\n\tcheck_ota\030\020 \001(\010\022\016\n\006status\030\021 \001"
-      "(\010\022\013\n\003ack\030\022 \001(\010\"&\n\013KeepAlive_t\022\027\n\006sender"
-      "\030\001 \001(\0162\007.User_t\"\273\001\n\006Buffer\022\017\n\007mac_hub\030\001 "
-      "\001(\t\022\027\n\006sender\030\002 \001(\0162\007.User_t\022\031\n\010receiver"
-      "\030\003 \001(\0162\007.User_t\022\032\n\tcotroller\030\004 \001(\0162\007.Use"
-      "r_t\022\023\n\003ota\030\020 \001(\0132\006.Ota_t\022\023\n\003vpn\030\021 \001(\0132\006."
-      "Vpn_t\022\023\n\003led\030\022 \003(\0132\006.Led_t\022\021\n\002sw\030\023 \003(\0132\005"
-      ".Sw_t\"$\n\005Vpn_t\022\016\n\006status\030\001 \001(\010\022\013\n\003mac\030\002 "
-      "\001(\t\"9\n\010Vendor_t\022\017\n\007mac_ven\030\001 \001(\t\022\014\n\004data"
-      "\030\002 \001(\t\022\016\n\006status\030\003 \001(\010*b\n\006User_t\022\007\n\003App\020"
-      "\000\022\n\n\006Server\020\001\022\007\n\003Hub\020\002\022\n\n\006Zigbee\020\003\022\007\n\003Bl"
-      "e\020\004\022\006\n\002Ai\020\005\022\010\n\004Wifi\020\006\022\n\n\006Screen\020\007\022\007\n\003Ota"
-      "\020\010b\006proto3"
+      "\n\003mac\030\021 \001(\004\022\016\n\006status\030\022 \001(\010\"=\n\004Sw_t\022\014\n\004n"
+      "ame\030\020 \001(\t\022\n\n\002ep\030\021 \001(\r\022\013\n\003mac\030\022 \001(\004\022\016\n\006st"
+      "atus\030\023 \001(\010\"7\n\005Ota_t\022\021\n\tcheck_ota\030\020 \001(\010\022\016"
+      "\n\006status\030\021 \001(\010\022\013\n\003ack\030\022 \001(\010\"&\n\013KeepAlive"
+      "_t\022\027\n\006sender\030\001 \001(\0162\007.User_t\"\273\001\n\006Buffer\022\017"
+      "\n\007mac_hub\030\001 \001(\t\022\027\n\006sender\030\002 \001(\0162\007.User_t"
+      "\022\031\n\010receiver\030\003 \001(\0162\007.User_t\022\032\n\tcotroller"
+      "\030\004 \001(\0162\007.User_t\022\023\n\003ota\030\020 \001(\0132\006.Ota_t\022\023\n\003"
+      "vpn\030\021 \001(\0132\006.Vpn_t\022\023\n\003led\030\022 \003(\0132\006.Led_t\022\021"
+      "\n\002sw\030\023 \003(\0132\005.Sw_t\"$\n\005Vpn_t\022\016\n\006status\030\001 \001"
+      "(\010\022\013\n\003mac\030\002 \001(\t\"9\n\010Vendor_t\022\017\n\007mac_ven\030\001"
+      " \001(\t\022\014\n\004data\030\002 \001(\t\022\016\n\006status\030\003 \001(\010*b\n\006Us"
+      "er_t\022\007\n\003App\020\000\022\n\n\006Server\020\001\022\007\n\003Hub\020\002\022\n\n\006Zi"
+      "gbee\020\003\022\007\n\003Ble\020\004\022\006\n\002Ai\020\005\022\010\n\004Wifi\020\006\022\n\n\006Scr"
+      "een\020\007\022\007\n\003Ota\020\010b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 610);
+      descriptor, 622);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "typedef.proto", &protobuf_RegisterTypes);
 }
@@ -358,18 +359,17 @@ Led_t::Led_t(const Led_t& from)
   if (from.name().size() > 0) {
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  mac_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.mac().size() > 0) {
-    mac_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.mac_);
-  }
-  status_ = from.status_;
+  ::memcpy(&status_, &from.status_,
+    static_cast<size_t>(reinterpret_cast<char*>(&mac_) -
+    reinterpret_cast<char*>(&status_)) + sizeof(mac_));
   // @@protoc_insertion_point(copy_constructor:Led_t)
 }
 
 void Led_t::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  mac_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = false;
+  ::memset(&status_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&mac_) -
+      reinterpret_cast<char*>(&status_)) + sizeof(mac_));
 }
 
 Led_t::~Led_t() {
@@ -379,7 +379,6 @@ Led_t::~Led_t() {
 
 void Led_t::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  mac_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void Led_t::SetCachedSize(int size) const {
@@ -403,8 +402,9 @@ void Led_t::Clear() {
   (void) cached_has_bits;
 
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  mac_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = false;
+  ::memset(&status_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&mac_) -
+      reinterpret_cast<char*>(&status_)) + sizeof(mac_));
   _internal_metadata_.Clear();
 }
 
@@ -434,16 +434,14 @@ bool Led_t::MergePartialFromCodedStream(
         break;
       }
 
-      // string mac = 17;
+      // uint64 mac = 17;
       case 17: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(138u /* 138 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_mac()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->mac().data(), static_cast<int>(this->mac().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "Led_t.mac"));
+            static_cast< ::google::protobuf::uint8>(136u /* 136 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &mac_)));
         } else {
           goto handle_unusual;
         }
@@ -500,14 +498,9 @@ void Led_t::SerializeWithCachedSizes(
       16, this->name(), output);
   }
 
-  // string mac = 17;
-  if (this->mac().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->mac().data(), static_cast<int>(this->mac().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "Led_t.mac");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      17, this->mac(), output);
+  // uint64 mac = 17;
+  if (this->mac() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(17, this->mac(), output);
   }
 
   // bool status = 18;
@@ -540,15 +533,9 @@ void Led_t::SerializeWithCachedSizes(
         16, this->name(), target);
   }
 
-  // string mac = 17;
-  if (this->mac().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->mac().data(), static_cast<int>(this->mac().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "Led_t.mac");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        17, this->mac(), target);
+  // uint64 mac = 17;
+  if (this->mac() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(17, this->mac(), target);
   }
 
   // bool status = 18;
@@ -580,16 +567,16 @@ size_t Led_t::ByteSizeLong() const {
         this->name());
   }
 
-  // string mac = 17;
-  if (this->mac().size() > 0) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->mac());
-  }
-
   // bool status = 18;
   if (this->status() != 0) {
     total_size += 2 + 1;
+  }
+
+  // uint64 mac = 17;
+  if (this->mac() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->mac());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -623,12 +610,11 @@ void Led_t::MergeFrom(const Led_t& from) {
 
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  if (from.mac().size() > 0) {
-
-    mac_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.mac_);
-  }
   if (from.status() != 0) {
     set_status(from.status());
+  }
+  if (from.mac() != 0) {
+    set_mac(from.mac());
   }
 }
 
@@ -658,9 +644,8 @@ void Led_t::InternalSwap(Led_t* other) {
   using std::swap;
   name_.Swap(&other->name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  mac_.Swap(&other->mac_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
   swap(status_, other->status_);
+  swap(mac_, other->mac_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
@@ -676,6 +661,7 @@ void Sw_t::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Sw_t::kNameFieldNumber;
+const int Sw_t::kEpFieldNumber;
 const int Sw_t::kMacFieldNumber;
 const int Sw_t::kStatusFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -695,18 +681,17 @@ Sw_t::Sw_t(const Sw_t& from)
   if (from.name().size() > 0) {
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  mac_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.mac().size() > 0) {
-    mac_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.mac_);
-  }
-  status_ = from.status_;
+  ::memcpy(&mac_, &from.mac_,
+    static_cast<size_t>(reinterpret_cast<char*>(&status_) -
+    reinterpret_cast<char*>(&mac_)) + sizeof(status_));
   // @@protoc_insertion_point(copy_constructor:Sw_t)
 }
 
 void Sw_t::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  mac_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = false;
+  ::memset(&mac_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&status_) -
+      reinterpret_cast<char*>(&mac_)) + sizeof(status_));
 }
 
 Sw_t::~Sw_t() {
@@ -716,7 +701,6 @@ Sw_t::~Sw_t() {
 
 void Sw_t::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  mac_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void Sw_t::SetCachedSize(int size) const {
@@ -740,8 +724,9 @@ void Sw_t::Clear() {
   (void) cached_has_bits;
 
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  mac_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = false;
+  ::memset(&mac_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&status_) -
+      reinterpret_cast<char*>(&mac_)) + sizeof(status_));
   _internal_metadata_.Clear();
 }
 
@@ -771,26 +756,38 @@ bool Sw_t::MergePartialFromCodedStream(
         break;
       }
 
-      // string mac = 17;
+      // uint32 ep = 17;
       case 17: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(138u /* 138 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_mac()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->mac().data(), static_cast<int>(this->mac().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "Sw_t.mac"));
+            static_cast< ::google::protobuf::uint8>(136u /* 136 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &ep_)));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // bool status = 18;
+      // uint64 mac = 18;
       case 18: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(144u /* 144 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &mac_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool status = 19;
+      case 19: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(152u /* 152 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
@@ -837,19 +834,19 @@ void Sw_t::SerializeWithCachedSizes(
       16, this->name(), output);
   }
 
-  // string mac = 17;
-  if (this->mac().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->mac().data(), static_cast<int>(this->mac().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "Sw_t.mac");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      17, this->mac(), output);
+  // uint32 ep = 17;
+  if (this->ep() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(17, this->ep(), output);
   }
 
-  // bool status = 18;
+  // uint64 mac = 18;
+  if (this->mac() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(18, this->mac(), output);
+  }
+
+  // bool status = 19;
   if (this->status() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(18, this->status(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(19, this->status(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -877,20 +874,19 @@ void Sw_t::SerializeWithCachedSizes(
         16, this->name(), target);
   }
 
-  // string mac = 17;
-  if (this->mac().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->mac().data(), static_cast<int>(this->mac().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "Sw_t.mac");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        17, this->mac(), target);
+  // uint32 ep = 17;
+  if (this->ep() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(17, this->ep(), target);
   }
 
-  // bool status = 18;
+  // uint64 mac = 18;
+  if (this->mac() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(18, this->mac(), target);
+  }
+
+  // bool status = 19;
   if (this->status() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(18, this->status(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(19, this->status(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -917,14 +913,21 @@ size_t Sw_t::ByteSizeLong() const {
         this->name());
   }
 
-  // string mac = 17;
-  if (this->mac().size() > 0) {
+  // uint64 mac = 18;
+  if (this->mac() != 0) {
     total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->mac());
   }
 
-  // bool status = 18;
+  // uint32 ep = 17;
+  if (this->ep() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->ep());
+  }
+
+  // bool status = 19;
   if (this->status() != 0) {
     total_size += 2 + 1;
   }
@@ -960,9 +963,11 @@ void Sw_t::MergeFrom(const Sw_t& from) {
 
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  if (from.mac().size() > 0) {
-
-    mac_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.mac_);
+  if (from.mac() != 0) {
+    set_mac(from.mac());
+  }
+  if (from.ep() != 0) {
+    set_ep(from.ep());
   }
   if (from.status() != 0) {
     set_status(from.status());
@@ -995,8 +1000,8 @@ void Sw_t::InternalSwap(Sw_t* other) {
   using std::swap;
   name_.Swap(&other->name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  mac_.Swap(&other->mac_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
+  swap(mac_, other->mac_);
+  swap(ep_, other->ep_);
   swap(status_, other->status_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }

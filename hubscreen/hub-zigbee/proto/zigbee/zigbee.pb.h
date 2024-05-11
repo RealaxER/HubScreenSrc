@@ -147,17 +147,17 @@ class Zigbee_t : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // accessors -------------------------------------------------------
 
-  // .SwZb_t led = 1;
-  bool has_led() const;
-  void clear_led();
-  static const int kLedFieldNumber = 1;
+  // .SwZb_t sw = 1;
+  bool has_sw() const;
+  void clear_sw();
+  static const int kSwFieldNumber = 1;
   private:
-  const ::SwZb_t& _internal_led() const;
+  const ::SwZb_t& _internal_sw() const;
   public:
-  const ::SwZb_t& led() const;
-  ::SwZb_t* release_led();
-  ::SwZb_t* mutable_led();
-  void set_allocated_led(::SwZb_t* led);
+  const ::SwZb_t& sw() const;
+  ::SwZb_t* release_sw();
+  ::SwZb_t* mutable_sw();
+  void set_allocated_sw(::SwZb_t* sw);
 
   // bool sync = 2;
   void clear_sync();
@@ -169,7 +169,7 @@ class Zigbee_t : public ::google::protobuf::Message /* @@protoc_insertion_point(
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::SwZb_t* led_;
+  ::SwZb_t* sw_;
   bool sync_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_zigbee_2eproto::TableStruct;
@@ -263,17 +263,17 @@ class SwZb_t : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 
   // accessors -------------------------------------------------------
 
-  // uint64 endpoint = 2;
-  void clear_endpoint();
-  static const int kEndpointFieldNumber = 2;
-  ::google::protobuf::uint64 endpoint() const;
-  void set_endpoint(::google::protobuf::uint64 value);
-
-  // uint32 deviceID = 1;
+  // uint64 deviceID = 1;
   void clear_deviceid();
   static const int kDeviceIDFieldNumber = 1;
-  ::google::protobuf::uint32 deviceid() const;
-  void set_deviceid(::google::protobuf::uint32 value);
+  ::google::protobuf::uint64 deviceid() const;
+  void set_deviceid(::google::protobuf::uint64 value);
+
+  // uint32 endpoint = 2;
+  void clear_endpoint();
+  static const int kEndpointFieldNumber = 2;
+  ::google::protobuf::uint32 endpoint() const;
+  void set_endpoint(::google::protobuf::uint32 value);
 
   // bool status = 3;
   void clear_status();
@@ -285,8 +285,8 @@ class SwZb_t : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint64 endpoint_;
-  ::google::protobuf::uint32 deviceid_;
+  ::google::protobuf::uint64 deviceid_;
+  ::google::protobuf::uint32 endpoint_;
   bool status_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_zigbee_2eproto::TableStruct;
@@ -302,58 +302,58 @@ class SwZb_t : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 #endif  // __GNUC__
 // Zigbee_t
 
-// .SwZb_t led = 1;
-inline bool Zigbee_t::has_led() const {
-  return this != internal_default_instance() && led_ != NULL;
+// .SwZb_t sw = 1;
+inline bool Zigbee_t::has_sw() const {
+  return this != internal_default_instance() && sw_ != NULL;
 }
-inline void Zigbee_t::clear_led() {
-  if (GetArenaNoVirtual() == NULL && led_ != NULL) {
-    delete led_;
+inline void Zigbee_t::clear_sw() {
+  if (GetArenaNoVirtual() == NULL && sw_ != NULL) {
+    delete sw_;
   }
-  led_ = NULL;
+  sw_ = NULL;
 }
-inline const ::SwZb_t& Zigbee_t::_internal_led() const {
-  return *led_;
+inline const ::SwZb_t& Zigbee_t::_internal_sw() const {
+  return *sw_;
 }
-inline const ::SwZb_t& Zigbee_t::led() const {
-  const ::SwZb_t* p = led_;
-  // @@protoc_insertion_point(field_get:Zigbee_t.led)
+inline const ::SwZb_t& Zigbee_t::sw() const {
+  const ::SwZb_t* p = sw_;
+  // @@protoc_insertion_point(field_get:Zigbee_t.sw)
   return p != NULL ? *p : *reinterpret_cast<const ::SwZb_t*>(
       &::_SwZb_t_default_instance_);
 }
-inline ::SwZb_t* Zigbee_t::release_led() {
-  // @@protoc_insertion_point(field_release:Zigbee_t.led)
+inline ::SwZb_t* Zigbee_t::release_sw() {
+  // @@protoc_insertion_point(field_release:Zigbee_t.sw)
   
-  ::SwZb_t* temp = led_;
-  led_ = NULL;
+  ::SwZb_t* temp = sw_;
+  sw_ = NULL;
   return temp;
 }
-inline ::SwZb_t* Zigbee_t::mutable_led() {
+inline ::SwZb_t* Zigbee_t::mutable_sw() {
   
-  if (led_ == NULL) {
+  if (sw_ == NULL) {
     auto* p = CreateMaybeMessage<::SwZb_t>(GetArenaNoVirtual());
-    led_ = p;
+    sw_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:Zigbee_t.led)
-  return led_;
+  // @@protoc_insertion_point(field_mutable:Zigbee_t.sw)
+  return sw_;
 }
-inline void Zigbee_t::set_allocated_led(::SwZb_t* led) {
+inline void Zigbee_t::set_allocated_sw(::SwZb_t* sw) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete led_;
+    delete sw_;
   }
-  if (led) {
+  if (sw) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      led = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, led, submessage_arena);
+      sw = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, sw, submessage_arena);
     }
     
   } else {
     
   }
-  led_ = led;
-  // @@protoc_insertion_point(field_set_allocated:Zigbee_t.led)
+  sw_ = sw;
+  // @@protoc_insertion_point(field_set_allocated:Zigbee_t.sw)
 }
 
 // bool sync = 2;
@@ -374,29 +374,29 @@ inline void Zigbee_t::set_sync(bool value) {
 
 // SwZb_t
 
-// uint32 deviceID = 1;
+// uint64 deviceID = 1;
 inline void SwZb_t::clear_deviceid() {
-  deviceid_ = 0u;
+  deviceid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint32 SwZb_t::deviceid() const {
+inline ::google::protobuf::uint64 SwZb_t::deviceid() const {
   // @@protoc_insertion_point(field_get:SwZb_t.deviceID)
   return deviceid_;
 }
-inline void SwZb_t::set_deviceid(::google::protobuf::uint32 value) {
+inline void SwZb_t::set_deviceid(::google::protobuf::uint64 value) {
   
   deviceid_ = value;
   // @@protoc_insertion_point(field_set:SwZb_t.deviceID)
 }
 
-// uint64 endpoint = 2;
+// uint32 endpoint = 2;
 inline void SwZb_t::clear_endpoint() {
-  endpoint_ = GOOGLE_ULONGLONG(0);
+  endpoint_ = 0u;
 }
-inline ::google::protobuf::uint64 SwZb_t::endpoint() const {
+inline ::google::protobuf::uint32 SwZb_t::endpoint() const {
   // @@protoc_insertion_point(field_get:SwZb_t.endpoint)
   return endpoint_;
 }
-inline void SwZb_t::set_endpoint(::google::protobuf::uint64 value) {
+inline void SwZb_t::set_endpoint(::google::protobuf::uint32 value) {
   
   endpoint_ = value;
   // @@protoc_insertion_point(field_set:SwZb_t.endpoint)

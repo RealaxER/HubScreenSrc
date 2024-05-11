@@ -9,6 +9,7 @@
 #include "zigbee.pb.h"
 #include "typedef.pb.h"
 
+#define MAX_BUFFER 255
 
 struct Event {
     enum EventType { UART_DATA_RECEIVED, MQTT_MESSAGE_RECEIVED } type;
@@ -24,15 +25,15 @@ std::condition_variable cv;
 
 class HubDevice_t {
 public:
-    Zigbee_t zigbee_pt;
-    Buffer buff_pt;
+    Zigbee_t zigbee;
+    Buffer buff;
     Mqtt_t transport;
     Uart_t uart;
 
     HubDevice_t(const char *id, const char *port)
         : transport(id), uart(port) {
-        this->zigbee_pt = Zigbee_t();
-        this->buff_pt = Buffer();
+        this->zigbee = Zigbee_t();
+        this->buff = Buffer();
     }
 };
 
@@ -50,6 +51,52 @@ void mqtt_callback(struct mosquitto *mosq, void *userdata, const struct mosquitt
     std::vector<uint8_t> vec_data((const uint8_t *)message->payload, (const uint8_t *)message->payload + message->payloadlen);
     eventQueue.push(Event(Event::MQTT_MESSAGE_RECEIVED, message->topic, vec_data));
     cv.notify_one();
+}
+
+
+
+uint8_t zigbee_arr[MAX_BUFFER];
+void convertBufferToZigbee(HubDevice_t device){
+    memset(zigbee_arr , 0, sizeof(zigbee_arr));
+    if(device.buff.sender() != User_t::Hub || device.buff.receiver() != User_t::Zigbee ) {
+        return;
+    }
+
+    if(device.buff.sw_size() == 0){
+        Zigbee_t zigbee;
+        zigbee.set_sync(true);
+        zigbee.SerializeToArray(zigbee_arr, sizeof(zigbee_arr));
+        LOG_INFO("Packet sync to zigbee");
+        LOG_INFO("--> " << "UART" << " : " << zigbee.DebugString() );
+        // start byte data
+        device.uart.send(zigbee_arr, zigbee.ByteSize());
+        // end byte data
+        uint8_t end = 0xff;
+        device.uart.send(&end, 1);
+
+    }
+
+    for (int i = 0; i < device.buff.sw_size(); ++i) {       
+        Sw_t sw = device.buff.sw(i); 
+
+        Zigbee_t zigbee;
+        SwZb_t* sw_zigbee = zigbee.mutable_sw(); 
+        sw_zigbee->set_endpoint(sw.ep());
+        sw_zigbee->set_deviceid(sw.mac());
+        sw_zigbee->set_status(sw.status());
+        zigbee.SerializeToArray(zigbee_arr, sizeof(zigbee_arr));
+
+        LOG_INFO("--> " << "UART" << " : " << zigbee.DebugString() );
+        // start byte data
+        device.uart.send(zigbee_arr, zigbee.ByteSize());
+        // end byte data
+        uint8_t end = 0xff;
+        device.uart.send(&end, 1);
+    }
+}
+
+Buffer convertZigbeeToBuffer(Zigbee_t zigbee){
+
 }
 
 int main(void) {
@@ -71,19 +118,31 @@ int main(void) {
 
     while (true) {
         std::unique_lock<std::mutex> lock(mtx);
+
         cv.wait(lock, []{ return !eventQueue.empty(); });
 
         Event event = eventQueue.front();
+
         eventQueue.pop();
+
         lock.unlock();
 
+
         switch (event.type) {
+
             case Event::UART_DATA_RECEIVED:
                 // Handle UART data here
                 break;
+
             case Event::MQTT_MESSAGE_RECEIVED:
-                // Handle MQTT message here
+                if (!hub_zigbee.buff.ParseFromArray(event.data.data(), event.data.size())) {
+                    std::cerr << "Failed to parse protobuf message from vector" << std::endl;
+                    break;
+                }
+
+                convertBufferToZigbee(hub_zigbee);
                 break;
+
             default:
                 std::cerr << "Unknown event type" << std::endl;
         }
