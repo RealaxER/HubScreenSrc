@@ -21,7 +21,9 @@ void* uart_handle(void* arg) {
     return NULL;
 }
 
-
+int Uart_t::send(uint8_t * data, int len) {
+	return write(fd, data, len);
+}
 
 Uart_t::Uart_t(const char* port){
     fd = open(port, O_RDWR | O_NDELAY | O_NOCTTY);

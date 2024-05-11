@@ -13,6 +13,7 @@ private:
     pthread_t thread_id; // ID của thread
 public:
     Uart_t(const char * port);
+    int send(uint8_t * data, int len);
     int connect(int baud);
     int disconnect(void);
 
