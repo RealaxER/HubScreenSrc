@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Living Lab</string>
+    <string name="select_controller">Select Controller</string>
+    <string-array name="controller_options">
+        <item>Zigbee</item>
+        <item>Ble</item>
+        <item>Wifi</item>
+    </string-array>
+    <string-array name="device_options">
+        <item>Led</item>
+        <item>Switch</item>
+    </string-array>
+</resources>
