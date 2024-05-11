@@ -19,41 +19,42 @@ pub struct MqttDriver {
 }
 // packed install from app
 impl MqttDriver {
-    pub async fn new(id: String, host: String, port: u16, keep_alive: u64, mac: String) -> Self {
+    pub async fn new(id: String, host: String, port: u16, keep_alive: u64, mac: String, mode:bool) -> Self {
         let mut mqttoptions = MqttOptions::new(id, host, port);
 
         mqttoptions.set_keep_alive(Duration::from_secs(keep_alive));
         
         let (client, eventloop) = AsyncClient::new(mqttoptions.clone(), 10);
-
-        let topic: String = format!("hub/server/{}", mac);
-        log::info!("Connecting to hub: {}", topic);
-        client
-            .subscribe(topic, QoS::AtMostOnce)
-            .await
-            .unwrap();
-
-        for i in 3..=7 {
-            if let Some(user) = User_t::from_i32(i) {
-                let topic = format!("hub/{:?}", user);
-                let topic = topic.to_lowercase();
-                log::info!("Topic: {:?}", topic);
-                client
-                   .subscribe(topic, QoS::AtMostOnce)
-                   .await
-                   .unwrap();
+        if mode {
+            for i in 3..=7 {
+                if let Some(user) = User_t::from_i32(i) {
+                    let topic = format!("hub/{:?}", user);
+                    let topic = topic.to_lowercase();
+                    log::info!("Topic: {:?}", topic);
+                    client
+                        .subscribe(topic, QoS::AtMostOnce)
+                        .await
+                        .unwrap();
+                }
             }
-        }
-
-        client
-            .subscribe("hub/vendor/+", QoS::AtMostOnce)
-            .await
-            .unwrap();
-
-        client
+            client
             .subscribe("vendor/sub/+", QoS::AtMostOnce)
             .await
             .unwrap();
+        }
+        else {
+            let topic: String = format!("hub/server/{}", mac);
+            log::info!("Connecting to hub: {}", topic);
+            client
+                .subscribe(topic, QoS::AtMostOnce)
+                .await
+                .unwrap();
+    
+            client
+                .subscribe("hub/vendor/+", QoS::AtMostOnce)
+                .await
+                .unwrap();
+        }
 
         let (tx, rx) = mpsc::channel::<Result<TransportOut, BridgeIpErr>>(5);
         MqttDriver {

@@ -14,6 +14,7 @@ use tokio::{
 pub struct SystemIntergration {
     interval: Interval,
     logic: BrLogic,
+    broker: MqttDriver,
     transport: MqttDriver,
     master: Master
 }
@@ -23,14 +24,25 @@ impl SystemIntergration {
         SystemIntergration {
             interval: interval(Duration::from_secs(45)),
             logic: BrLogic::new(),
-            transport: MqttDriver::new(
+            broker: MqttDriver::new(
                 "hub-master".to_string(),
                 "54.253.168.98".to_string(),
                 1883,
                 45,
-                mac,
+                mac.clone(),
+                false,
             )
             .await,
+            transport: MqttDriver::new(
+                "hub-master-transport".to_string(),
+                "127.0.0.1".to_string(),
+                1883,
+                45,
+                mac,
+                true
+            )
+            .await,
+
             master: Master{},
         }
     }
@@ -43,6 +55,10 @@ impl SystemIntergration {
         select! {
             _ = self.interval.tick() => {
                 self.logic.on_event(BrLogicIn::Tick(TickLogicOut::CheckKeepAlive));
+            },
+
+            etransport  = self.broker.recv() => {
+                self.logic.on_event(BrLogicIn::Transport(etransport));
             },
 
             etransport  = self.transport.recv() => {
@@ -66,7 +82,7 @@ impl SystemIntergration {
                     buffer.sender = User_t::Hub.into();
                     buffer.receiver = User_t::Server.into();
                     let message = buffer.write_to_bytes().unwrap();
-                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                    let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
                 BrLogicOut::DisableVpn => {
@@ -84,7 +100,7 @@ impl SystemIntergration {
 
                     let topic = format!("hub/master/{}",self.transport.mac);
                     let message = buffer.write_to_bytes().unwrap();
-                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                    let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
                 BrLogicOut::EnableVpn => {
@@ -103,7 +119,7 @@ impl SystemIntergration {
 
                     let topic = format!("hub/master/{}",self.transport.mac);
                     let message = buffer.write_to_bytes().unwrap();
-                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                    let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
                 BrLogicOut::CheckKeepAlive => {
@@ -122,13 +138,13 @@ impl SystemIntergration {
                     buffer.receiver = User_t::Server.into();
                     buffer.cotroller = User_t::Hub.into();
                     let message = buffer.write_to_bytes().unwrap();
-                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                    let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
                 BrLogicOut::VendorData { vendor } => {
                     let topic = format!("vendor/pub/{}", vendor.mac_ven);
                     let message = vendor.write_to_bytes().unwrap();
-                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                    let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
                 _ => {}
             }
