@@ -33,21 +33,19 @@ public class MainActivity extends AppCompatActivity {
     //private static final String BROKER = "tcp://54.253.168.98:1883";
     private static final String CLIENT_ID = "living-lab-app";
     private static final String TOPIC_DEVICE = "hub/control/app/8xff";
-    int[] img = {R.drawable.switch_off, R.drawable.led_off, R.drawable.switch_off, R.drawable.led_off, R.drawable.led_off, R.drawable.switch_off};
-    String[] name = {"Sw 1", "Led 1", "Sw 2", "Led 2", "Led 3", "Sw 3"};
-    long[] mac = {1, 2, 3, 4, 5, 6};
-    String[] controller = {"Zigbee", "Wifi", "Wifi", "Zigbee", "Wifi", "Ble"};
-    String[] device_type = {"Switch", "Led", "Switch", "Led", "Led", "Switch"};
-    //int[] img = {};
-    //String[] name = {};
-    //String[] mac = {};
-    //static TextView mac_text;
+//    int[] img = {R.drawable.switch_off, R.drawable.led_off, R.drawable.switch_off, R.drawable.led_off, R.drawable.led_off, R.drawable.switch_off};
+//    String[] name = {"Sw 1", "Led 1", "Sw 2", "Led 2", "Led 3", "Sw 3"};
+//    long[] mac = {1, 2, 3, 4, 5, 6};
+//    String[] controller = {"Zigbee", "Wifi", "Wifi", "Zigbee", "Wifi", "Ble"};
+//    String[] device_type = {"Switch", "Led", "Switch", "Led", "Led", "Switch"};
+
     GridView gv;
     Button add_btn, remove_btn;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch ota_btn, vpn_btn;
     Button scan_btn;
     static ArrayList<Device> myList;
+    private SharedPrefsManager prefsManager;
     MyArrayAdapter myAdapter;
     private static MqttHandler mqttHandler;
     @SuppressLint("MissingInflatedId")
@@ -71,10 +69,12 @@ public class MainActivity extends AppCompatActivity {
         ota_btn = findViewById(R.id.ota_btn);
         scan_btn = findViewById(R.id.scan_btn);
 
-        myList = new ArrayList<>();
-        for(int i = 0; i < name.length; i++){
-            myList.add(new Device(img[i], name[i], mac[i], false, controller[i], device_type[i]));
-        }
+        prefsManager = new SharedPrefsManager(this);
+        //myList = new ArrayList<>();
+        myList = prefsManager.loadDeviceList();
+//        for(int i = 0; i < name.length; i++){
+//            myList.add(new Device(img[i], name[i], mac[i], false, controller[i], device_type[i]));
+//        }
         myAdapter = new MyArrayAdapter(MainActivity.this, R.layout.layout_item_device, myList);
         gv.setAdapter(myAdapter);
 
@@ -274,6 +274,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+    protected void onPause() {
+        super.onPause();
+        prefsManager.saveDeviceList(myList);
     }
     static class MyMqttCallback implements MqttCallback {
 

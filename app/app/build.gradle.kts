@@ -41,5 +41,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation ("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("com.google.protobuf:protobuf-java:4.26.1")
 }
