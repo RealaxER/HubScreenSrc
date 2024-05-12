@@ -7,6 +7,9 @@ from gtts import gTTS
 import paho.mqtt.client as mqtt
 import playsound
 import typedef_pb2
+import threading
+import time
+import queue
 
 language = "en"
 
@@ -41,34 +44,63 @@ def get_time():
 
 ###### MQTT SETUP#########
 
-# def on_connect(client, userdata, flags, rc):
-#     print("Connected with return: ", rc)
-#     #Subscribe topic
-#     client.subscribe("topic/TestRecieved")
+data_queue = queue.Queue()
+def on_connect(client, _, __, rc):
+    print("Connected with return: ", rc)
+    #Subscribe topic
+    client.subscribe("hub/ai")
 
-# def on_message(client, userdata, message):
-#     print("Recieved data from topic:", message.topic)
-#     received_message = my_pb2.MyMessage()
-#     received_message.ParseFromString(message.payload)
-#     # Process the recieved data depend on the topic
-#     #if message.topic == "somethings"
-#     #   Do somethings...
+def on_message(_ , __, message):
+    print("Recieved data from topic:", message.topic)
+    buff = typedef_pb2.Buffer()
+    buff.ParseFromString(message.payload)
+    if buff.receiver == typedef_pb2.User_t.Value("Ai"):
+        print("<-- ", message.topic," : ",buff)
+        data_queue.put(buff)
 
-# def mqtt_publish(topic, message):
-#     data = message.SerializeToString()
-#     client.publish(topic, data)
+def mqtt_publish(topic, message):
+    data = message.SerializeToString()
+    client.publish(topic, data)
+    print("--> ", topic," : ",message)
 
-# client = mqtt.Client(client_id="Temperature_Inside") 
-# client.on_connect = on_connect
-# client.on_message = on_message
+client = mqtt.Client(client_id="hub-ai") 
+client.on_connect = on_connect
+client.on_message = on_message
 
-# client.connect("54.253.168.98", 1883, 60)
-
-
+client.connect("127.0.0.1", 1883, 60)
 
 
-print("Start")
+# Handle name sw and led 
+sw_names = []
+led_names = []
+def mqtt_thread():
+    while True:
+        client.loop()
+        try:
+            buff = data_queue.get(block=False)
+            for led in buff.led:
+                if led.name not in led_names:
+                    led_names.append(led.name)
+            print("Received LED info:", led_names)
 
+            for sw in buff.sw:
+                if sw.name not in sw_names:
+                    sw_names.append(sw.name)
+            print("Received Sw info:", sw_names)
+        except queue.Empty:
+            pass
+        time.sleep(0.1) 
+
+mqtt_thread = threading.Thread(target=mqtt_thread)
+mqtt_thread.daemon = True 
+mqtt_thread.start()
+
+
+buffer = typedef_pb2.Buffer()
+buffer.sender = typedef_pb2.User_t.Value("Ai")
+buffer.receiver = typedef_pb2.User_t.Value("Hub")
+buffer.led.clear()
+## handle ai
 while True:
     print("Listening")
     text = get_audio()
@@ -92,11 +124,35 @@ while True:
         
         elif "turn on" in text.lower():
             device_name = text.lower().split("turn on")[1].strip()
+            buffer.led.clear()
+            buffer.sw.clear()
+            led = typedef_pb2.Led_t()
+            led.name = device_name
+
+            buffer.led.append(led)
+            mqtt_publish("hub/ai", buffer)
             speak(f"{device_name} is turned on")
 
         elif "turn off" in text.lower():
             device_name = text.lower().split("turn off")[1].strip()
-            speak(f"{device_name} is turned off")
+            if device_name in led_names:
+                buffer.led.clear()
+                led = typedef_pb2.Led_t()
+                led.name = device_name
+
+                buffer.led.append(led)
+                mqtt_publish("hub/ai", buffer)
+                speak(f"{device_name} is turned off")
+            elif device_name in sw_names:
+                buffer.sw.clear()
+                sw = typedef_pb2.Sw_t()
+                sw.name = device_name
+
+                buffer.sw.add(led)
+                mqtt_publish("hub/ai", buffer)
+                speak(f"{device_name} is turned off")
+            else :
+                speak(f"{device_name} not have")
 
 
         elif "can you" in text.lower():

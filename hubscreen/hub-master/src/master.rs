@@ -1,7 +1,9 @@
 use tokio::process::Command;
 
-pub struct Master {
+use crate::proto::typedef::Buffer;
 
+pub struct Master {
+    pub buff: Buffer
 }
 
 impl Master {
