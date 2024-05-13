@@ -1,6 +1,7 @@
 sudo apt install python3
 
 sudo apt-get install python3-pyaudio
+sudo apt install -y protobuf-compiler
 sudo apt-get install espeak
 pip install pyAudio
 pip install gTTS
@@ -8,3 +9,8 @@ pip install SpeechRecognition
 pip install playsound
 pip install pytz
 pip install datetime
+pip install protobuf
+
+
+# Run it 
+PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python python3 hub-ai.py 
