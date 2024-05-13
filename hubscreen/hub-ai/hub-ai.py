@@ -100,6 +100,12 @@ buffer = typedef_pb2.Buffer()
 buffer.sender = typedef_pb2.User_t.Value("Ai")
 buffer.receiver = typedef_pb2.User_t.Value("Hub")
 buffer.led.clear()
+led = typedef_pb2.Led_t()
+led.name = "bedroom"
+led.status = True
+
+buffer.led.append(led)
+mqtt_publish("hub/ai", buffer)
 ## handle ai
 while True:
     print("Listening")
@@ -128,6 +134,7 @@ while True:
             buffer.sw.clear()
             led = typedef_pb2.Led_t()
             led.name = device_name
+            led.status = True
 
             buffer.led.append(led)
             mqtt_publish("hub/ai", buffer)

@@ -50,36 +50,36 @@ impl SystemIntergration {
     }
 
     pub async fn init(&mut self) {
-        let mut buffer = Buffer::new();
+        // let mut buffer = Buffer::new();
 
-        let topic =  "hub/ai".to_string();
-        buffer.sender = User_t::Hub.into();
-        buffer.receiver = User_t::Ai.into();
+        // let topic =  "hub/ai".to_string();
+        // buffer.sender = User_t::Hub.into();
+        // buffer.receiver = User_t::Ai.into();
         
-        let mut sw = Sw_t::new();
-        sw.name = "Sw1".to_string();
-        sw.mac = 0xaaaa;
-        sw.status = true;
-        sw.ep = 1;
-        buffer.sw.push(sw);
+        // let mut sw = Sw_t::new();
+        // sw.name = "Sw1".to_string();
+        // sw.mac = 0xaaaa;
+        // sw.status = true;
+        // sw.ep = 1;
+        // buffer.sw.push(sw);
 
-        let mut sw = Sw_t::new();
-        sw.name = "Sw2".to_string();
-        sw.mac = 0xaaaa;
-        sw.status = true;
-        sw.ep = 2;
-        buffer.sw.push(sw);
+        // let mut sw = Sw_t::new();
+        // sw.name = "Sw2".to_string();
+        // sw.mac = 0xaaaa;
+        // sw.status = true;
+        // sw.ep = 2;
+        // buffer.sw.push(sw);
 
-        let message = buffer.write_to_bytes().unwrap();
-        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+        // let message = buffer.write_to_bytes().unwrap();
+        // let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
 
-        let topic =  "hub/ai".to_string();
-        let mut buffer = Buffer::new();
-        buffer.sender = User_t::Hub.into();
-        buffer.receiver = User_t::Ai.into();
+        // let topic =  "hub/ai".to_string();
+        // let mut buffer = Buffer::new();
+        // buffer.sender = User_t::Hub.into();
+        // buffer.receiver = User_t::Ai.into();
 
-        let message = buffer.write_to_bytes().unwrap();
-        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+        // let message = buffer.write_to_bytes().unwrap();
+        // let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
         self.logic.init();
     }
 
@@ -149,8 +149,7 @@ impl SystemIntergration {
                             }
                         }
                     }
-
-                    
+           
                     let topic = format!("hub/master/{}",self.transport.mac);
                     buffer.sender = User_t::Hub.into();
                     buffer.receiver = User_t::Server.into();
@@ -201,6 +200,7 @@ impl SystemIntergration {
 
                 BrLogicOut::UpgradeDevice { buffer } => {
                     log::info!("Device to upgrade: {:?}", buffer);
+                    self.master.upgrade_device(buffer).await;
                 }
 
                 BrLogicOut::SyncDevice => {

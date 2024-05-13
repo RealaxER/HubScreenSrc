@@ -53,6 +53,15 @@ elif [[ $1 == "install" ]]; then
         echo "OpenSSH is already installed."
     fi
 
+    if [ ! -x "$(command -v cmake)" ]; then
+        echo "Cmake is not installed. Installing..."
+        sudo apt install cmake
+        sudo apt install make
+        echo "Cmake has been installed."
+    else
+        echo "Cmake is already installed."
+    fi
+
     # Check Mosquitto
     if [ ! -x "$(command -v mosquitto)" ]; then
         echo "Mosquitto is not installed. Installing..."
@@ -64,9 +73,9 @@ elif [[ $1 == "install" ]]; then
 
 
     # Check lib mosquitto
-    if ! ldconfig -p | grep -q "libmosquitto"; then
+    if ! ldconfig -p | grep -q "libmosquitto-dev"; then
         echo "Mosquitto lib is not installed. Installing..."
-        sudo apt install mosquitto-dev
+        sudo apt-get install libmosquitto-dev
     else
         echo "Mosquitto lib is already installed."
     fi
@@ -116,35 +125,36 @@ elif [[ $1 == "install" ]]; then
 
         # Download protobuf
         sudo apt install -y protobuf-compiler
+        sudo apt install libprotobuf-dev
 
         echo "Protobuf has been successfully installed."
     else
         echo "Protobuf is already installed."
     fi
 
-    # Check and install Python 3 if not installed
-    if ! command -v python3 &> /dev/null; then
-        echo "Python 3 is not installed, initiating installation..."
-        sudo apt update
-        sudo apt install -y python3
-    fi
+    # # Check and install Python 3 if not installed
+    # if ! command -v python3 &> /dev/null; then
+    #     echo "Python 3 is not installed, initiating installation..."
+    #     sudo apt update
+    #     sudo apt install -y python3
+    # fi
 
-    # Check and install python3-pyaudio if not installed
-    if ! dpkg -s python3-pyaudio &> /dev/null; then
-        echo "python3-pyaudio is not installed, initiating installation..."
-        sudo apt-get install -y python3-pyaudio
-    fi
+    # # Check and install python3-pyaudio if not installed
+    # if ! dpkg -s python3-pyaudio &> /dev/null; then
+    #     echo "python3-pyaudio is not installed, initiating installation..."
+    #     sudo apt-get install -y python3-pyaudio
+    # fi
 
-    # Check and install espeak if not installed
-    if ! command -v espeak &> /dev/null; then
-        echo "espeak is not installed, initiating installation..."
-        sudo apt-get install -y espeak
-    fi
-    # Install Python libraries using pip
-    echo "Installing Python libraries using pip..."
+    # # Check and install espeak if not installed
+    # if ! command -v espeak &> /dev/null; then
+    #     echo "espeak is not installed, initiating installation..."
+    #     sudo apt-get install -y espeak
+    # fi
+    # # Install Python libraries using pip
+    # echo "Installing Python libraries using pip..."
 
-    pip install pyAudio gTTS SpeechRecognition playsound pytz datetime
-    pip install pyinstaller
+    # pip install pyAudio gTTS SpeechRecognition playsound pytz datetime
+    # pip install pyinstaller
 
 
     echo "Installation complete."
@@ -158,19 +168,25 @@ elif [[ $1 == "install" ]]; then
     cargo build --release
 
     cd ${current}/hubscreen/hub-zigbee
+    cd proto/zigbee/
+    protoc --cpp_out=./ zigbee.proto
+    cd ${current}/hubscreen/hub-zigbee
+    cd proto/hub/
+    protoc --cpp_out=./ typedef.proto
+
     mkdir build 
     cd build
     cmake ..
     make
 
-    cd ${current}/hubscreen/hub-screen
-    mkdir build 
-    cd build
-    cmake ..
-    make
+    # cd ${current}/hubscreen/hub-screen
+    # mkdir build 
+    # cd build
+    # cmake ..
+    # make
 
-    cd ${current}/hubscreen/hub-ai
-    pyinstaller --onefile hub-ai.py
+    # cd ${current}/hubscreen/hub-ai
+    # pyinstaller --onefile hub-ai.py
 
     # Check master.service already
     if [ ! -f "$service_master" ]; then
@@ -242,40 +258,40 @@ elif [[ $1 == "install" ]]; then
         echo "File vpn.service already."
     fi
 
-    # Check ai.service already
-    if [ ! -f "$service_ai" ]; then
-        sudo echo "File ai.service not have already. Initiating the download and installation process..."
-        # Info ai.service
-        sudo echo "[Unit]" > "$service_ai"
-        sudo echo "Description=Hubscreen ai Service" >> "$service_ai"
-        sudo echo "After=systend-user-sessions.service" >> "$service_ai"
-        sudo echo "" >> "$service_ai"
-        sudo echo "[Service]" >> "$service_ai"
-        sudo echo "Type=simple" >> "$service_ai"
-        sudo echo "Environment="PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python"" >> "$service_ai"
-        sudo echo "ExecStart=/bin/bash -c \"$cmd_service_ai\"" >> "$service_ai"
-        sudo chmod 600 $service_ai
-        sudo echo "Writed ai.service to systemd succesfully."
-    else
-        echo "File ai.service already."
-    fi
+    # # Check ai.service already
+    # if [ ! -f "$service_ai" ]; then
+    #     sudo echo "File ai.service not have already. Initiating the download and installation process..."
+    #     # Info ai.service
+    #     sudo echo "[Unit]" > "$service_ai"
+    #     sudo echo "Description=Hubscreen ai Service" >> "$service_ai"
+    #     sudo echo "After=systend-user-sessions.service" >> "$service_ai"
+    #     sudo echo "" >> "$service_ai"
+    #     sudo echo "[Service]" >> "$service_ai"
+    #     sudo echo "Type=simple" >> "$service_ai"
+    #     sudo echo "Environment="PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python"" >> "$service_ai"
+    #     sudo echo "ExecStart=/bin/bash -c \"$cmd_service_ai\"" >> "$service_ai"
+    #     sudo chmod 600 $service_ai
+    #     sudo echo "Writed ai.service to systemd succesfully."
+    # else
+    #     echo "File ai.service already."
+    # fi
 
-    # Check screen.service already
-    if [ ! -f "$service_screen" ]; then
-        sudo echo "File screen.service not have already. Initiating the download and installation process..."
-        # Info screen.service
-        sudo echo "[Unit]" > "$service_screen"
-        sudo echo "Description=Hubscreen screen Service" >> "$service_screen"
-        sudo echo "After=systend-user-sessions.service" >> "$service_screen"
-        sudo echo "" >> "$service_screen"
-        sudo echo "[Service]" >> "$service_screen"
-        sudo echo "Type=simple" >> "$service_screen"
-        sudo echo "ExecStart=/bin/bash -c \"$cmd_service_screen\"" >> "$service_screen"
-        sudo chmod 600 $service_screen
-        sudo echo "Writed screen.service to systemd succesfully."
-    else
-        echo "File screen.service already."
-    fi
+    # # Check screen.service already
+    # if [ ! -f "$service_screen" ]; then
+    #     sudo echo "File screen.service not have already. Initiating the download and installation process..."
+    #     # Info screen.service
+    #     sudo echo "[Unit]" > "$service_screen"
+    #     sudo echo "Description=Hubscreen screen Service" >> "$service_screen"
+    #     sudo echo "After=systend-user-sessions.service" >> "$service_screen"
+    #     sudo echo "" >> "$service_screen"
+    #     sudo echo "[Service]" >> "$service_screen"
+    #     sudo echo "Type=simple" >> "$service_screen"
+    #     sudo echo "ExecStart=/bin/bash -c \"$cmd_service_screen\"" >> "$service_screen"
+    #     sudo chmod 600 $service_screen
+    #     sudo echo "Writed screen.service to systemd succesfully."
+    # else
+    #     echo "File screen.service already."
+    # fi
 
 
 elif [[ $1 == "upgrade" ]]; then

@@ -7,6 +7,11 @@ pub struct Master {
 }
 
 impl Master {
+
+    pub async fn upgrade_device(&mut self, device: Buffer) {
+        self.buff = device;
+    }
+
     pub async fn enable_vpn(&mut self) {
         log::info!("Enable vpn");
         Command::new("sh")
