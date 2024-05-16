@@ -1,5 +1,7 @@
 package com.example.livinglab;
 
+import android.widget.ImageView;
+
 public class Device {
     private int img;
     private String name;
@@ -7,6 +9,7 @@ public class Device {
     private boolean status;
     private String controller;
     private String device_type;
+    private int ep;
     public Device(int img, String name, long mac, boolean status, String controller, String device_type) {
         this.img = img;
         this.name = name;
@@ -14,6 +17,14 @@ public class Device {
         this.status = status;
         this.controller = controller;
         this.device_type = device_type;
+    }
+
+    public int getEp() {
+        return ep;
+    }
+
+    public void setEp(int ep) {
+        this.ep = ep;
     }
 
     public int getImg() {
@@ -62,5 +73,29 @@ public class Device {
 
     public void setDevice_type(String device_type) {
         this.device_type = device_type;
+    }
+
+    public Typedef.Buffer toBuffer() {
+        Typedef.Buffer.Builder bufferBuilder = Typedef.Buffer.newBuilder()
+                .setMacHub("8xff")
+                .setSender(Typedef.User_t.App)
+                .setReceiver(Typedef.User_t.Server)
+                .setCotroller(Typedef.User_t.valueOf(this.controller));
+
+        if (this.device_type.equals("Led")) {
+            Typedef.Led_t.Builder ledBuilder = Typedef.Led_t.newBuilder()
+                    .setName(this.name)
+                    .setMac(this.mac)
+                    .setStatus(this.status);
+            bufferBuilder.addLed(ledBuilder);
+        } else if (this.device_type.equals("Switch")) {
+            Typedef.Sw_t.Builder swBuilder = Typedef.Sw_t.newBuilder()
+                    .setName(this.name)
+                    .setMac(this.mac)
+                    .setStatus(this.status);
+            bufferBuilder.addSw(swBuilder);
+        }
+
+        return bufferBuilder.build();
     }
 }
