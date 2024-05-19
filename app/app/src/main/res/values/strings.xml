@@ -10,4 +10,8 @@
         <item>Led</item>
         <item>Switch</item>
     </string-array>
+    <string-array name="device_status">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
 </resources>

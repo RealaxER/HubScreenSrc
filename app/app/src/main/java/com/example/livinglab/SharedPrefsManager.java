@@ -13,6 +13,7 @@ import java.util.List;
 public class SharedPrefsManager {
     private static final String PREF_NAME = "MyPrefs";
     private static final String DEVICE_LIST_KEY = "deviceList";
+    private static final String NEXT_REQUEST_CODE_KEY = "nextRequestCode";
 
     private SharedPreferences sharedPreferences;
 
@@ -36,5 +37,15 @@ public class SharedPrefsManager {
             return gson.fromJson(json, type);
         }
         return new ArrayList<>();
+    }
+
+    public void saveRequestCode(int nextRequestCode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(NEXT_REQUEST_CODE_KEY, nextRequestCode);
+        editor.apply();
+    }
+
+    public int loadRequestCode() {
+        return sharedPreferences.getInt(NEXT_REQUEST_CODE_KEY, 0);
     }
 }
