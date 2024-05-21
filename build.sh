@@ -174,6 +174,7 @@ elif [[ $1 == "install" ]]; then
     cd proto/hub/
     protoc --cpp_out=./ typedef.proto
 
+    cd ${current}/hubscreen/hub-zigbee
     mkdir build 
     cd build
     cmake ..
@@ -298,19 +299,19 @@ elif [[ $1 == "upgrade" ]]; then
     mkdir -p ${home}/log/
     mkdir -p ${home}/service/
 
-    sudo systemctl stop hub-ota 
-    sudo systemctl stop hub-zigbee 
-    sudo systemctl stop hub-master
-    sudo cp ${current}/hubscreen/hub-zigbee/target/release/hub-ota ${home}/service/
+    sudo systemctl stop ota 
+    sudo systemctl stop zigbee 
+    sudo systemctl stop master
+    sudo cp ${current}/hubscreen/hub-ota/target/release/hub-ota ${home}/service/
     sudo cp ${current}/hubscreen/hub-zigbee/build/hub-zigbee ${home}/service/
-    sudo cp ${current}/hubscreen/hub-zigbee/target/release/hub-master ${home}/service/
+    sudo cp ${current}/hubscreen/hub-master/target/release/hub-master ${home}/service/
     sudo cp ${current}/client1.ovpn ${home}/service/
-    sudo systemctl start hub-ota 
-    sudo systemctl start hub-zigbee 
-    sudo systemctl start hub-master
-    sudo systemctl enable hub-ota 
-    sudo systemctl enable hub-zigbee 
-    sudo systemctl enable hub-master
+    sudo systemctl start ota 
+    sudo systemctl start zigbee 
+    sudo systemctl start master
+    sudo systemctl enable ota 
+    sudo systemctl enable zigbee 
+    sudo systemctl enable master
 
 else 
     echo "Usage:./build.sh [install|upgrade|clean]"
