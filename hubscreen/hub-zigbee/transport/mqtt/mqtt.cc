@@ -49,7 +49,7 @@ int Mqtt_t::disconnect() {
     return -1;
 }
 
-int Mqtt_t::publish(const char * topic, const char * payload, int payload_len) {
+int Mqtt_t::publish(const char * topic, const unsigned char * payload, int payload_len) {
     if(this->mosq != nullptr) {
         mosquitto_publish(this->mosq, NULL, topic, payload_len, payload, 1, false);
         LOG_INFO("--> " << topic << " : " << payload);
@@ -81,7 +81,8 @@ void __test_mqtt(void) {
     mqtt_client.subscribe("test_mqtt", 1);
     mqtt_client.connect();
     std::string payload = "hello world";
-    if(mqtt_client.publish("test_mqtt", payload.c_str(), payload.size())) {
+    const unsigned char * payload_u8 = (const unsigned char *)payload.c_str();
+    if(mqtt_client.publish("test_mqtt", payload_u8, payload.size())) {
         std::cout << ANSI_COLOR_GREEN << "PASS" << ANSI_COLOR_RESET << " : mqtt publish" << std::endl;
     }
     sleep(1);

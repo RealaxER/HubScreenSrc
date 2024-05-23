@@ -16,7 +16,7 @@ public:
 
     int disconnect();
 
-    int publish(const char * topic, const char * payload, int payload_len);
+    int publish(const char * topic, const unsigned char * payload, int payload_len);
 
     int subscribe(const char * topic, int qos);
 };
