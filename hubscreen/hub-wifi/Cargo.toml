@@ -1,13 +1,7 @@
 [package]
-name = "hub-master"
+name = "hub-wifi"
 version = "0.1.0"
 edition = "2021"
-
-[profile.release]
-opt-level = 'z'
-lto = true
-codegen-units = 1
-strip = true  
 
 [dependencies]
 rumqttc = "0.24.0"
@@ -20,5 +14,3 @@ log = "0.4.20"
 env_logger = { version = "0.11.2" }
 reqwest = "0.12.4"
 openssl = { version = "0.10", features = ["vendored"] }
-chrono = {version = "0.4", features = ["clock","std"] }
-rusqlite = {version = "0.31.0"}

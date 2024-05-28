@@ -4,8 +4,7 @@ syntax = "proto3";
 message Led_t{
     string name = 16;
     uint64 mac = 17;
-    uint32 ep = 18;
-    bool status = 19;
+    bool status = 18;
 }
 
 message Sw_t{
@@ -38,12 +37,6 @@ enum User_t {
     Ota = 8;
 }
 
-message Timer_t {
-    uint32 day =15;
-    uint32 month = 16;
-    uint32 hour = 17;
-    uint32 minute = 18;
-}
 
 message Buffer {
     string mac_hub = 1;
@@ -55,7 +48,6 @@ message Buffer {
     Vpn_t vpn = 17;
     repeated Led_t led = 18;
     repeated Sw_t  sw = 19;
-    Timer_t time = 20;
 }
 
 message Vpn_t {
