@@ -161,10 +161,12 @@ elif [[ $1 == "install" ]]; then
 
 
     # Build program
-    cd ${current}/hubscreen/hub-master
+    cd ${current}/hubscreen/hub-master/
+    #protoc --rust_out=./ typedef.proto
     cargo build --release
 
     cd ${current}/hubscreen/hub-ota
+   #protoc --rust_out=./ typedef.proto
     cargo build --release
 
     cd ${current}/hubscreen/hub-zigbee
@@ -189,6 +191,27 @@ elif [[ $1 == "install" ]]; then
     # cd ${current}/hubscreen/hub-ai
     # pyinstaller --onefile hub-ai.py
 
+
+
+elif [[ $1 == "upgrade" ]]; then
+    mkdir -p ${home}/log/
+    mkdir -p ${home}/service/
+
+    sudo systemctl stop ota 
+    sudo systemctl stop zigbee 
+    sudo systemctl stop master
+    sudo cp ${current}/hubscreen/hub-ota/target/release/hub-ota ${home}/service/
+    sudo cp ${current}/hubscreen/hub-zigbee/build/hub-zigbee ${home}/service/
+    sudo cp ${current}/hubscreen/hub-master/target/release/hub-master ${home}/service/
+    sudo cp ${current}/client1.ovpn ${home}/service/
+    sudo systemctl start ota 
+    sudo systemctl start zigbee 
+    sudo systemctl start master
+    sudo systemctl enable ota 
+    sudo systemctl enable zigbee 
+    sudo systemctl enable master
+
+elif [[ $1 == "service" ]]; then
     # Check master.service already
     if [ ! -f "$service_master" ]; then
         sudo echo "File master.service not have already. Initiating the download and installation process..."
@@ -293,25 +316,6 @@ elif [[ $1 == "install" ]]; then
     # else
     #     echo "File screen.service already."
     # fi
-
-
-elif [[ $1 == "upgrade" ]]; then
-    mkdir -p ${home}/log/
-    mkdir -p ${home}/service/
-
-    sudo systemctl stop ota 
-    sudo systemctl stop zigbee 
-    sudo systemctl stop master
-    sudo cp ${current}/hubscreen/hub-ota/target/release/hub-ota ${home}/service/
-    sudo cp ${current}/hubscreen/hub-zigbee/build/hub-zigbee ${home}/service/
-    sudo cp ${current}/hubscreen/hub-master/target/release/hub-master ${home}/service/
-    sudo cp ${current}/client1.ovpn ${home}/service/
-    sudo systemctl start ota 
-    sudo systemctl start zigbee 
-    sudo systemctl start master
-    sudo systemctl enable ota 
-    sudo systemctl enable zigbee 
-    sudo systemctl enable master
 
 else 
     echo "Usage:./build.sh [install|upgrade|clean]"
