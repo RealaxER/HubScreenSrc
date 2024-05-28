@@ -6,6 +6,8 @@ pub mod logic;
 pub mod proto;
 pub mod system_intergration;
 pub mod transport;
+pub mod timer;
+pub mod sqlite;
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {

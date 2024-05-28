@@ -3,5 +3,9 @@ pub enum BridgeIpErr {
     MqttErr,
     MqttConvertJsoErr,
     HttpSendErr,
-    HttpErr
+    HttpErr,
+    CreateSqlErr,
+    AddSqlErr,
+    DeleteSqlErr,
+    GetSqlErr,
 }
