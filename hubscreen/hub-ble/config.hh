@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
 
-#define DEVICE_NAME "hub-zigbee"
-#define PATH_SEZIAL "/dev/ttyAMA0"
+#define DEVICE_NAME "hub-ble"
+#define PATH_SEZIAL "/dev/serial0"
 #define BROKER "127.0.0.1"
 #define PORT 1883
-#define SUB "hub/zigbee"
+#define SUB "hub/ble"
 
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RED     "\x1b[31m"

@@ -36,7 +36,7 @@ struct Zigbee_tDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Zigbee_tDefaultTypeInternal _Zigbee_t_default_instance_;
 PROTOBUF_CONSTEXPR SwZb_t::SwZb_t(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.deviceid_)*/uint64_t{0u}
+    /*decltype(_impl_.deviceid_)*/0u
   , /*decltype(_impl_.endpoint_)*/0u
   , /*decltype(_impl_.status_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -85,7 +85,7 @@ static const ::_pb::Message* const file_default_instances[] = {
 const char descriptor_table_protodef_zigbee_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\014zigbee.proto\"-\n\010Zigbee_t\022\023\n\002sw\030\001 \001(\0132\007"
   ".SwZb_t\022\014\n\004sync\030\002 \001(\010\"<\n\006SwZb_t\022\020\n\010devic"
-  "eID\030\001 \001(\004\022\020\n\010endpoint\030\002 \001(\r\022\016\n\006status\030\003 "
+  "eID\030\017 \001(\r\022\020\n\010endpoint\030\020 \001(\r\022\016\n\006status\030\021 "
   "\001(\010b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_zigbee_2eproto_once;
@@ -361,7 +361,7 @@ inline void SwZb_t::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.deviceid_){uint64_t{0u}}
+      decltype(_impl_.deviceid_){0u}
     , decltype(_impl_.endpoint_){0u}
     , decltype(_impl_.status_){false}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -403,25 +403,25 @@ const char* SwZb_t::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint64 deviceID = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.deviceid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+      // uint32 deviceID = 15;
+      case 15:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 120)) {
+          _impl_.deviceid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // uint32 endpoint = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+      // uint32 endpoint = 16;
+      case 16:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 128)) {
           _impl_.endpoint_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // bool status = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+      // bool status = 17;
+      case 17:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 136)) {
           _impl_.status_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
@@ -456,22 +456,22 @@ uint8_t* SwZb_t::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 deviceID = 1;
+  // uint32 deviceID = 15;
   if (this->_internal_deviceid() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_deviceid(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(15, this->_internal_deviceid(), target);
   }
 
-  // uint32 endpoint = 2;
+  // uint32 endpoint = 16;
   if (this->_internal_endpoint() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_endpoint(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(16, this->_internal_endpoint(), target);
   }
 
-  // bool status = 3;
+  // bool status = 17;
   if (this->_internal_status() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_status(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(17, this->_internal_status(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -490,19 +490,21 @@ size_t SwZb_t::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint64 deviceID = 1;
+  // uint32 deviceID = 15;
   if (this->_internal_deviceid() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_deviceid());
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_deviceid());
   }
 
-  // uint32 endpoint = 2;
+  // uint32 endpoint = 16;
   if (this->_internal_endpoint() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_endpoint());
+    total_size += 2 +
+      ::_pbi::WireFormatLite::UInt32Size(
+        this->_internal_endpoint());
   }
 
-  // bool status = 3;
+  // bool status = 17;
   if (this->_internal_status() != 0) {
-    total_size += 1 + 1;
+    total_size += 2 + 1;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);

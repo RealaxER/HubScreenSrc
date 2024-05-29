@@ -1,4 +1,6 @@
 #include <uart.hh>
+#include <string.h>
+#include <stdio.h>
 
 #define MAX_DATA_LENGTH 255
 uint8_t buffer[MAX_DATA_LENGTH];
@@ -12,10 +14,14 @@ void* uart_handle(void* arg) {
     while (1) {
         bytes_read = read(fd, buffer, MAX_DATA_LENGTH);
         if (bytes_read > 0) {
-            uart_callback(buffer, bytes_read);
-            memset(buffer, 0, sizeof(buffer));
+	    for(int i =0; i<bytes_read;i++){
+	    	printf("%d ", buffer[i]);
+		}
+	    printf("\n");
+	    uart_callback(buffer, bytes_read);
+	    memset(buffer, 0, sizeof(buffer));
         }
-        usleep(1000);
+        sleep(5);
     }
     return NULL;
 }
@@ -31,20 +37,24 @@ Uart_t::Uart_t(const char* port){
     }
 }
 
+Uart_t::~Uart_t(){
+	std::cout <<"huy" << std::endl;
+}
+
 int Uart_t::connect(int baud) {
-    tcgetattr(fd, &options);
-    options.c_cflag = baud | CS8 | CLOCAL | CREAD;
-    options.c_iflag = IGNPAR;
-    options.c_oflag = 0;
-    options.c_lflag = 0;
-    tcflush(fd, TCIFLUSH);
-    tcsetattr(fd, TCSANOW, &options);
+    tcgetattr(this->fd, &this->options);
+    this->options.c_cflag = baud | CS8 | CLOCAL | CREAD;
+    this->options.c_iflag = IGNPAR;
+    this->options.c_oflag = 0;
+    this->options.c_lflag = 0;
+    tcflush(this->fd, TCIFLUSH);
+    tcsetattr(this->fd, TCSANOW, &this->options);
 
     if (pthread_create(&thread_id, NULL, uart_handle, &fd)) {
         perror("Error creating thread");
         return -1;
     }
-    pthread_join(thread_id, NULL);
+//    pthread_join(thread_id, NULL);
 
     return 0;
 }

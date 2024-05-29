@@ -346,20 +346,20 @@ class SwZb_t final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kDeviceIDFieldNumber = 1,
-    kEndpointFieldNumber = 2,
-    kStatusFieldNumber = 3,
+    kDeviceIDFieldNumber = 15,
+    kEndpointFieldNumber = 16,
+    kStatusFieldNumber = 17,
   };
-  // uint64 deviceID = 1;
+  // uint32 deviceID = 15;
   void clear_deviceid();
-  uint64_t deviceid() const;
-  void set_deviceid(uint64_t value);
+  uint32_t deviceid() const;
+  void set_deviceid(uint32_t value);
   private:
-  uint64_t _internal_deviceid() const;
-  void _internal_set_deviceid(uint64_t value);
+  uint32_t _internal_deviceid() const;
+  void _internal_set_deviceid(uint32_t value);
   public:
 
-  // uint32 endpoint = 2;
+  // uint32 endpoint = 16;
   void clear_endpoint();
   uint32_t endpoint() const;
   void set_endpoint(uint32_t value);
@@ -368,7 +368,7 @@ class SwZb_t final :
   void _internal_set_endpoint(uint32_t value);
   public:
 
-  // bool status = 3;
+  // bool status = 17;
   void clear_status();
   bool status() const;
   void set_status(bool value);
@@ -385,7 +385,7 @@ class SwZb_t final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint64_t deviceid_;
+    uint32_t deviceid_;
     uint32_t endpoint_;
     bool status_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -518,27 +518,27 @@ inline void Zigbee_t::set_sync(bool value) {
 
 // SwZb_t
 
-// uint64 deviceID = 1;
+// uint32 deviceID = 15;
 inline void SwZb_t::clear_deviceid() {
-  _impl_.deviceid_ = uint64_t{0u};
+  _impl_.deviceid_ = 0u;
 }
-inline uint64_t SwZb_t::_internal_deviceid() const {
+inline uint32_t SwZb_t::_internal_deviceid() const {
   return _impl_.deviceid_;
 }
-inline uint64_t SwZb_t::deviceid() const {
+inline uint32_t SwZb_t::deviceid() const {
   // @@protoc_insertion_point(field_get:SwZb_t.deviceID)
   return _internal_deviceid();
 }
-inline void SwZb_t::_internal_set_deviceid(uint64_t value) {
+inline void SwZb_t::_internal_set_deviceid(uint32_t value) {
   
   _impl_.deviceid_ = value;
 }
-inline void SwZb_t::set_deviceid(uint64_t value) {
+inline void SwZb_t::set_deviceid(uint32_t value) {
   _internal_set_deviceid(value);
   // @@protoc_insertion_point(field_set:SwZb_t.deviceID)
 }
 
-// uint32 endpoint = 2;
+// uint32 endpoint = 16;
 inline void SwZb_t::clear_endpoint() {
   _impl_.endpoint_ = 0u;
 }
@@ -558,7 +558,7 @@ inline void SwZb_t::set_endpoint(uint32_t value) {
   // @@protoc_insertion_point(field_set:SwZb_t.endpoint)
 }
 
-// bool status = 3;
+// bool status = 17;
 inline void SwZb_t::clear_status() {
   _impl_.status_ = false;
 }

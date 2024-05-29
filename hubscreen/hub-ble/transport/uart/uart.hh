@@ -6,6 +6,7 @@
 #include <string.h>
 #include <pthread.h> 
 #include <stdint.h>
+#include <iostream>
 
 class Uart_t {
 private:
@@ -17,5 +18,5 @@ public:
     int send(uint8_t * data, int len);
     int connect(int baud);
     int disconnect(void);
-
+    ~Uart_t();	
 };

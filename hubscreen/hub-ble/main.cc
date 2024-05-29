@@ -7,7 +7,7 @@
 #include "uart.hh"
 #include "config.hh"
 
-#include "zigbee.pb.h"
+#include "ble.pb.h"
 #include "typedef.pb.h"
 
 #define MAX_BUFFER 255
@@ -26,79 +26,52 @@ std::condition_variable cv;
 
 class HubDevice_t {
 public:
-    Zigbee_t zigbee;
+    Ble_t ble;
     Buffer buff;
     Mqtt_t transport;
     Uart_t uart;
 
     HubDevice_t(const char *id, const char *port)
         : transport(id), uart(port) {
-        this->zigbee = Zigbee_t();
+        this->ble = Ble_t();
         this->buff = Buffer();
+	uart.connect(B115200);
     }
 };
 
+std::vector<std::vector<uint8_t>> extract_uart(const uint8_t *input, size_t size) {
+    std::vector<std::vector<uint8_t>> results;
+    std::vector<uint8_t> current_message;
+    bool in_message = false;
 
-struct ring_buffer  {
-    uint8_t data[255];
-    uint8_t temp[255];
-    uint16_t len;
-    uint16_t len_data;
-};
-
-struct ring_buffer r_buff;
-
-void ring_buffer_init(void) {
-    memset(r_buff.data , 0, sizeof(r_buff.data));
-    memset(r_buff.temp , 0, sizeof(r_buff.temp));
-    r_buff.len = r_buff.len_data = 0;
-}
-
-bool uart_have_packet(){
-    for(int i = 0; i < r_buff.len ; i++) {
-        r_buff.len_data = i;
-        if(r_buff.data[i] == 0xff){
-            if(r_buff.data[i+1] == 0xff){
-                return true;
+    for (size_t i = 0; i < size; ++i) {
+        if (input[i] == 0xFF && i + 1 < size && input[i + 1] == 0xFF) {
+            if (in_message && !current_message.empty()) {
+                results.push_back(current_message);
+                current_message.clear();
             }
+            in_message = true;
+            ++i; // Skip the next 0xFF
+        } else if (in_message) {
+            current_message.push_back(input[i]);
         }
     }
-    return false;
-}
 
-void uart_memset_temp(void) {
-    memset(r_buff.temp, 0, sizeof(r_buff.temp));
-    for(int i = r_buff.len_data + 2; i < r_buff.len; i++){
-        r_buff.temp[i] = r_buff.data[i];
+    if (!current_message.empty()) {
+        results.push_back(current_message);
     }
-}
 
-std::vector<uint8_t> uart_packet_vector() {
-    std::vector<uint8_t> result(r_buff.data, r_buff.data + r_buff.len_data);
-    return result;
-}
-
-void uart_add_data(const unsigned char  *data, int len) {
-    int index = 0;
-    int lenght = len + r_buff.len;
-    for(int i = r_buff.len; i < lenght ; i++) {
-        r_buff.temp[i] = data[index++];
-        r_buff.len ++;
-    }
-    memset(r_buff.data, 0, sizeof(r_buff.data));
-    for(int i = 0; i < r_buff.len; i++) {
-        r_buff.data[i] = r_buff.temp[i];
-    }
+    return results;
 }
 
 
 void uart_callback(const unsigned char *data, int length) {
     std::lock_guard<std::mutex> lock(mtx);
-    LOG_INFO("<-- " << "UART" << " : " << data);
 
     std::vector<uint8_t> vec_data(data, data + length);
     eventQueue.push(Event(Event::UART_DATA_RECEIVED, "", vec_data));
     cv.notify_one();
+    LOG_INFO("<-- " << "UART" << " : " << data);
 }
 
 void mqtt_callback(struct mosquitto *mosq, void *userdata, const struct mosquitto_message *message) {
@@ -110,66 +83,68 @@ void mqtt_callback(struct mosquitto *mosq, void *userdata, const struct mosquitt
 }
 
 
-void convertBufferToZigbee(HubDevice_t device){
-    uint8_t zigbee_arr[MAX_BUFFER];
-    memset(zigbee_arr , 0, sizeof(zigbee_arr));
+void convertBufferToWifi(HubDevice_t device){
+    uint8_t ble_arr[MAX_BUFFER];
+    memset(ble_arr , 0, sizeof(ble_arr));
 
-    if(device.buff.sender() != User_t::Hub || device.buff.receiver() != User_t::Zigbee ) {
+    if(device.buff.sender() != User_t::Hub || device.buff.receiver() != User_t::Ble ) {
         return;
     }
 
     if(device.buff.sw_size() == 0){
-        Zigbee_t zigbee;
-        zigbee.set_sync(true);
-        zigbee.SerializeToArray(zigbee_arr, sizeof(zigbee_arr));
-        LOG_INFO("Packet sync to zigbee");
-        LOG_INFO("--> " << "UART" << " : " << zigbee.DebugString() );
+        Ble_t ble;
+        ble.set_sync(true);
+        ble.SerializeToArray(ble_arr, sizeof(ble_arr));
+        LOG_INFO("Packet sync to ble");
+        LOG_INFO("--> " << "UART" << " : " << ble.DebugString() );
         // start byte data
-        device.uart.send(zigbee_arr, zigbee.ByteSizeLong());
-        // end byte data
-        uint8_t end = 0xff;
-        device.uart.send(&end, 1);
+        device.uart.send(ble_arr, ble.ByteSizeLong());
+	for(int i =0;i<ble.ByteSizeLong(); i++){
+		printf("%d ", ble_arr[i]);
+	}
+	printf("\n");
 
     }
 
     for (int i = 0; i < device.buff.sw_size(); ++i) {
         Sw_t sw = device.buff.sw(i);
 
-        Zigbee_t zigbee;
-        SwZb_t* sw_zigbee = zigbee.mutable_sw();
-        sw_zigbee->set_endpoint(sw.ep());
-        sw_zigbee->set_deviceid(sw.mac());
-        sw_zigbee->set_status(sw.status());
-        zigbee.SerializeToArray(zigbee_arr, sizeof(zigbee_arr));
+        Ble_t ble;
+        SwZb_t* sw_ble = ble.mutable_sw();
+        sw_ble->set_endpoint(sw.ep());
+        sw_ble->set_deviceid(sw.mac());
+        sw_ble->set_status(sw.status());
+        ble.SerializeToArray(ble_arr, sizeof(ble_arr));
 
-        LOG_INFO("--> " << "UART" << " : " << zigbee.DebugString() );
+        LOG_INFO("--> " << "UART" << " : " << ble.DebugString() );
         // start byte data
-        device.uart.send(zigbee_arr, zigbee.ByteSizeLong());
+        device.uart.send(ble_arr, ble.ByteSizeLong());
         // end byte data
         uint8_t end[2] = {0xff, 0xff};
         device.uart.send(end, 2);
     }
 }
 
-void convertZigbeeToBuffer(HubDevice_t device){
-    if(device.zigbee.has_sw()){
+void convertBleToBuffer(HubDevice_t device){
+    if(device.ble.has_sw()){
         Buffer buffer;
-        buffer.set_sender(User_t::Zigbee);
+        buffer.set_sender(User_t::Ble);
         buffer.set_receiver(User_t::Hub);
-        buffer.set_cotroller(User_t::Zigbee);
-
+        buffer.set_cotroller(User_t::Ble);
+	buffer.set_mac_hub("8xff");
 
         uint8_t buffer_arr[MAX_BUFFER];
 
         // Convert SwZb_t to Sw_t and add to the buffer
         Sw_t* sw = buffer.add_sw();
-        sw->set_mac(device.zigbee.sw().deviceid());
-        sw->set_ep(device.zigbee.sw().endpoint());
-        sw->set_status(device.zigbee.sw().status());
+        sw->set_mac(device.ble.sw().deviceid());
+        sw->set_ep(device.ble.sw().endpoint());
+        sw->set_status(device.ble.sw().status());
+	sw->set_name("led " + std::to_string(device.ble.sw().endpoint()));
 
         buffer.SerializeToArray(buffer_arr, sizeof(buffer_arr));
 
-        const char * topic = "hub/zigbee";
+        const char * topic = "hub/ble";
         LOG_INFO("--> " << topic << " : " << buffer.DebugString());
         device.transport.publish(topic, reinterpret_cast<const unsigned char*>(buffer_arr), buffer.ByteSizeLong());
     }
@@ -181,53 +156,44 @@ int main(void) {
     // Test UART
 
     // Setup HubDevice_t
-    HubDevice_t hub_zigbee(DEVICE_NAME, PATH_SEZIAL);
+    HubDevice_t hub_ble(DEVICE_NAME, PATH_SEZIAL);
 
     // Set MQTT
-    hub_zigbee.transport.set_callback(mqtt_callback);
-    hub_zigbee.transport.setup(BROKER, PORT, 45);
-    hub_zigbee.transport.subscribe(SUB , 1);
-    hub_zigbee.transport.connect();
-
+    hub_ble.transport.set_callback(mqtt_callback);
+    hub_ble.transport.setup(BROKER, PORT, 45);
+    hub_ble.transport.subscribe(SUB , 1);
+    hub_ble.transport.connect();
     // Set UART
-    ring_buffer_init();
-    hub_zigbee.uart.connect(B1152000);
-
+    std::vector<std::vector<uint8_t>> messages;
 
     while (true) {
         std::unique_lock<std::mutex> lock(mtx);
-
         cv.wait(lock, []{ return !eventQueue.empty(); });
-
         Event event = eventQueue.front();
-
         eventQueue.pop();
-
         lock.unlock();
 
-
         switch (event.type) {
-
-            case Event::UART_DATA_RECEIVED:
-                uart_add_data(event.data.data(), event.data.size());
-                if(uart_have_packet()) {
-                    uart_memset_temp();
-                    std::vector<uint8_t> zigbee_vec = uart_packet_vector();
-                    if (!hub_zigbee.zigbee.ParseFromArray(zigbee_vec.data(),zigbee_vec.size())) {
-                        std::cerr << "Failed to parse zigbee message from vector" << std::endl;
+		    case Event::UART_DATA_RECEIVED:
+                LOG_INFO("In received data");
+                messages = extract_uart(event.data.data(), event.data.size());
+                std::cout << "Extracted messages:" << std::endl;
+                for (const auto& message : messages) {
+                    if (!hub_ble.ble.ParseFromArray(message.data(), message.size())) {
+                        std::cerr << "Failed to parse ble message from vector" << std::endl;
                         break;
                     }
-                    convertZigbeeToBuffer(hub_zigbee);
+                    convertBleToBuffer(hub_ble);
                 }
                 break;
 
             case Event::MQTT_MESSAGE_RECEIVED:
-                if (!hub_zigbee.buff.ParseFromArray(event.data.data(), event.data.size())) {
+                if (!hub_ble.buff.ParseFromArray(event.data.data(), event.data.size())) {
                     std::cerr << "Failed to parse protobuf message from vector" << std::endl;
                     break;
                 }
 
-                convertBufferToZigbee(hub_zigbee);
+                convertBufferToWifi(hub_ble);
                 break;
 
             default:
