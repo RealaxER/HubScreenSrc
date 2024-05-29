@@ -190,8 +190,18 @@ elif [[ $1 == "build" ]]; then
 
     cd ${current}/hubscreen/hub-ota
     cargo build --release
-    
+
+    cd ${current}/hubscreen/hub-wifi
+    cargo build --release
+
     cd ${current}/hubscreen/hub-zigbee
+    mkdir build 
+    cd build
+    cmake ..
+    make
+
+
+    cd ${current}/hubscreen/hub-ble
     mkdir build 
     cd build
     cmake ..
