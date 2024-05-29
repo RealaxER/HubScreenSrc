@@ -27,8 +27,7 @@ impl SystemIntergration {
                 "127.0.0.1".to_string(),
                 1883,
                 45,
-                mac,
-                true
+                mac
             )
             .await,
         }

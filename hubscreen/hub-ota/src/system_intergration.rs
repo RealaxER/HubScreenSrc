@@ -37,7 +37,7 @@ impl SystemIntergration {
             logic: BrLogic::new(),
             transport: MqttDriver::new(
                 "hub-ota".to_string(),
-                "54.253.168.98".to_string(),
+                "127.0.0.1".to_string(),
                 1883,
                 45,
             )

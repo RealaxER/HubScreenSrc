@@ -110,7 +110,7 @@ void convertBufferToWifi(HubDevice_t device){
         Sw_t sw = device.buff.sw(i);
 
         Ble_t ble;
-        SwZb_t* sw_ble = ble.mutable_sw();
+        SwBle_t* sw_ble = ble.mutable_sw();
         sw_ble->set_endpoint(sw.ep());
         sw_ble->set_deviceid(sw.mac());
         sw_ble->set_status(sw.status());

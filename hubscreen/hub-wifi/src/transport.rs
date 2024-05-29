@@ -1,7 +1,7 @@
 pub mod mqtt;
 pub enum TransportIn {}
 
-use crate::proto::buffer::typedef::{Buffer, Vendor_t};
+use crate::proto::buffer::typedef::Buffer;
 use crate::proto::wifi::wifi::Wifi_t;
 
 

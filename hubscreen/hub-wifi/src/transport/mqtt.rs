@@ -18,7 +18,7 @@ pub struct MqttDriver {
 }
 // packed install from app
 impl MqttDriver {
-    pub async fn new(id: String, host: String, port: u16, keep_alive: u64, mac: String, mode:bool) -> Self {
+    pub async fn new(id: String, host: String, port: u16, keep_alive: u64, mac: String) -> Self {
         let mut mqttoptions = MqttOptions::new(id, host, port);
 
         mqttoptions.set_keep_alive(Duration::from_secs(keep_alive));

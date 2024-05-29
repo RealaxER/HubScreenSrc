@@ -1,5 +1,5 @@
 use crate::error::BridgeIpErr;
-use crate::proto::buffer::typedef::{Buffer, User_t, Vendor_t};
+use crate::proto::buffer::typedef::{Buffer, User_t };
 use crate::proto::wifi::wifi::Wifi_t;
 
 use crate::transport::TransportOut;

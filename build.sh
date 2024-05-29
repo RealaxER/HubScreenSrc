@@ -31,7 +31,13 @@ if [[ $1 == "clean" ]]; then
     cd ${current}/hubscreen/hub-ota
     cargo clean
 
+    cd ${current}/hubscreen/hub-wifi
+    cargo clean
+
     cd ${current}/hubscreen/hub-zigbee
+    rm -r build
+
+    cd ${current}/hubscreen/hub-ble
     rm -r build
 
     cd ${current}/hubscreen/hub-ai
@@ -181,6 +187,8 @@ elif [[ $1 == "protoc" ]]; then
     cd ${current}/hubscreen/hub-zigbee/proto/hub
     protoc --cpp_out=./ typedef.proto
 
+    cd ${current}
+
     echo "Protoc gen complete."
 
 elif [[ $1 == "build" ]]; then
@@ -195,17 +203,19 @@ elif [[ $1 == "build" ]]; then
     cargo build --release
 
     cd ${current}/hubscreen/hub-zigbee
-    mkdir build 
+    mkdir -p build 
     cd build
     cmake ..
     make
-
 
     cd ${current}/hubscreen/hub-ble
-    mkdir build 
+    mkdir -p build 
     cd build
     cmake ..
     make
+
+    cd ${current}
+    echo "Build succesfully."
 
     # cd ${current}/hubscreen/hub-screen
     # mkdir build 

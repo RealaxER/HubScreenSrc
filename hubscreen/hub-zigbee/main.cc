@@ -92,7 +92,7 @@ void convertBufferToZigbee(HubDevice_t device){
     }
 
     if(device.buff.sw_size() == 0){
-        Zigbee_t zigbee;`
+        Zigbee_t zigbee;
         zigbee.set_sync(true);
         zigbee.SerializeToArray(zigbee_arr, sizeof(zigbee_arr));
         LOG_INFO("Packet sync to zigbee");
