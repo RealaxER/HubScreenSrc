@@ -159,7 +159,32 @@ elif [[ $1 == "install" ]]; then
 
     echo "Installation complete."
 
+elif [[ $1 == "protoc" ]]; then
+    cd ${current}/hubscreen/hub-master/src/proto/
+    protoc --rust_out=./ typedef.proto
 
+    cd ${current}/hubscreen/hub-ota/src/proto/
+    protoc --rust_out=./ typedef.proto
+
+    cd ${current}/hubscreen/hub-wifi/src/proto/buffer
+    protoc --rust_out=./ typedef.proto
+    cd ${current}/hubscreen/hub-wifi/src/proto/wifi
+    protoc --rust_out=./ wifi.proto
+
+    cd ${current}/hubscreen/hub-ble/proto/ble
+    protoc --cpp_out=./ ble.proto
+    cd ${current}/hubscreen/hub-ble/proto/hub
+    protoc --cpp_out=./ typedef.proto
+
+    cd ${current}/hubscreen/hub-zigbee/proto/zigbee
+    protoc --cpp_out=./ zigbee.proto
+    cd ${current}/hubscreen/hub-zigbee/proto/hub
+    protoc --cpp_out=./ typedef.proto
+
+    echo "Protoc gen complete."
+
+
+elif [[ $1 == "build" ]]; then
     # Build program
     cd ${current}/hubscreen/hub-master/
     #protoc --rust_out=./ typedef.proto
@@ -318,5 +343,5 @@ elif [[ $1 == "service" ]]; then
     # fi
 
 else 
-    echo "Usage:./build.sh [install|upgrade|clean]"
+    echo "Usage:./build.sh [install|upgrade|clean|protoc|service]"
 fi
