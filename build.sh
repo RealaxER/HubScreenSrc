@@ -183,24 +183,14 @@ elif [[ $1 == "protoc" ]]; then
 
     echo "Protoc gen complete."
 
-
 elif [[ $1 == "build" ]]; then
     # Build program
     cd ${current}/hubscreen/hub-master/
-    #protoc --rust_out=./ typedef.proto
     cargo build --release
 
     cd ${current}/hubscreen/hub-ota
-   #protoc --rust_out=./ typedef.proto
     cargo build --release
-
-    cd ${current}/hubscreen/hub-zigbee
-    cd proto/zigbee/
-    protoc --cpp_out=./ zigbee.proto
-    cd ${current}/hubscreen/hub-zigbee
-    cd proto/hub/
-    protoc --cpp_out=./ typedef.proto
-
+    
     cd ${current}/hubscreen/hub-zigbee
     mkdir build 
     cd build
