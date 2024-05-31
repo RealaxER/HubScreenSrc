@@ -211,8 +211,9 @@ impl SystemIntergration {
                     
                 }
 
-                BrLogicOut::UpgradeDevice { buffer } => {
+                BrLogicOut::UpgradeDevice { mut buffer } => {
                     log::info!("Device to upgrade: {:?}", buffer);
+                    
                     // for led in buffer.led {
                     //     let _ = self.sql.add_device(led.name, led.status , led.ep, led.mac, "led".to_string()).await;
                     // }
@@ -220,6 +221,19 @@ impl SystemIntergration {
                     //     let _ = self.sql.add_device(sw.name, sw.status , sw.ep, sw.mac, "sw".to_string()).await;
                     // }
                     //self.master.upgrade_device(buffer).await;
+
+                    let topic = format!("hub/screen");
+                    let topic = topic.to_ascii_lowercase();
+                    buffer.sender = User_t::Hub.into();
+                    buffer.receiver = User_t::Screen.into();
+                    buffer.cotroller = User_t::Hub.into();
+                    let message = buffer.write_to_bytes().unwrap();
+                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+
+                    let topic = format!("hub/screen");
+                    buffer.receiver = User_t::Ai.into();
+                    let message = buffer.write_to_bytes().unwrap();
+                    let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
                 BrLogicOut::SyncDevice => {
