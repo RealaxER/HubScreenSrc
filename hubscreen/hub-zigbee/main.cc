@@ -60,7 +60,6 @@ std::vector<std::vector<uint8_t>> extract_uart(const uint8_t *input, size_t size
     if (!current_message.empty()) {
         results.push_back(current_message);
     }
-
     return results;
 }
 
@@ -130,7 +129,7 @@ void convertZigbeeToBuffer(HubDevice_t device){
         buffer.set_sender(User_t::Zigbee);
         buffer.set_receiver(User_t::Hub);
         buffer.set_cotroller(User_t::Zigbee);
-	buffer.set_mac_hub("8xff");
+	    buffer.set_mac_hub("8xff");
 
         uint8_t buffer_arr[MAX_BUFFER];
 
