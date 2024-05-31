@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 import datetime
 import os
@@ -10,7 +9,36 @@ import typedef_pb2
 import threading
 import time
 import queue
+import difflib
 
+def find_closest_name(name, name_list, cutoff=0.6):
+    matches = difflib.get_close_matches(name, name_list, n=1, cutoff=cutoff)
+    if matches:
+        closest_match = matches[0]
+        if any(char.isdigit() for char in closest_match):
+            word_match = closest_match.split()
+            converted_match = ' '.join([num_to_word(word) if word.isdigit() else word for word in word_match])
+            matches_recheck = difflib.get_close_matches(converted_match, name_list, n=1, cutoff=cutoff)
+            if matches_recheck:
+                return matches_recheck[0]
+            return converted_match
+        else:
+            word_match = closest_match.split()
+            converted_match = ' '.join([word_to_num(word) if word.isalpha() else word for word in word_match])
+            matches_recheck = difflib.get_close_matches(converted_match, name_list, n=1, cutoff=cutoff)
+            if matches_recheck:
+                return matches_recheck[0]
+            return converted_match
+    return ""
+
+def num_to_word(num):
+    words = {"1": "one", "2": "two", "3": "three", "4": "four", "5": "five", "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten"}
+    return words.get(num, num)
+
+def word_to_num(word):
+    words = {"one": "1", "two": "2", "three": "3", "four": "4", "five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10"}
+    return words.get(word, word)
+    
 language = "en"
 
 def speak(text):
@@ -70,6 +98,7 @@ client.on_message = on_message
 client.connect("127.0.0.1", 1883, 60)
 
 
+buffer = typedef_pb2.Buffer()
 # Handle name sw and led 
 sw_names = []
 led_names = []
@@ -77,16 +106,7 @@ def mqtt_thread():
     while True:
         client.loop()
         try:
-            buff = data_queue.get(block=False)
-            for led in buff.led:
-                if led.name not in led_names:
-                    led_names.append(led.name)
-            print("Received LED info:", led_names)
-
-            for sw in buff.sw:
-                if sw.name not in sw_names:
-                    sw_names.append(sw.name)
-            print("Received Sw info:", sw_names)
+            buffer = data_queue.get(block=False)
         except queue.Empty:
             pass
         time.sleep(0.1) 
@@ -96,18 +116,32 @@ mqtt_thread.daemon = True
 mqtt_thread.start()
 
 
-buffer = typedef_pb2.Buffer()
-buffer.sender = typedef_pb2.User_t.Value("Ai")
-buffer.receiver = typedef_pb2.User_t.Value("Hub")
-buffer.led.clear()
-led = typedef_pb2.Led_t()
-led.name = "bedroom"
-led.status = True
+def control_device(device_name, status): 
+    device_name = text.lower().split("turn on")[1].strip()
+    device_name = find_closest_name(device_name , buffer.led)
+    if device_name in buffer.led:
+        buff.led.clear()
+        led = typedef_pb2.Led_t()
+        led.name = device_name
+        led.status = True
+        buff.led.append(led)
+        mqtt_publish("hub/ai", buff)
+        speak(f"{device_name} is turned off")
+    elif device_name in buffer.sw:
+        buff.sw.clear()
+        sw = typedef_pb2.Sw_t()
+        sw.name = device_name
+        sw.status = True
+        buff.sw.append(sw)
 
-buffer.led.append(led)
-mqtt_publish("hub/ai", buffer)
+        mqtt_publish("hub/ai", buff)
+        speak(f"{device_name} is turned off")
+
 ## handle ai
 while True:
+    buff = typedef_pb2.Buffer()
+    buff.sender = typedef_pb2.User_t.Value("Ai")
+    buff.receiver = typedef_pb2.User_t.Value("Hub")
     print("Listening")
     text = get_audio()
     if language == "en":
@@ -130,37 +164,44 @@ while True:
         
         elif "turn on" in text.lower():
             device_name = text.lower().split("turn on")[1].strip()
-            buffer.led.clear()
-            buffer.sw.clear()
-            led = typedef_pb2.Led_t()
-            led.name = device_name
-            led.status = True
-
-            buffer.led.append(led)
-            mqtt_publish("hub/ai", buffer)
-            speak(f"{device_name} is turned on")
-
-        elif "turn off" in text.lower():
-            device_name = text.lower().split("turn off")[1].strip()
-            if device_name in led_names:
-                buffer.led.clear()
+            device_name = find_closest_name(device_name , buffer.led)
+            if device_name in buffer.led:
+                buff.led.clear()
                 led = typedef_pb2.Led_t()
                 led.name = device_name
-
-                buffer.led.append(led)
-                mqtt_publish("hub/ai", buffer)
+                led.status = True
+                buff.led.append(led)
+                mqtt_publish("hub/ai", buff)
                 speak(f"{device_name} is turned off")
-            elif device_name in sw_names:
-                buffer.sw.clear()
+            elif device_name in buffer.sw:
+                buff.sw.clear()
                 sw = typedef_pb2.Sw_t()
                 sw.name = device_name
+                sw.status = True
+                buff.sw.append(sw)
 
-                buffer.sw.add(led)
-                mqtt_publish("hub/ai", buffer)
+                mqtt_publish("hub/ai", buff)
                 speak(f"{device_name} is turned off")
-            else :
-                speak(f"{device_name} not have")
 
+        elif "turn off" in text.lower():
+            device_name = text.lower().split("turn on")[1].strip()
+            device_name = find_closest_name(device_name , buffer.led)
+            if device_name in buffer.led:
+                buff.led.clear()
+                led = typedef_pb2.Led_t()
+                led.name = device_name
+                led.status = False
+                buff.led.append(led)
+                mqtt_publish("hub/ai", buff)
+                speak(f"{device_name} is turned off")
+            elif device_name in buffer.sw:
+                buff.sw.clear()
+                sw = typedef_pb2.Sw_t()
+                sw.name = device_name
+                sw.status = False
+                buff.sw.append(sw)
+                mqtt_publish("hub/ai", buff)
+                speak(f"{device_name} is turned off")
 
         elif "can you" in text.lower():
             if "speak" in text.lower():
