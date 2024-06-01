@@ -187,6 +187,10 @@ elif [[ $1 == "protoc" ]]; then
     cd ${current}/hubscreen/hub-zigbee/proto/hub
     protoc --cpp_out=./ typedef.proto
 
+    cd ${current}/hubscreen/hub-ai
+    protoc --python_out=./ typedef.proto
+
+
     cd ${current}
 
     echo "Protoc gen complete."
