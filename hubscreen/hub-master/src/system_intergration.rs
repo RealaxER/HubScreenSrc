@@ -112,6 +112,12 @@ impl SystemIntergration {
                         buffer.receiver = buffer.cotroller.clone();
                         let message = buffer.write_to_bytes().unwrap();
                         let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+
+                        buffer.cotroller = User_t::Ai.into();
+                        buffer.receiver = User_t::Ai.into();
+                        let topic = format!("hub/ai");
+                        let message = buffer.write_to_bytes().unwrap();
+                        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                     }
                     else {
                         log::info!("SET TIMER: {}:{}:{}:{}", buffer.time.hour, 
@@ -123,46 +129,7 @@ impl SystemIntergration {
                 }
 
                 BrLogicOut::DataToServer { mut buffer } => {
-                    if buffer.sender == User_t::Ai.into() {
-                        buffer.mac_hub = self.transport.mac.clone(); 
-                        if !buffer.led.is_empty() {
-                            for led_ct in buffer.led.iter_mut() {
-                                for mut led in self.master.buff.led.clone() {
-                                    if led_ct.name == led.name {
-                                        let mut temp = Buffer::new();
-                                        temp.sender = User_t::Hub.into();
-                                        temp.receiver = User_t::Wifi.into();
-                                        led.status = led_ct.status.clone();
-                                        *led_ct = led.clone();
-                                        temp.led.push(led.clone());
-
-                                        let topic = format!("hub/wifi");
-                                        let message = temp.write_to_bytes().unwrap();
-                                        let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
-                                    }
-                                }
-                            }
-                        }
-                        else if !buffer.sw.is_empty() {
-                            for sw_ct in buffer.sw.iter_mut() {
-                                for mut sw in self.master.buff.sw.clone() {
-                                    if sw_ct.name == sw.name {
-                                        let mut temp = Buffer::new();
-                                        temp.sender = User_t::Hub.into();
-                                        temp.receiver = User_t::Wifi.into();
-                                        sw.status = sw_ct.status.clone();
-                                        *sw_ct = sw.clone();
-                                        temp.sw.push(sw.clone());
-
-                                        let topic = format!("hub/ai");
-                                        let message = temp.write_to_bytes().unwrap();
-                                        let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
-                                    }
-                                }
-                            }
-                        }
-                    }
-           
+        
                     let topic = format!("hub/master/{}",self.transport.mac);
                     buffer.sender = User_t::Hub.into();
                     buffer.receiver = User_t::Server.into();
@@ -230,7 +197,7 @@ impl SystemIntergration {
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
 
-                    let topic = format!("hub/screen");
+                    let topic = format!("hub/ai");
                     buffer.receiver = User_t::Ai.into();
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
