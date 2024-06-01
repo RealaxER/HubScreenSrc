@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rtypedef.proto\"2\n\x05Led_t\x12\x0c\n\x04name\x18\x10 \x01(\t\x12\x0b\n\x03mac\x18\x11 \x01(\x04\x12\x0e\n\x06status\x18\x12 \x01(\x08\"=\n\x04Sw_t\x12\x0c\n\x04name\x18\x10 \x01(\t\x12\n\n\x02\x65p\x18\x11 \x01(\r\x12\x0b\n\x03mac\x18\x12 \x01(\x04\x12\x0e\n\x06status\x18\x13 \x01(\x08\"7\n\x05Ota_t\x12\x11\n\tcheck_ota\x18\x10 \x01(\x08\x12\x0e\n\x06status\x18\x11 \x01(\x08\x12\x0b\n\x03\x61\x63k\x18\x12 \x01(\x08\"&\n\x0bKeepAlive_t\x12\x17\n\x06sender\x18\x01 \x01(\x0e\x32\x07.User_t\"\xbb\x01\n\x06\x42uffer\x12\x0f\n\x07mac_hub\x18\x01 \x01(\t\x12\x17\n\x06sender\x18\x02 \x01(\x0e\x32\x07.User_t\x12\x19\n\x08receiver\x18\x03 \x01(\x0e\x32\x07.User_t\x12\x1a\n\tcotroller\x18\x04 \x01(\x0e\x32\x07.User_t\x12\x13\n\x03ota\x18\x10 \x01(\x0b\x32\x06.Ota_t\x12\x13\n\x03vpn\x18\x11 \x01(\x0b\x32\x06.Vpn_t\x12\x13\n\x03led\x18\x12 \x03(\x0b\x32\x06.Led_t\x12\x11\n\x02sw\x18\x13 \x03(\x0b\x32\x05.Sw_t\"$\n\x05Vpn_t\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0b\n\x03mac\x18\x02 \x01(\t\"9\n\x08Vendor_t\x12\x0f\n\x07mac_ven\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\x08*b\n\x06User_t\x12\x07\n\x03\x41pp\x10\x00\x12\n\n\x06Server\x10\x01\x12\x07\n\x03Hub\x10\x02\x12\n\n\x06Zigbee\x10\x03\x12\x07\n\x03\x42le\x10\x04\x12\x06\n\x02\x41i\x10\x05\x12\x08\n\x04Wifi\x10\x06\x12\n\n\x06Screen\x10\x07\x12\x07\n\x03Ota\x10\x08\x62\x06proto3')
+  serialized_pb=_b('\n\rtypedef.proto\">\n\x05Led_t\x12\x0c\n\x04name\x18\x10 \x01(\t\x12\x0b\n\x03mac\x18\x11 \x01(\x04\x12\n\n\x02\x65p\x18\x12 \x01(\r\x12\x0e\n\x06status\x18\x13 \x01(\x08\"=\n\x04Sw_t\x12\x0c\n\x04name\x18\x10 \x01(\t\x12\n\n\x02\x65p\x18\x11 \x01(\r\x12\x0b\n\x03mac\x18\x12 \x01(\x04\x12\x0e\n\x06status\x18\x13 \x01(\x08\"7\n\x05Ota_t\x12\x11\n\tcheck_ota\x18\x10 \x01(\x08\x12\x0e\n\x06status\x18\x11 \x01(\x08\x12\x0b\n\x03\x61\x63k\x18\x12 \x01(\x08\"&\n\x0bKeepAlive_t\x12\x17\n\x06sender\x18\x01 \x01(\x0e\x32\x07.User_t\"C\n\x07Timer_t\x12\x0b\n\x03\x64\x61y\x18\x0f \x01(\r\x12\r\n\x05month\x18\x10 \x01(\r\x12\x0c\n\x04hour\x18\x11 \x01(\r\x12\x0e\n\x06minute\x18\x12 \x01(\r\"\xd3\x01\n\x06\x42uffer\x12\x0f\n\x07mac_hub\x18\x01 \x01(\t\x12\x17\n\x06sender\x18\x02 \x01(\x0e\x32\x07.User_t\x12\x19\n\x08receiver\x18\x03 \x01(\x0e\x32\x07.User_t\x12\x1a\n\tcotroller\x18\x04 \x01(\x0e\x32\x07.User_t\x12\x13\n\x03ota\x18\x10 \x01(\x0b\x32\x06.Ota_t\x12\x13\n\x03vpn\x18\x11 \x01(\x0b\x32\x06.Vpn_t\x12\x13\n\x03led\x18\x12 \x03(\x0b\x32\x06.Led_t\x12\x11\n\x02sw\x18\x13 \x03(\x0b\x32\x05.Sw_t\x12\x16\n\x04time\x18\x14 \x01(\x0b\x32\x08.Timer_t\"$\n\x05Vpn_t\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0b\n\x03mac\x18\x02 \x01(\t\"9\n\x08Vendor_t\x12\x0f\n\x07mac_ven\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\x08*b\n\x06User_t\x12\x07\n\x03\x41pp\x10\x00\x12\n\n\x06Server\x10\x01\x12\x07\n\x03Hub\x10\x02\x12\n\n\x06Zigbee\x10\x03\x12\x07\n\x03\x42le\x10\x04\x12\x06\n\x02\x41i\x10\x05\x12\x08\n\x04Wifi\x10\x06\x12\n\n\x06Screen\x10\x07\x12\x07\n\x03Ota\x10\x08\x62\x06proto3')
 )
 
 _USER_T = _descriptor.EnumDescriptor(
@@ -68,8 +68,8 @@ _USER_T = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=516,
-  serialized_end=614,
+  serialized_start=621,
+  serialized_end=719,
 )
 _sym_db.RegisterEnumDescriptor(_USER_T)
 
@@ -108,8 +108,15 @@ _LED_T = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status', full_name='Led_t.status', index=2,
-      number=18, type=8, cpp_type=7, label=1,
+      name='ep', full_name='Led_t.ep', index=2,
+      number=18, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='Led_t.status', index=3,
+      number=19, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -127,7 +134,7 @@ _LED_T = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=17,
-  serialized_end=67,
+  serialized_end=79,
 )
 
 
@@ -178,8 +185,8 @@ _SW_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=69,
-  serialized_end=130,
+  serialized_start=81,
+  serialized_end=142,
 )
 
 
@@ -223,8 +230,8 @@ _OTA_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=132,
-  serialized_end=187,
+  serialized_start=144,
+  serialized_end=199,
 )
 
 
@@ -254,8 +261,60 @@ _KEEPALIVE_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=189,
-  serialized_end=227,
+  serialized_start=201,
+  serialized_end=239,
+)
+
+
+_TIMER_T = _descriptor.Descriptor(
+  name='Timer_t',
+  full_name='Timer_t',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='day', full_name='Timer_t.day', index=0,
+      number=15, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='month', full_name='Timer_t.month', index=1,
+      number=16, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='hour', full_name='Timer_t.hour', index=2,
+      number=17, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='minute', full_name='Timer_t.minute', index=3,
+      number=18, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=241,
+  serialized_end=308,
 )
 
 
@@ -322,6 +381,13 @@ _BUFFER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='time', full_name='Buffer.time', index=8,
+      number=20, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -334,8 +400,8 @@ _BUFFER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=230,
-  serialized_end=417,
+  serialized_start=311,
+  serialized_end=522,
 )
 
 
@@ -372,8 +438,8 @@ _VPN_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=419,
-  serialized_end=455,
+  serialized_start=524,
+  serialized_end=560,
 )
 
 
@@ -417,8 +483,8 @@ _VENDOR_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=457,
-  serialized_end=514,
+  serialized_start=562,
+  serialized_end=619,
 )
 
 _KEEPALIVE_T.fields_by_name['sender'].enum_type = _USER_T
@@ -429,10 +495,12 @@ _BUFFER.fields_by_name['ota'].message_type = _OTA_T
 _BUFFER.fields_by_name['vpn'].message_type = _VPN_T
 _BUFFER.fields_by_name['led'].message_type = _LED_T
 _BUFFER.fields_by_name['sw'].message_type = _SW_T
+_BUFFER.fields_by_name['time'].message_type = _TIMER_T
 DESCRIPTOR.message_types_by_name['Led_t'] = _LED_T
 DESCRIPTOR.message_types_by_name['Sw_t'] = _SW_T
 DESCRIPTOR.message_types_by_name['Ota_t'] = _OTA_T
 DESCRIPTOR.message_types_by_name['KeepAlive_t'] = _KEEPALIVE_T
+DESCRIPTOR.message_types_by_name['Timer_t'] = _TIMER_T
 DESCRIPTOR.message_types_by_name['Buffer'] = _BUFFER
 DESCRIPTOR.message_types_by_name['Vpn_t'] = _VPN_T
 DESCRIPTOR.message_types_by_name['Vendor_t'] = _VENDOR_T
@@ -466,6 +534,13 @@ KeepAlive_t = _reflection.GeneratedProtocolMessageType('KeepAlive_t', (_message.
   # @@protoc_insertion_point(class_scope:KeepAlive_t)
   ))
 _sym_db.RegisterMessage(KeepAlive_t)
+
+Timer_t = _reflection.GeneratedProtocolMessageType('Timer_t', (_message.Message,), dict(
+  DESCRIPTOR = _TIMER_T,
+  __module__ = 'typedef_pb2'
+  # @@protoc_insertion_point(class_scope:Timer_t)
+  ))
+_sym_db.RegisterMessage(Timer_t)
 
 Buffer = _reflection.GeneratedProtocolMessageType('Buffer', (_message.Message,), dict(
   DESCRIPTOR = _BUFFER,

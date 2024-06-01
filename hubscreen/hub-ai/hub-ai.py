@@ -12,24 +12,20 @@ import queue
 import difflib
 
 def find_closest_name(name, name_list, cutoff=0.6):
-    matches = difflib.get_close_matches(name, name_list, n=1, cutoff=cutoff)
-    if matches:
-        closest_match = matches[0]
-        if any(char.isdigit() for char in closest_match):
-            word_match = closest_match.split()
-            converted_match = ' '.join([num_to_word(word) if word.isdigit() else word for word in word_match])
-            matches_recheck = difflib.get_close_matches(converted_match, name_list, n=1, cutoff=cutoff)
-            if matches_recheck:
-                return matches_recheck[0]
-            return converted_match
-        else:
-            word_match = closest_match.split()
-            converted_match = ' '.join([word_to_num(word) if word.isalpha() else word for word in word_match])
-            matches_recheck = difflib.get_close_matches(converted_match, name_list, n=1, cutoff=cutoff)
-            if matches_recheck:
-                return matches_recheck[0]
-            return converted_match
-    return ""
+    if any(char.isdigit() for char in name):
+        word_match = name.split()
+        converted_match = ' '.join([num_to_word(word) if word.isdigit() else word for word in word_match])
+        matches_recheck = difflib.get_close_matches(converted_match, name_list, n=1, cutoff=cutoff)
+        if matches_recheck:
+            return matches_recheck[0]
+        return converted_match
+    else:
+        word_match = name.split()
+        converted_match = ' '.join([word_to_num(word) if word.isalpha() else word for word in word_match])
+        matches_recheck = difflib.get_close_matches(converted_match, name_list, n=1, cutoff=cutoff)
+        if matches_recheck:
+            return matches_recheck[0]
+        return converted_match
 
 def num_to_word(num):
     words = {"1": "one", "2": "two", "3": "three", "4": "four", "5": "five", "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten"}
@@ -42,6 +38,7 @@ def word_to_num(word):
 language = "en"
 
 def speak(text):
+    print("HUB-AI: ",text)
     tts = gTTS(text=text, lang=language)
     filename = "voice.mp3"
     tts.save(filename)
@@ -55,7 +52,7 @@ def get_audio():
         said = ""
         try:
             said = r.recognize_google(audio, language = language)
-            print(said)
+            print("USER: " ,said)
         except Exception as e:
             print("Exception: " + str(e))
     return said
@@ -80,11 +77,11 @@ def on_connect(client, _, __, rc):
 
 def on_message(_ , __, message):
     print("Recieved data from topic:", message.topic)
-    buff = typedef_pb2.Buffer()
-    buff.ParseFromString(message.payload)
-    if buff.receiver == typedef_pb2.User_t.Value("Ai"):
-        print("<-- ", message.topic," : ",buff)
-        data_queue.put(buff)
+    _buff = typedef_pb2.Buffer()
+    _buff.ParseFromString(message.payload)
+    if _buff.receiver == typedef_pb2.User_t.Value("Ai"):
+        print("<-- ", message.topic," : ",_buff)
+        data_queue.put(_buff)
 
 def mqtt_publish(topic, message):
     data = message.SerializeToString()
@@ -99,16 +96,21 @@ client.connect("127.0.0.1", 1883, 60)
 
 
 buffer = typedef_pb2.Buffer()
-# Handle name sw and led 
-sw_names = []
-led_names = []
+device_names = []
 def mqtt_thread():
+    global buffer 
+    global device_names
     while True:
         client.loop()
-        try:
-            buffer = data_queue.get(block=False)
-        except queue.Empty:
-            pass
+        if not data_queue.empty():
+            temp = data_queue.get()
+            if temp: 
+                for led in temp.led:
+                    buffer.led.append(led)
+                    device_names.append(led.name)
+                for sw in temp.sw:
+                    buffer.sw.append(sw)
+                    device_names.append(sw.name)
         time.sleep(0.1) 
 
 mqtt_thread = threading.Thread(target=mqtt_thread)
@@ -126,7 +128,7 @@ def control_device(device_name, status):
         led.status = True
         buff.led.append(led)
         mqtt_publish("hub/ai", buff)
-        speak(f"{device_name} is turned off")
+        speak(f"{device_name} is turned on")
     elif device_name in buffer.sw:
         buff.sw.clear()
         sw = typedef_pb2.Sw_t()
@@ -137,17 +139,22 @@ def control_device(device_name, status):
         mqtt_publish("hub/ai", buff)
         speak(f"{device_name} is turned off")
 
+check_system = True
+buff = typedef_pb2.Buffer()
+buff.sender = typedef_pb2.User_t.Ai
+buff.receiver = typedef_pb2.User_t.Hub
+buff.mac_hub = "8xff"
 ## handle ai
 while True:
-    buff = typedef_pb2.Buffer()
-    buff.sender = typedef_pb2.User_t.Value("Ai")
-    buff.receiver = typedef_pb2.User_t.Value("Hub")
+    if check_system == True:
+        speak("The system is starting up")
+        check_system = False 
     print("Listening")
     text = get_audio()
     if language == "en":
 
         if "who are" in text.lower():
-            speak("I'm hub screen created by Living Lab")
+            speak("I'm hub screen created by Living Lab, How can i help you")
 
         elif "hi" in text.lower() or "hello" in text.lower():
             speak("Hello")
@@ -163,45 +170,57 @@ while True:
             get_time()
         
         elif "turn on" in text.lower():
+            status = True
             device_name = text.lower().split("turn on")[1].strip()
-            device_name = find_closest_name(device_name , buffer.led)
-            if device_name in buffer.led:
-                buff.led.clear()
-                led = typedef_pb2.Led_t()
-                led.name = device_name
-                led.status = True
-                buff.led.append(led)
-                mqtt_publish("hub/ai", buff)
-                speak(f"{device_name} is turned off")
-            elif device_name in buffer.sw:
-                buff.sw.clear()
-                sw = typedef_pb2.Sw_t()
-                sw.name = device_name
-                sw.status = True
-                buff.sw.append(sw)
-
-                mqtt_publish("hub/ai", buff)
-                speak(f"{device_name} is turned off")
+            print("Device name: ",device_name)
+            device_name = find_closest_name(device_name , device_names)
+            for _led in buffer.led:
+                if _led.name == device_name:
+                    buff.led.clear()
+                    buff.sw.clear()
+                    led = typedef_pb2.Led_t()
+                    led = _led
+                    led.status = status
+                    buff.led.append(led)
+                    mqtt_publish("hub/ai", buff)
+                    speak(f"{device_name} is turned on")
+            for _sw in buffer.sw:    
+                if _sw.name == device_name:
+                    buff.sw.clear()
+                    buff.led.clear()
+                    sw = typedef_pb2.Sw_t()
+                    sw = _sw
+                    sw.name = device_name
+                    sw.status = status
+                    buff.sw.append(sw)
+                    mqtt_publish("hub/ai", buff)
+                    speak(f"{device_name} is turned on")
 
         elif "turn off" in text.lower():
-            device_name = text.lower().split("turn on")[1].strip()
-            device_name = find_closest_name(device_name , buffer.led)
-            if device_name in buffer.led:
-                buff.led.clear()
-                led = typedef_pb2.Led_t()
-                led.name = device_name
-                led.status = False
-                buff.led.append(led)
-                mqtt_publish("hub/ai", buff)
-                speak(f"{device_name} is turned off")
-            elif device_name in buffer.sw:
-                buff.sw.clear()
-                sw = typedef_pb2.Sw_t()
-                sw.name = device_name
-                sw.status = False
-                buff.sw.append(sw)
-                mqtt_publish("hub/ai", buff)
-                speak(f"{device_name} is turned off")
+            status = False
+            device_name = text.lower().split("turn off")[1].strip()
+            device_name = find_closest_name(device_name , device_names)
+            for _led in buffer.led:
+                if _led.name == device_name:
+                    buff.sw.clear()
+                    buff.led.clear()
+                    led = typedef_pb2.Led_t()
+                    led = _led
+                    led.status = status
+                    buff.led.append(led)
+                    mqtt_publish("hub/ai", buff)
+                    speak(f"{device_name} is turned off")
+            for _sw in buffer.sw:    
+                if _sw.name == device_name:
+                    buff.sw.clear()
+                    buff.led.clear()
+                    sw = typedef_pb2.Sw_t()
+                    sw = _sw
+                    sw.name = device_name
+                    sw.status = status
+                    buff.sw.append(sw)
+                    mqtt_publish("hub/ai", buff)
+                    speak(f"{device_name} is turned off")
 
         elif "can you" in text.lower():
             if "speak" in text.lower():

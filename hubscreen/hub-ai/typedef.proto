@@ -4,7 +4,8 @@ syntax = "proto3";
 message Led_t{
     string name = 16;
     uint64 mac = 17;
-    bool status = 18;
+    uint32 ep = 18;
+    bool status = 19;
 }
 
 message Sw_t{
