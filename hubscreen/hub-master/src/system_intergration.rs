@@ -48,7 +48,8 @@ impl SystemIntergration {
             .await,
             //sql: Sqlite::new("/home/bhien/data.db".to_string()).await,
             master: Master{
-                buff: Buffer::new()
+                buff: Buffer::new(),
+                devices: Vec::new()
             },
         }
     }
@@ -113,11 +114,18 @@ impl SystemIntergration {
                         let message = buffer.write_to_bytes().unwrap();
                         let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
 
-                        buffer.cotroller = User_t::Ai.into();
-                        buffer.receiver = User_t::Ai.into();
-                        let topic = format!("hub/ai");
-                        let message = buffer.write_to_bytes().unwrap();
-                        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                        if self.master.check_device(buffer.clone()).await {
+                            let topic = format!("hub/ai");
+                            buffer.receiver = User_t::Ai.into();
+                            let message = buffer.write_to_bytes().unwrap();
+                            let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+
+
+                            let topic = format!("hub/screen");
+                            buffer.receiver = User_t::Screen.into();
+                            let message = buffer.write_to_bytes().unwrap();
+                            let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                        }
                     }
                     else {
                         log::info!("SET TIMER: {}:{}:{}:{}", buffer.time.hour, 
@@ -179,15 +187,8 @@ impl SystemIntergration {
                 }
 
                 BrLogicOut::UpgradeDevice { mut buffer } => {
-                    log::info!("Device to upgrade: {:?}", buffer);
-                    
-                    // for led in buffer.led {
-                    //     let _ = self.sql.add_device(led.name, led.status , led.ep, led.mac, "led".to_string()).await;
-                    // }
-                    // for sw in buffer.sw {
-                    //     let _ = self.sql.add_device(sw.name, sw.status , sw.ep, sw.mac, "sw".to_string()).await;
-                    // }
-                    //self.master.upgrade_device(buffer).await;
+                    log::info!("=======UPGRADE DEVICE===========");
+                    self.master.update_device(buffer.clone()).await;
 
                     let topic = format!("hub/screen");
                     let topic = topic.to_ascii_lowercase();
