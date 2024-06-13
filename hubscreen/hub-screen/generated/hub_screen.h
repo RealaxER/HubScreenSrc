@@ -25,10 +25,12 @@
 #define PORT 1883
 #define SUB "hub/screen"
 
-#define LED_ON LV_IMGBTN_STATE_RELEASED
-#define LED_OFF LV_IMGBTN_STATE_CHECKED_RELEASED
+#define LED_ON 1
+#define LED_OFF 0
 #define SW_ON 1
 #define SW_OFF 0
+
+
 
 class HubScreen_t {
 public:
@@ -42,6 +44,7 @@ public:
     }
 };
 
+
 struct Event {
     enum EventType { 
         ErrFormat, 
@@ -49,7 +52,9 @@ struct Event {
         SyncDeivce,
         StatusDeivce,
         ControlDevice,    
-        SyncTimer,   
+        SyncTimer,  
+        AddDevice,
+        RemoveDevice
     } type;
     const Buffer buffer;
     const std::string topic;
@@ -60,6 +65,10 @@ struct Event {
 void sync_devices(Buffer buffer);
 void sync_timer(Buffer buffer);
 void sync_status(Buffer buffer);
+void add_device(Buffer buffer);
+void remove_device(Buffer buffer);
+void set_sw_output(uint8_t index, uint32_t state);
+void events_init_hubscreen(lv_ui *ui);
 
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RED     "\x1b[31m"

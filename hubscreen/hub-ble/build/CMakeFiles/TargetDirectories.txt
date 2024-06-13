@@ -1,0 +1,3 @@
+/home/bhien/HubScreenSrc/hubscreen/hub-ble/build/CMakeFiles/hub-ble.dir
+/home/bhien/HubScreenSrc/hubscreen/hub-ble/build/CMakeFiles/edit_cache.dir
+/home/bhien/HubScreenSrc/hubscreen/hub-ble/build/CMakeFiles/rebuild_cache.dir

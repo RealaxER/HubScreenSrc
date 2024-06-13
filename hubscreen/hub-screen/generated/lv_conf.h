@@ -24,7 +24,7 @@
 #ifdef CHIP_MP157 
 #define LV_COLOR_DEPTH     16
 #else
-#define LV_COLOR_DEPTH     32
+#define LV_COLOR_DEPTH     16
 #endif
 /*Swap the 2 bytes of RGB565 color. Useful if the display has a 8 bit interface (e.g. SPI)*/
 #define LV_COLOR_16_SWAP   0

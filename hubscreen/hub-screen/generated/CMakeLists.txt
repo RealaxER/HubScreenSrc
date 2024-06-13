@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 project(hub-screen)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD 11)
 
 
 message("Cmake from Bui Dinh Hien")
 # set path
-set(PATH_LIB /home/jason/work/hub_screen/lib)
-set(PATH_CUSTOM /home/jason/work/hub_screen/custom/)
+set(PATH_LIB /root/HubScreenSrc/hubscreen/hub-screen/generated)
+set(PATH_CUSTOM /root/HubScreenSrc/hubscreen/hub-screen/custom)
 
 
 set(CMAKE_NO_SYSTEM_FROM_IMPORTED ON)

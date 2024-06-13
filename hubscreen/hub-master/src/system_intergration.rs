@@ -30,7 +30,7 @@ impl SystemIntergration {
             timer: SystemTimer::default(),
             broker: MqttDriver::new(
                 "hub-master".to_string(),
-                "54.253.168.98".to_string(),
+                "3.26.238.229".to_string(),
                 1883,
                 45,
                 mac.clone(),
@@ -188,6 +188,15 @@ impl SystemIntergration {
 
                 BrLogicOut::UpgradeDevice { mut buffer } => {
                     log::info!("=======UPGRADE DEVICE===========");
+		    if buffer.sync.sync {
+                        let mut buff = Buffer::new();
+                        buff.sender = User_t::Hub.into();
+                        buff.receiver = User_t::Zigbee.into();
+                        buff.cotroller = User_t::Zigbee.into();
+                        let topic = format!("hub/zigbee");
+                        let message = buff.write_to_bytes().unwrap();
+                        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                    }
                     self.master.update_device(buffer.clone()).await;
 
                     let topic = format!("hub/screen");

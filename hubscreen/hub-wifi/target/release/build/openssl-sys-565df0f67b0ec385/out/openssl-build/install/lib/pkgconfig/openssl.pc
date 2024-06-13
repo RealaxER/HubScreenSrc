@@ -1,0 +1,7 @@
+libdir=/home/bhien/HubScreenSrc/hubscreen/hub-wifi/target/release/build/openssl-sys-565df0f67b0ec385/out/openssl-build/install/lib
+includedir=/home/bhien/HubScreenSrc/hubscreen/hub-wifi/target/release/build/openssl-sys-565df0f67b0ec385/out/openssl-build/install/include
+
+Name: OpenSSL
+Description: Secure Sockets Layer and cryptography libraries and tools
+Version: 3.3.0
+Requires: libssl libcrypto

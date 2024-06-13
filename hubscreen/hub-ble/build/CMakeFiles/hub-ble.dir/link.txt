@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic "CMakeFiles/hub-ble.dir/main.cc.o" "CMakeFiles/hub-ble.dir/proto/hub/typedef.pb.cc.o" "CMakeFiles/hub-ble.dir/proto/ble/ble.pb.cc.o" "CMakeFiles/hub-ble.dir/transport/mqtt/mqtt.cc.o" "CMakeFiles/hub-ble.dir/transport/uart/uart.cc.o" -o hub-ble  -lmosquitto -lprotobuf -lpthread 

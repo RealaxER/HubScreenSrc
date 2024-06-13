@@ -1,0 +1,11 @@
+libdir=/home/bhien/HubScreenSrc/hubscreen/hub-wifi/target/release/build/openssl-sys-565df0f67b0ec385/out/openssl-build/install/lib
+includedir=/home/bhien/HubScreenSrc/hubscreen/hub-wifi/target/release/build/openssl-sys-565df0f67b0ec385/out/openssl-build/install/include
+enginesdir=/home/bhien/HubScreenSrc/hubscreen/hub-wifi/target/release/build/openssl-sys-565df0f67b0ec385/out/openssl-build/install/lib/engines-3
+modulesdir=/home/bhien/HubScreenSrc/hubscreen/hub-wifi/target/release/build/openssl-sys-565df0f67b0ec385/out/openssl-build/install/lib/ossl-modules
+
+Name: OpenSSL-libcrypto
+Description: OpenSSL cryptography library
+Version: 3.3.0
+Libs: -L${libdir} -lcrypto
+Libs.private: -ldl -pthread
+Cflags: -I${includedir}

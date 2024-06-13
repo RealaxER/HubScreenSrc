@@ -112,7 +112,7 @@ static void screen_imgbtn_7_event_handler (lv_event_t *e)
 		break;
 	}
 }
-static void screen_timer_1_event_handler (lv_event_t *e)
+static void screen_imgbtn_14_event_handler (lv_event_t *e)
 {
 	lv_event_code_t code = lv_event_get_code(e);
 
@@ -120,13 +120,14 @@ static void screen_timer_1_event_handler (lv_event_t *e)
 	case LV_EVENT_CLICKED:
 	{
 		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
+		ui_move_animation(guider_ui.screen_win_1, 1000, 0, 490, 0, &lv_anim_path_linear, 0, 0, 0, 0, NULL, NULL, NULL);
 		break;
 	}
 	default:
 		break;
 	}
 }
-static void screen_timer_2_event_handler (lv_event_t *e)
+static void screen_imgbtn_15_event_handler (lv_event_t *e)
 {
 	lv_event_code_t code = lv_event_get_code(e);
 
@@ -134,13 +135,14 @@ static void screen_timer_2_event_handler (lv_event_t *e)
 	case LV_EVENT_CLICKED:
 	{
 		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
+		ui_move_animation(guider_ui.screen_win_1, 1000, 0, 490, 0, &lv_anim_path_linear, 0, 0, 0, 0, NULL, NULL, NULL);
 		break;
 	}
 	default:
 		break;
 	}
 }
-static void screen_timer_3_event_handler (lv_event_t *e)
+static void screen_imgbtn_16_event_handler (lv_event_t *e)
 {
 	lv_event_code_t code = lv_event_get_code(e);
 
@@ -148,90 +150,7 @@ static void screen_timer_3_event_handler (lv_event_t *e)
 	case LV_EVENT_CLICKED:
 	{
 		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_timer_4_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_timer_4_time_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_timer_5_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_timer_5_time_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_timer_6_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_timer_6_time_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
+		ui_move_animation(guider_ui.screen_win_1, 1000, 0, 490, 0, &lv_anim_path_linear, 0, 0, 0, 0, NULL, NULL, NULL);
 		break;
 	}
 	default:
@@ -246,6 +165,7 @@ static void screen_win_1_item0_event_handler (lv_event_t *e)
 	case LV_EVENT_CLICKED:
 	{
 		lv_obj_add_flag(guider_ui.screen_win_1, LV_OBJ_FLAG_HIDDEN);
+		ui_move_animation(guider_ui.screen_win_1, 1000, 0, 810, 0, &lv_anim_path_linear, 0, 0, 0, 0, NULL, NULL, NULL);
 		break;
 	}
 	default:
@@ -259,6 +179,7 @@ static void screen_imgbtn_1_event_handler (lv_event_t *e)
 	switch (code) {
 	case LV_EVENT_CLICKED:
 	{
+		lv_obj_clear_flag(guider_ui.screen_cont_wifi, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_ble, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_lang, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_noti, LV_OBJ_FLAG_HIDDEN);
@@ -275,26 +196,10 @@ static void screen_imgbtn_2_event_handler (lv_event_t *e)
 	switch (code) {
 	case LV_EVENT_CLICKED:
 	{
+		lv_obj_add_flag(guider_ui.screen_cont_wifi, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_clear_flag(guider_ui.screen_cont_ble, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_lang, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_noti, LV_OBJ_FLAG_HIDDEN);
-		break;
-	}
-	default:
-		break;
-	}
-}
-static void screen_cont_zigbe_menu_event_handler (lv_event_t *e)
-{
-	lv_event_code_t code = lv_event_get_code(e);
-
-	switch (code) {
-	case LV_EVENT_CLICKED:
-	{
-		lv_obj_clear_flag(guider_ui.screen_cont_zigbee, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_add_flag(guider_ui.screen_cont_noti, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_add_flag(guider_ui.screen_cont_ble, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_add_flag(guider_ui.screen_cont_lang, LV_OBJ_FLAG_HIDDEN);
 		break;
 	}
 	default:
@@ -311,6 +216,7 @@ static void screen_imgbtn_3_event_handler (lv_event_t *e)
 		lv_obj_add_flag(guider_ui.screen_cont_noti, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_clear_flag(guider_ui.screen_cont_lang, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_ble, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_add_flag(guider_ui.screen_cont_wifi, LV_OBJ_FLAG_HIDDEN);
 		break;
 	}
 	default:
@@ -327,6 +233,36 @@ static void screen_imgbtn_4_event_handler (lv_event_t *e)
 		lv_obj_clear_flag(guider_ui.screen_cont_noti, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_lang, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(guider_ui.screen_cont_ble, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_add_flag(guider_ui.screen_cont_wifi, LV_OBJ_FLAG_HIDDEN);
+		break;
+	}
+	default:
+		break;
+	}
+}
+static void screen_sw_1_event_handler (lv_event_t *e)
+{
+	lv_event_code_t code = lv_event_get_code(e);
+
+	switch (code) {
+	case LV_EVENT_VALUE_CHANGED:
+	{
+		lv_obj_t * status_obj = lv_event_get_target(e);
+		int status = lv_obj_has_state(status_obj, LV_STATE_CHECKED) ? 1 : 0;
+		switch(status) {
+		case 0:
+		{
+			lv_obj_add_flag(guider_ui.screen_cont_9, LV_OBJ_FLAG_HIDDEN);
+			break;
+		}
+		case 1:
+		{
+			lv_obj_clear_flag(guider_ui.screen_cont_9, LV_OBJ_FLAG_HIDDEN);
+			break;
+		}
+		default:
+			break;
+		}
 		break;
 	}
 	default:
@@ -370,21 +306,15 @@ void events_init_screen(lv_ui *ui)
 	lv_obj_add_event_cb(ui->screen_imgbtn_6, screen_imgbtn_6_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_label_16, screen_label_16_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_imgbtn_7, screen_imgbtn_7_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_1, screen_timer_1_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_2, screen_timer_2_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_3, screen_timer_3_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_4, screen_timer_4_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_4_time, screen_timer_4_time_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_5, screen_timer_5_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_5_time, screen_timer_5_time_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_6, screen_timer_6_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_timer_6_time, screen_timer_6_time_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->screen_imgbtn_14, screen_imgbtn_14_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->screen_imgbtn_15, screen_imgbtn_15_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->screen_imgbtn_16, screen_imgbtn_16_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_win_1_item0, screen_win_1_item0_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_imgbtn_1, screen_imgbtn_1_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_imgbtn_2, screen_imgbtn_2_event_handler, LV_EVENT_ALL, ui);
-	lv_obj_add_event_cb(ui->screen_cont_zigbe_menu, screen_cont_zigbe_menu_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_imgbtn_3, screen_imgbtn_3_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_imgbtn_4, screen_imgbtn_4_event_handler, LV_EVENT_ALL, ui);
+	lv_obj_add_event_cb(ui->screen_sw_1, screen_sw_1_event_handler, LV_EVENT_ALL, ui);
 	lv_obj_add_event_cb(ui->screen_sw_2, screen_sw_2_event_handler, LV_EVENT_ALL, ui);
 }
 
