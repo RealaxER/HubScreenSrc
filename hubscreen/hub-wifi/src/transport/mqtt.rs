@@ -1,7 +1,7 @@
 use super::TransportOut;
 use crate::error::BridgeIpErr;
 use crate::proto::buffer::typedef::Buffer;
-use crate::proto::wifi::wifi::Wifi_t;
+use crate::proto::wifi::wifi::Zigbee_t;
 use crate::proto::buffer::typedef::User_t;
 use protobuf::Message;
 use rumqttc::{AsyncClient, Event, EventLoop, MqttOptions, QoS};
@@ -93,7 +93,12 @@ impl MqttDriver {
                                     self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
                                 }
                             }
-                            else if let Ok(wifi) = Wifi_t::parse_from_bytes(&publish.payload.to_vec()) {
+                            else if let Ok(wifi) = Zigbee_t::parse_from_bytes(&publish.payload.to_vec()) {
+                                log::info!(
+                                    "<-- {} : {:?}",
+                                    publish.topic.clone(),
+                                    wifi.clone()
+                                );
                                 self.tx
                                 .send(Ok(TransportOut::ResponseWifi(
                                     publish.topic.clone(),

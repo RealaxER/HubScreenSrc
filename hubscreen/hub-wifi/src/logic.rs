@@ -1,6 +1,6 @@
 use crate::error::BridgeIpErr;
 use crate::proto::buffer::typedef::{Buffer, User_t };
-use crate::proto::wifi::wifi::Wifi_t;
+use crate::proto::wifi::wifi::Zigbee_t;
 
 use crate::transport::TransportOut;
 use std::collections::VecDeque;
@@ -27,12 +27,12 @@ pub enum BrLogicOut {
     None,
     SyncDevice, 
     DataToDevice{buffer: Buffer},
-    DataToHub{mac:String ,wifi: Wifi_t}
+    DataToHub{mac:String ,wifi: Zigbee_t}
 }
 
 impl BrLogic {
     pub fn init(&mut self) {
-        
+        self.outputs.push_back(BrLogicOut::SyncDevice);   
     }
 
     pub fn new() -> Self {
@@ -61,9 +61,11 @@ impl BrLogic {
                         }     
                     }
                     TransportOut::ResponseWifi(topic, wifi) => {
+             
                         let parts: Vec<&str> = topic.split('/').collect();
                         if let Some(last_part) = parts.last() {
                             let mac = last_part.to_string();
+                            log::info!("====MAC:{}====", mac);
                             self.outputs.push_back(BrLogicOut::DataToHub { mac, wifi});
                         } 
                     }

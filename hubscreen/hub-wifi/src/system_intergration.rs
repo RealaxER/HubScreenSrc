@@ -2,7 +2,7 @@ use crate::error::BridgeIpErr;
 use crate::logic::TickLogicOut;
 use crate::logic::{BrLogic, BrLogicIn, BrLogicOut};
 use crate::proto::buffer::typedef::{Buffer, User_t, Sw_t};
-use crate::proto::wifi::wifi::{SwWifi_t, Wifi_t};
+use crate::proto::wifi::wifi::{SwZb_t, Zigbee_t};
 use crate::transport::mqtt::MqttDriver;
 use protobuf::Message;
 use tokio::{
@@ -51,8 +51,8 @@ impl SystemIntergration {
         while let Some(out) = self.logic.pop_action() {
             match out {
                 BrLogicOut::DataToDevice { buffer }  => {
-                    let mut wifi = Wifi_t::new();
-                    let mut sw_wf = SwWifi_t::new();
+                    let mut wifi = Zigbee_t::new();
+                    let mut sw_wf = SwZb_t::new();
                     for sw in buffer.sw {
                         sw_wf.status = sw.status;
                         sw_wf.deviceID = sw.mac as u32;
@@ -60,15 +60,15 @@ impl SystemIntergration {
                     }
                     wifi.sw = Some(sw_wf).into();
                     
-                    let topic = format!("device/wifi/{}",self.transport.mac);
+                    let topic = format!("hub/wifi/9118");
                     let message = wifi.write_to_bytes().unwrap();
                     let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
                 BrLogicOut::SyncDevice => {
-                    let mut wifi = Wifi_t::new();
+                    let mut wifi = Zigbee_t::new();
                     wifi.sync = true;
-                    let topic = format!("device/wifi/{}",self.transport.mac);
+                    let topic = format!("hub/wifi/9118");
                     let message = wifi.write_to_bytes().unwrap();
                     let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
@@ -85,7 +85,7 @@ impl SystemIntergration {
                     sw.status = wifi.sw.status;
                     buffer.sw.push(sw);
 
-                    let topic = format!("device/wifi/{}",mac);
+                    let topic = format!("hub/wifi/{}",mac);
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }

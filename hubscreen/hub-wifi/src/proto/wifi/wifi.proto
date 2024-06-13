@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-message Wifi_t {
-  SwWifi_t sw =1; 
+message Zigbee_t {
+  SwZb_t sw =1; 
   bool sync =2;
 } 
 
-message SwWifi_t {
+message SwZb_t {
   uint32 deviceID=15; 
   uint32 endpoint=16;
   bool status =17;

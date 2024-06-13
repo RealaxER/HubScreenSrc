@@ -25,53 +25,53 @@
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 
-// @@protoc_insertion_point(message:Wifi_t)
+// @@protoc_insertion_point(message:Zigbee_t)
 #[derive(PartialEq,Clone,Default,Debug)]
-pub struct Wifi_t {
+pub struct Zigbee_t {
     // message fields
-    // @@protoc_insertion_point(field:Wifi_t.sw)
-    pub sw: ::protobuf::MessageField<SwWifi_t>,
-    // @@protoc_insertion_point(field:Wifi_t.sync)
+    // @@protoc_insertion_point(field:Zigbee_t.sw)
+    pub sw: ::protobuf::MessageField<SwZb_t>,
+    // @@protoc_insertion_point(field:Zigbee_t.sync)
     pub sync: bool,
     // special fields
-    // @@protoc_insertion_point(special_field:Wifi_t.special_fields)
+    // @@protoc_insertion_point(special_field:Zigbee_t.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
-impl<'a> ::std::default::Default for &'a Wifi_t {
-    fn default() -> &'a Wifi_t {
-        <Wifi_t as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a Zigbee_t {
+    fn default() -> &'a Zigbee_t {
+        <Zigbee_t as ::protobuf::Message>::default_instance()
     }
 }
 
-impl Wifi_t {
-    pub fn new() -> Wifi_t {
+impl Zigbee_t {
+    pub fn new() -> Zigbee_t {
         ::std::default::Default::default()
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
         let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, SwWifi_t>(
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, SwZb_t>(
             "sw",
-            |m: &Wifi_t| { &m.sw },
-            |m: &mut Wifi_t| { &mut m.sw },
+            |m: &Zigbee_t| { &m.sw },
+            |m: &mut Zigbee_t| { &mut m.sw },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "sync",
-            |m: &Wifi_t| { &m.sync },
-            |m: &mut Wifi_t| { &mut m.sync },
+            |m: &Zigbee_t| { &m.sync },
+            |m: &mut Zigbee_t| { &mut m.sync },
         ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Wifi_t>(
-            "Wifi_t",
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Zigbee_t>(
+            "Zigbee_t",
             fields,
             oneofs,
         )
     }
 }
 
-impl ::protobuf::Message for Wifi_t {
-    const NAME: &'static str = "Wifi_t";
+impl ::protobuf::Message for Zigbee_t {
+    const NAME: &'static str = "Zigbee_t";
 
     fn is_initialized(&self) -> bool {
         true
@@ -129,8 +129,8 @@ impl ::protobuf::Message for Wifi_t {
         &mut self.special_fields
     }
 
-    fn new() -> Wifi_t {
-        Wifi_t::new()
+    fn new() -> Zigbee_t {
+        Zigbee_t::new()
     }
 
     fn clear(&mut self) {
@@ -139,8 +139,8 @@ impl ::protobuf::Message for Wifi_t {
         self.special_fields.clear();
     }
 
-    fn default_instance() -> &'static Wifi_t {
-        static instance: Wifi_t = Wifi_t {
+    fn default_instance() -> &'static Zigbee_t {
+        static instance: Zigbee_t = Zigbee_t {
             sw: ::protobuf::MessageField::none(),
             sync: false,
             special_fields: ::protobuf::SpecialFields::new(),
@@ -149,46 +149,46 @@ impl ::protobuf::Message for Wifi_t {
     }
 }
 
-impl ::protobuf::MessageFull for Wifi_t {
+impl ::protobuf::MessageFull for Zigbee_t {
     fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("Wifi_t").unwrap()).clone()
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("Zigbee_t").unwrap()).clone()
     }
 }
 
-impl ::std::fmt::Display for Wifi_t {
+impl ::std::fmt::Display for Zigbee_t {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Wifi_t {
+impl ::protobuf::reflect::ProtobufValue for Zigbee_t {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-// @@protoc_insertion_point(message:SwWifi_t)
+// @@protoc_insertion_point(message:SwZb_t)
 #[derive(PartialEq,Clone,Default,Debug)]
-pub struct SwWifi_t {
+pub struct SwZb_t {
     // message fields
-    // @@protoc_insertion_point(field:SwWifi_t.deviceID)
+    // @@protoc_insertion_point(field:SwZb_t.deviceID)
     pub deviceID: u32,
-    // @@protoc_insertion_point(field:SwWifi_t.endpoint)
+    // @@protoc_insertion_point(field:SwZb_t.endpoint)
     pub endpoint: u32,
-    // @@protoc_insertion_point(field:SwWifi_t.status)
+    // @@protoc_insertion_point(field:SwZb_t.status)
     pub status: bool,
     // special fields
-    // @@protoc_insertion_point(special_field:SwWifi_t.special_fields)
+    // @@protoc_insertion_point(special_field:SwZb_t.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
-impl<'a> ::std::default::Default for &'a SwWifi_t {
-    fn default() -> &'a SwWifi_t {
-        <SwWifi_t as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a SwZb_t {
+    fn default() -> &'a SwZb_t {
+        <SwZb_t as ::protobuf::Message>::default_instance()
     }
 }
 
-impl SwWifi_t {
-    pub fn new() -> SwWifi_t {
+impl SwZb_t {
+    pub fn new() -> SwZb_t {
         ::std::default::Default::default()
     }
 
@@ -197,29 +197,29 @@ impl SwWifi_t {
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "deviceID",
-            |m: &SwWifi_t| { &m.deviceID },
-            |m: &mut SwWifi_t| { &mut m.deviceID },
+            |m: &SwZb_t| { &m.deviceID },
+            |m: &mut SwZb_t| { &mut m.deviceID },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "endpoint",
-            |m: &SwWifi_t| { &m.endpoint },
-            |m: &mut SwWifi_t| { &mut m.endpoint },
+            |m: &SwZb_t| { &m.endpoint },
+            |m: &mut SwZb_t| { &mut m.endpoint },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "status",
-            |m: &SwWifi_t| { &m.status },
-            |m: &mut SwWifi_t| { &mut m.status },
+            |m: &SwZb_t| { &m.status },
+            |m: &mut SwZb_t| { &mut m.status },
         ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SwWifi_t>(
-            "SwWifi_t",
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SwZb_t>(
+            "SwZb_t",
             fields,
             oneofs,
         )
     }
 }
 
-impl ::protobuf::Message for SwWifi_t {
-    const NAME: &'static str = "SwWifi_t";
+impl ::protobuf::Message for SwZb_t {
+    const NAME: &'static str = "SwZb_t";
 
     fn is_initialized(&self) -> bool {
         true
@@ -285,8 +285,8 @@ impl ::protobuf::Message for SwWifi_t {
         &mut self.special_fields
     }
 
-    fn new() -> SwWifi_t {
-        SwWifi_t::new()
+    fn new() -> SwZb_t {
+        SwZb_t::new()
     }
 
     fn clear(&mut self) {
@@ -296,8 +296,8 @@ impl ::protobuf::Message for SwWifi_t {
         self.special_fields.clear();
     }
 
-    fn default_instance() -> &'static SwWifi_t {
-        static instance: SwWifi_t = SwWifi_t {
+    fn default_instance() -> &'static SwZb_t {
+        static instance: SwZb_t = SwZb_t {
             deviceID: 0,
             endpoint: 0,
             status: false,
@@ -307,49 +307,49 @@ impl ::protobuf::Message for SwWifi_t {
     }
 }
 
-impl ::protobuf::MessageFull for SwWifi_t {
+impl ::protobuf::MessageFull for SwZb_t {
     fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("SwWifi_t").unwrap()).clone()
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("SwZb_t").unwrap()).clone()
     }
 }
 
-impl ::std::fmt::Display for SwWifi_t {
+impl ::std::fmt::Display for SwZb_t {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for SwWifi_t {
+impl ::protobuf::reflect::ProtobufValue for SwZb_t {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\nwifi.proto\"7\n\x06Wifi_t\x12\x19\n\x02sw\x18\x01\x20\x01(\x0b2\t.Sw\
-    Wifi_tR\x02sw\x12\x12\n\x04sync\x18\x02\x20\x01(\x08R\x04sync\"Z\n\x08Sw\
-    Wifi_t\x12\x1a\n\x08deviceID\x18\x0f\x20\x01(\rR\x08deviceID\x12\x1a\n\
-    \x08endpoint\x18\x10\x20\x01(\rR\x08endpoint\x12\x16\n\x06status\x18\x11\
-    \x20\x01(\x08R\x06statusJ\xa0\x03\n\x06\x12\x04\0\0\x0b\x01\n\x08\n\x01\
-    \x0c\x12\x03\0\0\x12\n\n\n\x02\x04\0\x12\x04\x02\0\x05\x01\n\n\n\x03\x04\
-    \0\x01\x12\x03\x02\x08\x0e\n\x0b\n\x04\x04\0\x02\0\x12\x03\x03\x02\x11\n\
-    \r\n\x05\x04\0\x02\0\x04\x12\x04\x03\x02\x02\x10\n\x0c\n\x05\x04\0\x02\0\
-    \x06\x12\x03\x03\x02\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x03\x0b\r\n\
-    \x0c\n\x05\x04\0\x02\0\x03\x12\x03\x03\x0f\x10\n\x0b\n\x04\x04\0\x02\x01\
-    \x12\x03\x04\x02\x0f\n\r\n\x05\x04\0\x02\x01\x04\x12\x04\x04\x02\x03\x11\
-    \n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x04\x02\x06\n\x0c\n\x05\x04\0\x02\
-    \x01\x01\x12\x03\x04\x07\x0b\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x04\r\
-    \x0e\n\n\n\x02\x04\x01\x12\x04\x07\0\x0b\x01\n\n\n\x03\x04\x01\x01\x12\
-    \x03\x07\x08\x10\n\x0b\n\x04\x04\x01\x02\0\x12\x03\x08\x02\x15\n\r\n\x05\
-    \x04\x01\x02\0\x04\x12\x04\x08\x02\x07\x12\n\x0c\n\x05\x04\x01\x02\0\x05\
-    \x12\x03\x08\x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03\x08\t\x11\n\
-    \x0c\n\x05\x04\x01\x02\0\x03\x12\x03\x08\x12\x14\n\x0b\n\x04\x04\x01\x02\
-    \x01\x12\x03\t\x02\x15\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04\t\x02\x08\
-    \x15\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03\t\x02\x08\n\x0c\n\x05\x04\
-    \x01\x02\x01\x01\x12\x03\t\t\x11\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\
-    \t\x12\x14\n\x0b\n\x04\x04\x01\x02\x02\x12\x03\n\x02\x12\n\r\n\x05\x04\
-    \x01\x02\x02\x04\x12\x04\n\x02\t\x15\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\
-    \x03\n\x02\x06\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\n\x07\r\n\x0c\n\
-    \x05\x04\x01\x02\x02\x03\x12\x03\n\x0f\x11b\x06proto3\
+    \n\nwifi.proto\"7\n\x08Zigbee_t\x12\x17\n\x02sw\x18\x01\x20\x01(\x0b2\
+    \x07.SwZb_tR\x02sw\x12\x12\n\x04sync\x18\x02\x20\x01(\x08R\x04sync\"X\n\
+    \x06SwZb_t\x12\x1a\n\x08deviceID\x18\x0f\x20\x01(\rR\x08deviceID\x12\x1a\
+    \n\x08endpoint\x18\x10\x20\x01(\rR\x08endpoint\x12\x16\n\x06status\x18\
+    \x11\x20\x01(\x08R\x06statusJ\xa0\x03\n\x06\x12\x04\0\0\x0b\x01\n\x08\n\
+    \x01\x0c\x12\x03\0\0\x12\n\n\n\x02\x04\0\x12\x04\x02\0\x05\x01\n\n\n\x03\
+    \x04\0\x01\x12\x03\x02\x08\x10\n\x0b\n\x04\x04\0\x02\0\x12\x03\x03\x02\
+    \x0f\n\r\n\x05\x04\0\x02\0\x04\x12\x04\x03\x02\x02\x12\n\x0c\n\x05\x04\0\
+    \x02\0\x06\x12\x03\x03\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x03\t\
+    \x0b\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x03\r\x0e\n\x0b\n\x04\x04\0\x02\
+    \x01\x12\x03\x04\x02\x0f\n\r\n\x05\x04\0\x02\x01\x04\x12\x04\x04\x02\x03\
+    \x0f\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x04\x02\x06\n\x0c\n\x05\x04\0\
+    \x02\x01\x01\x12\x03\x04\x07\x0b\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\
+    \x04\r\x0e\n\n\n\x02\x04\x01\x12\x04\x07\0\x0b\x01\n\n\n\x03\x04\x01\x01\
+    \x12\x03\x07\x08\x0e\n\x0b\n\x04\x04\x01\x02\0\x12\x03\x08\x02\x15\n\r\n\
+    \x05\x04\x01\x02\0\x04\x12\x04\x08\x02\x07\x10\n\x0c\n\x05\x04\x01\x02\0\
+    \x05\x12\x03\x08\x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03\x08\t\x11\
+    \n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03\x08\x12\x14\n\x0b\n\x04\x04\x01\
+    \x02\x01\x12\x03\t\x02\x15\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04\t\x02\
+    \x08\x15\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03\t\x02\x08\n\x0c\n\x05\
+    \x04\x01\x02\x01\x01\x12\x03\t\t\x11\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\
+    \x03\t\x12\x14\n\x0b\n\x04\x04\x01\x02\x02\x12\x03\n\x02\x12\n\r\n\x05\
+    \x04\x01\x02\x02\x04\x12\x04\n\x02\t\x15\n\x0c\n\x05\x04\x01\x02\x02\x05\
+    \x12\x03\n\x02\x06\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\n\x07\r\n\x0c\
+    \n\x05\x04\x01\x02\x02\x03\x12\x03\n\x0f\x11b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -368,8 +368,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
             let mut messages = ::std::vec::Vec::with_capacity(2);
-            messages.push(Wifi_t::generated_message_descriptor_data());
-            messages.push(SwWifi_t::generated_message_descriptor_data());
+            messages.push(Zigbee_t::generated_message_descriptor_data());
+            messages.push(SwZb_t::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(0);
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
