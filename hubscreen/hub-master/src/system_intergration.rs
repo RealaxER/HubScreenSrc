@@ -188,7 +188,7 @@ impl SystemIntergration {
 
                 BrLogicOut::UpgradeDevice { mut buffer } => {
                     log::info!("=======UPGRADE DEVICE===========");
-		    if buffer.sync.sync {
+		            if buffer.sync.sync {
                         let mut buff = Buffer::new();
                         buff.sender = User_t::Hub.into();
                         buff.receiver = User_t::Zigbee.into();
@@ -214,6 +214,7 @@ impl SystemIntergration {
                 }
 
                 BrLogicOut::SyncDevice => {
+                    self.master.enable_hub().await;
                     let topic = format!("hub/master/{}",self.transport.mac);
                     let mut buffer = Buffer::new();
                     buffer.mac_hub = self.transport.mac.clone();

@@ -34,12 +34,13 @@ pub enum BrLogicOut {
     TimerHandle{buffer:Buffer},
     UpgradeDevice{buffer:Buffer},
     EnableVpn,
-    DisableVpn
+    DisableVpn,
 }
 
 impl BrLogic {
     pub fn init(&mut self) {
         self.outputs.push_back(BrLogicOut::SyncDevice);
+
     }
 
     pub fn new() -> Self {

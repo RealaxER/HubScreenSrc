@@ -52,6 +52,20 @@ impl Master {
         .expect("failed to execute process");
     }
 
+    pub async fn enable_hub(&mut self){
+        log::info!("========Enable ALL SERVICE==========");
+        Command::new("sh")
+        .arg("-c")
+        .arg("sudo systemctl start zigbee.service && 
+            sudo systemctl start wifi.service && 
+            sudo systemctl start screen.service && 
+            sudo systemctl start ai.service
+            sudo systemctl start ota.service &&"
+        )
+        .spawn() 
+        .expect("failed to execute process");
+    }
+
     pub async fn disable_vpn(&mut self) {
         log::info!("Disable vpn");
         Command::new("sh")
