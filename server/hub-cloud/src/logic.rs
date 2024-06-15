@@ -1,5 +1,6 @@
 use crate::error::BridgeIpErr;
 use crate::proto::typedef::Buffer;
+use crate::proto::typedef::Vendor_t;
 use crate::proto::typedef::User_t;
 use crate::transport::http::CloudResponse;
 use crate::transport::TransportOut;
@@ -30,7 +31,9 @@ pub enum BrLogicOut {
     DataToApp { buffer: Buffer },
     CheckOta {response: CloudResponse , socket: TcpStream},
     FindOta,
-    AllowOta{buffer: Buffer}
+    AllowOta{buffer: Buffer},
+    ResponseMac {mac: String, vendor: Vendor_t},
+    MacToWifi {request: String, mac: String}
 }
 
 impl BrLogic {
@@ -67,6 +70,24 @@ impl BrLogic {
                             self.outputs.push_back(BrLogicOut::DataToApp { buffer});
                         }
                     }
+                    TransportOut::ResponeMacEvent(topic, vendor) => {
+                        let parts: Vec<&str> = topic.split('/').collect();
+                        if let Some(last_part) = parts.last() {
+                            let mac = last_part.to_string();
+                            log::info!("====MAC HUB RESPONSE:{}====", mac);
+                            self.outputs.push_back(BrLogicOut::ResponseMac {mac, vendor});
+                        }
+                    }
+                    TransportOut::ResponeVendor(topic, mac) => {
+
+                        let parts: Vec<&str> = topic.split('/').collect();
+                        if let Some(last_part) = parts.last() {
+                            let request = last_part.to_string();
+                            log::info!("====MAC WIFI REQUESST:{}====", request);
+                            self.outputs.push_back(BrLogicOut::MacToWifi {request, mac});
+                        }
+                    }
+
                     TransportOut::ResponseHttpEvent(response, socket ) => {
                         self.outputs.push_back(BrLogicOut::CheckOta { response, socket })
                     }

@@ -5,9 +5,10 @@ use crate::proto::typedef::{User_t, Ota_t};
 use crate::transport::http::Cloud;
 use crate::transport::mqtt::MqttDriver;
 use crate::ota::Ota;
+use crate::cloud::HubCloud;
 use crate::sqlite::Sqlite;
-
 use protobuf::Message;
+
 use tokio::{
     select,
     time::{interval, Duration, Interval},
@@ -20,7 +21,8 @@ pub struct SystemIntergration {
     transport: MqttDriver,
     http: Cloud,
     ota: Ota,
-    sql: Sqlite
+    sql: Sqlite,
+    cloud: HubCloud
 }
 
 impl SystemIntergration {
@@ -48,6 +50,9 @@ impl SystemIntergration {
                 dir_ota: dir_ota ,
             },
             sql: Sqlite::new(db).await,
+            cloud: HubCloud{
+                devices: Vec::new()
+            }
         }
     }
 
@@ -164,6 +169,29 @@ impl SystemIntergration {
                                 self.ota.path = format!("{}{}",directory_path ,file_ota);
                             }   
                         }
+                    }
+                }
+
+                BrLogicOut::MacToWifi { request, mac } => {
+                    let topic = format!("master/wifi/{}", request);
+                    let message = self.cloud.get_ip(mac).await;
+                    let _ = self
+                            .transport
+                            .send(topic, message.into(), rumqttc::QoS::AtMostOnce, false)
+                            .await;
+                }
+
+                BrLogicOut::ResponseMac { mac, vendor } => {
+                    let mut check = true;
+                    for (mac_old, ip_old) in &mut self.cloud.devices {
+                        if *mac_old == mac {
+                            check = false;
+                            *ip_old = vendor.mac_ven.clone();
+                        }
+                    }
+                    
+                    if check {
+                        self.cloud.devices.push((mac, vendor.mac_ven));
                     }
                 }
 

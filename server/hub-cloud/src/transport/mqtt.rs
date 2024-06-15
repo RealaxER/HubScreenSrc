@@ -2,6 +2,7 @@ use super::TransportOut;
 use crate::error::BridgeIpErr;
 use crate::proto::typedef::Buffer;
 use crate::proto::typedef::User_t;
+use crate::proto::typedef::Vendor_t;
 use protobuf::Message;
 use rumqttc::{AsyncClient, Event, EventLoop, MqttOptions, QoS};
 use tokio::sync::mpsc;
@@ -33,6 +34,16 @@ impl MqttDriver {
             .await
             .unwrap();
 
+        client
+            .subscribe("vendor/wifi/+", QoS::AtMostOnce)
+            .await
+            .unwrap();
+
+        client
+            .subscribe("vendor/master/+", QoS::AtMostOnce)
+            .await
+            .unwrap();
+    
         let (tx, rx) = mpsc::channel::<Result<TransportOut, BridgeIpErr>>(5);
         log::info!("Connecting to mqtt server");
         MqttDriver {
@@ -89,6 +100,34 @@ impl MqttDriver {
                                 else {
                                     self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
                                 }
+                            }
+                            else if let Some(vendor) = Vendor_t::parse_from_bytes(&publish.payload.to_vec()).ok() {
+                                log::info!(
+                                    "<-- {} : {:?}",
+                                    publish.topic.clone(),
+                                    vendor.clone()
+                                );
+                                self.tx
+                                    .send(Ok(TransportOut::ResponeMacEvent(
+                                        publish.topic.clone(),
+                                        vendor,
+                                    )))
+                                    .await
+                                    .unwrap();
+                            }
+                            else {
+                                log::info!(
+                                    "<-- {} : {:?}",
+                                    publish.topic.clone(),
+                                    publish.payload.clone()
+                                );
+                                self.tx
+                                    .send(Ok(TransportOut::ResponeVendor(
+                                        publish.topic.clone(),
+                                        String::from_utf8(publish.payload.to_vec()).unwrap(),
+                                    )))
+                                    .await
+                                    .unwrap();
                             }
                             return self.rx.recv().await.unwrap();
                         }
