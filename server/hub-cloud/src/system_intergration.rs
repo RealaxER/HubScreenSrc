@@ -37,7 +37,7 @@ impl SystemIntergration {
             logic: BrLogic::new(),
             transport: MqttDriver::new(
                 "hub-cloud".to_string(),
-                "54.253.168.98".to_string(),
+                "3.26.238.229".to_string(),
                 1883,
                 45,
             ).await,
