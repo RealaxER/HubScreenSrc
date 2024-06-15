@@ -114,18 +114,11 @@ impl SystemIntergration {
                         let message = buffer.write_to_bytes().unwrap();
                         let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
 
-                        if self.master.check_device(buffer.clone()).await {
-                            let topic = format!("hub/ai");
-                            buffer.receiver = User_t::Ai.into();
-                            let message = buffer.write_to_bytes().unwrap();
-                            let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
-
-
-                            let topic = format!("hub/screen");
-                            buffer.receiver = User_t::Screen.into();
-                            let message = buffer.write_to_bytes().unwrap();
-                            let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
-                        }
+                        let topic = format!("hub/screen");
+                        buffer.receiver = User_t::Screen.into();
+                        let message = buffer.write_to_bytes().unwrap();
+                        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                        
                     }
                     else {
                         log::info!("SET TIMER: {}:{}:{}:{}", buffer.time.hour, 
@@ -253,9 +246,9 @@ impl SystemIntergration {
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
 
-                    let topic = format!("hub/ble");
-                    buffer.receiver = User_t::Ble.into();
-                    buffer.cotroller = User_t::Ble.into();
+                    let topic = format!("hub/screen");
+                    buffer.receiver = User_t::Screen.into();
+                    buffer.cotroller = User_t::Screen.into();
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }

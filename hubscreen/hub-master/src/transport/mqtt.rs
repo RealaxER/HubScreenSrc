@@ -2,7 +2,6 @@ use super::TransportOut;
 use crate::error::BridgeIpErr;
 use crate::proto::typedef::Buffer;
 use crate::proto::typedef::User_t;
-use crate::proto::typedef::Vendor_t;
 use protobuf::Message;
 use protobuf::Enum;
 use rumqttc::{AsyncClient, Event, EventLoop, MqttOptions, QoS};
@@ -37,21 +36,12 @@ impl MqttDriver {
                         .unwrap();
                 }
             }
-            client
-            .subscribe("vendor/sub/+", QoS::AtMostOnce)
-            .await
-            .unwrap();
         }
         else {
             let topic: String = format!("hub/server/{}", mac);
             log::info!("Connecting to hub: {}", topic);
             client
                 .subscribe(topic, QoS::AtMostOnce)
-                .await
-                .unwrap();
-    
-            client
-                .subscribe("hub/vendor/+", QoS::AtMostOnce)
                 .await
                 .unwrap();
         }
@@ -96,48 +86,25 @@ impl MqttDriver {
                 Ok(v) => match v {
                     Event::Incoming(packet) => match packet {
                         rumqttc::Packet::Publish(publish) => {
-                            if publish.topic.clone().contains("hub/vendor/"){
-                                if let Ok(vendor) = Vendor_t::parse_from_bytes(&publish.payload.to_vec()) {
+                            if let Ok(buff) = Buffer::parse_from_bytes(&publish.payload.to_vec()) {
+                                if buff.receiver == User_t::Hub.into() {
                                     log::info!(
                                         "<-- {} : {:?}",
-                                        publish.topic,
-                                        vendor.clone()
+                                        publish.topic.clone(),
+                                        buff.clone()
                                     );
-
                                     self.tx
-                                    .send(Ok(TransportOut::ResponseVendorEvent(
-                                        vendor,
-                                    )))
-                                    .await
-                                    .unwrap();
-                                }
-                            }
-
-                            else if publish.topic.clone().contains("vendor/sub/"){
-
-                            }
-                            else {
-                                if let Ok(buff) = Buffer::parse_from_bytes(&publish.payload.to_vec()) {
-                                    if buff.receiver == User_t::Hub.into() {
-                                        log::info!(
-                                            "<-- {} : {:?}",
+                                        .send(Ok(TransportOut::ResponseMqttEvent(
                                             publish.topic.clone(),
-                                            buff.clone()
-                                        );
-                                        self.tx
-                                            .send(Ok(TransportOut::ResponseMqttEvent(
-                                                publish.topic.clone(),
-                                                buff,
-                                            )))
-                                            .await
-                                            .unwrap();
-                                    }
-                                    else {
-                                        self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
-                                    }
+                                            buff,
+                                        )))
+                                        .await
+                                        .unwrap();
+                                }
+                                else {
+                                    self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
                                 }
                             }
-
                             return self.rx.recv().await.unwrap();
                         }
 
