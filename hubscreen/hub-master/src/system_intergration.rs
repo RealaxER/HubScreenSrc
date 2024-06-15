@@ -1,6 +1,6 @@
 use crate::error::BridgeIpErr;
 use crate::logic::{BrLogic, BrLogicIn, BrLogicOut};
-use crate::proto::typedef::{Buffer, User_t, Vpn_t};
+use crate::proto::typedef::{Buffer, User_t, Vendor_t, Vpn_t};
 use crate::transport::mqtt::MqttDriver;
 use crate::master::Master;
 use crate::timer::{SystemTimer, Timer};
@@ -222,6 +222,12 @@ impl SystemIntergration {
                     buffer.receiver = User_t::Server.into();
                     buffer.cotroller = User_t::Hub.into();
                     let message = buffer.write_to_bytes().unwrap();
+                    let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+
+                    let mut vendor = Vendor_t::new();
+                    vendor.mac_ven = self.logic.get_local_ip().unwrap();
+                    let topic = format!("vendor/master/{}",self.transport.mac);
+                    let message = vendor.write_to_bytes().unwrap();
                     let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }
 
