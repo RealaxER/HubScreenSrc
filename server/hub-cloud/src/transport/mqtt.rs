@@ -82,40 +82,45 @@ impl MqttDriver {
                 Ok(v) => match v {
                     Event::Incoming(packet) => match packet {
                         rumqttc::Packet::Publish(publish) => {
-                            if let Some(buff) = Buffer::parse_from_bytes(&publish.payload.to_vec()).ok() {
-                                if buff.receiver.unwrap() == User_t::Server {
+                            if publish.topic.contains("hub/master") || publish.topic.contains("hub/control/app"){
+                                if let Some(buff) = Buffer::parse_from_bytes(&publish.payload.to_vec()).ok() {
+                                    if buff.receiver.unwrap() == User_t::Server {
+                                        log::info!(
+                                            "<-- {} : {:?}",
+                                            publish.topic.clone(),
+                                            buff.clone()
+                                        );
+                                        self.tx
+                                            .send(Ok(TransportOut::ResponseMqttEvent(
+                                                publish.topic.clone(),
+                                                buff,
+                                            )))
+                                            .await
+                                            .unwrap();
+                                    }
+                                    else {
+                                        self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
+                                    }
+                                }
+                            }
+
+                            else if publish.topic.contains("vendor/master") {
+                                if let Some(vendor) = Vendor_t::parse_from_bytes(&publish.payload.to_vec()).ok() {
                                     log::info!(
                                         "<-- {} : {:?}",
                                         publish.topic.clone(),
-                                        buff.clone()
+                                        vendor.clone()
                                     );
                                     self.tx
-                                        .send(Ok(TransportOut::ResponseMqttEvent(
+                                        .send(Ok(TransportOut::ResponeMacEvent(
                                             publish.topic.clone(),
-                                            buff,
+                                            vendor,
                                         )))
                                         .await
                                         .unwrap();
                                 }
-                                else {
-                                    self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
-                                }
                             }
-                            else if let Some(vendor) = Vendor_t::parse_from_bytes(&publish.payload.to_vec()).ok() {
-                                log::info!(
-                                    "<-- {} : {:?}",
-                                    publish.topic.clone(),
-                                    vendor.clone()
-                                );
-                                self.tx
-                                    .send(Ok(TransportOut::ResponeMacEvent(
-                                        publish.topic.clone(),
-                                        vendor,
-                                    )))
-                                    .await
-                                    .unwrap();
-                            }
-                            else {
+                            else if publish.topic.contains("vendor/wifi") {
                                 log::info!(
                                     "<-- {} : {:?}",
                                     publish.topic.clone(),
@@ -131,7 +136,6 @@ impl MqttDriver {
                             }
                             return self.rx.recv().await.unwrap();
                         }
-
                         _ => {}
                     },
                     Event::Outgoing(_) => {}

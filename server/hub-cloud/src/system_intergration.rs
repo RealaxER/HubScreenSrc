@@ -175,6 +175,7 @@ impl SystemIntergration {
                 BrLogicOut::MacToWifi { request, mac } => {
                     let topic = format!("master/wifi/{}", request);
                     let message = self.cloud.get_ip(mac).await;
+                    log::info!("[NOTIFY] mac to device wifi with ip {}", message.clone());
                     let _ = self
                             .transport
                             .send(topic, message.into(), rumqttc::QoS::AtMostOnce, false)
@@ -186,11 +187,13 @@ impl SystemIntergration {
                     for (mac_old, ip_old) in &mut self.cloud.devices {
                         if *mac_old == mac {
                             check = false;
+                            log::info!("[MODIFY] ip {}", vendor.mac_ven.clone());
                             *ip_old = vendor.mac_ven.clone();
                         }
                     }
                     
                     if check {
+                        log::info!("[ADD] new ip {}", vendor.mac_ven.clone());
                         self.cloud.devices.push((mac, vendor.mac_ven));
                     }
                 }
