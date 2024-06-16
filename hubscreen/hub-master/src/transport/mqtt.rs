@@ -56,6 +56,38 @@ impl MqttDriver {
             eventloop: eventloop,
         }
     }
+    pub async fn restart(&mut self, mode: bool) -> Result<(), BridgeIpErr> {
+        log::info!("Restarting MQTT driver...");
+
+        self.client.disconnect().await.unwrap();
+
+        let (client, eventloop) = AsyncClient::new(self.options.clone(), 10);
+        self.client = client;
+        self.eventloop = eventloop;
+        if mode {
+            for i in 3..=7 {
+                if let Some(user) = User_t::from_i32(i) {
+                    let topic = format!("hub/{:?}", user).to_lowercase();
+                    log::info!("Re-subscribing to topic: {:?}", topic);
+                    self.client
+                        .subscribe(topic, QoS::AtMostOnce)
+                        .await
+                        .unwrap();
+                }
+            }
+        } else {
+            let topic: String = format!("hub/server/{}", self.mac);
+            log::info!("Re-subscribing to topic: {}", topic);
+            self.client
+                .subscribe(topic, QoS::AtMostOnce)
+                .await
+                .unwrap();
+        }
+
+        log::info!("MQTT driver restarted successfully.");
+        Ok(())
+    }
+
     pub async fn send(
         &mut self,
         topic: String,
@@ -78,6 +110,7 @@ impl MqttDriver {
             Err(_) => Err(BridgeIpErr::MqttErr),
         }
     }
+
 
     pub async fn recv(&mut self) -> Result<TransportOut, BridgeIpErr> {
         loop {
@@ -102,7 +135,7 @@ impl MqttDriver {
                                         .unwrap();
                                 }
                                 else {
-                                    self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
+                                    self.tx.send(Err(BridgeIpErr::FormatErr)).await.unwrap();
                                 }
                             }
                             return self.rx.recv().await.unwrap();

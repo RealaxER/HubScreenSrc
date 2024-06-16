@@ -35,6 +35,7 @@ pub enum BrLogicOut {
     UpgradeDevice{buffer:Buffer},
     EnableVpn,
     DisableVpn,
+    RestartMqtt,
 }
 
 impl BrLogic {
@@ -118,6 +119,9 @@ impl BrLogic {
                     }
                 },
                 Err(e) => match e {
+                    BridgeIpErr::MqttErr => {
+                        self.outputs.push_back(BrLogicOut::RestartMqtt);
+                    }
                     _ => {}
                 },
             },

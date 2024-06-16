@@ -207,7 +207,7 @@ impl SystemIntergration {
                 }
 
                 BrLogicOut::SyncDevice => {
-                    self.master.enable_hub().await;
+                    //self.master.enable_hub().await;
                     let topic = format!("hub/master/{}",self.transport.mac);
                     let mut buffer = Buffer::new();
                     buffer.mac_hub = self.transport.mac.clone();
@@ -251,6 +251,11 @@ impl SystemIntergration {
                     buffer.cotroller = User_t::Screen.into();
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.broker.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+                }
+
+                BrLogicOut::RestartMqtt => {
+                    let _ = self.transport.restart(true).await;
+                    let _ = self.broker.restart(false).await;
                 }
                 _ => {}
             }
