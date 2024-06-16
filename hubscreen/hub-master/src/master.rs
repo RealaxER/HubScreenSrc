@@ -57,7 +57,7 @@ impl Master {
         Command::new("sh")
         .arg("-c")
         .arg("sudo systemctl start zigbee.service && 
-            sudo systemctl start wifi.service && 
+            //sudo systemctl start wifi.service && 
             sudo systemctl start screen.service && 
             sudo systemctl start ai.service && 
             sudo systemctl start ota.service"
