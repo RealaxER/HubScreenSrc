@@ -825,6 +825,7 @@ void sync_status(Buffer buffer) {
         for(int j = 0; j < bufferManager->led_size(); j++){
             if(led.name() == bufferManager->led(j).name()){
                 LOG_INFO(led.name());
+		bufferManager->mutable_led(j)->set_status(led.status());
                 if(led.status()){
                     set_led_output(j, LED_ON);   
                     LOG_INFO("On");
@@ -842,6 +843,7 @@ void sync_status(Buffer buffer) {
             if(sw.name() == bufferManager->sw(j).name()){
                 LOG_INFO(bufferManager->sw_size());
                 LOG_INFO(sw.name());
+		bufferManager->mutable_sw(j)->set_status(sw.status());
                 if(sw.status()){
                     set_sw_output(j, SW_ON); 
                     LOG_INFO("On");
