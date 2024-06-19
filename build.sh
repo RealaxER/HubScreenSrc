@@ -7,6 +7,9 @@ home="$HOME"
 service_master="/etc/systemd/system/master.service"
 cmd_service_master="RUST_LOG=info $home/service/hub-master --mac 8xff >> $home/log/hub-master.log 2>&1"
 
+service_wifi="/etc/systemd/system/wifi.service"
+cmd_service_wifi="RUST_LOG=info $home/service/hub-wifi --mac 8xff >> $home/log/hub-wifi.log 2>&1"
+
 service_zigbee="/etc/systemd/system/zigbee.service"
 cmd_service_zigbee="$home/service/hub-zigbee >> $home/log/hub-zigbee.log 2>&1"
 
@@ -240,16 +243,20 @@ elif [[ $1 == "upgrade" ]]; then
     sudo systemctl stop zigbee 
     sudo systemctl stop master
     sudo systemctl stop screen
+    sudo systemctl stop wifi
     sudo cp ${current}/hubscreen/hub-screen/generated/build/hub-screen ${home}/service/
     sudo cp ${current}/hubscreen/hub-ota/target/release/hub-ota ${home}/service/
     sudo cp ${current}/hubscreen/hub-zigbee/build/hub-zigbee ${home}/service/
     sudo cp ${current}/hubscreen/hub-master/target/release/hub-master ${home}/service/
+    sudo cp ${current}/hubscreen/hub-wifi/target/release/hub-wifi ${home}/service/
     sudo cp ${current}/client1.ovpn ${home}/service/
     sudo systemctl start ota 
     sudo systemctl start zigbee 
     sudo systemctl start master
     sudo systemctl start screen
-    sudo systemctl enable ota 
+    sudo systemctl start wifi
+    sudo systemctl enable ota
+    sudo systemctl enable wifi 
     sudo systemctl enable zigbee 
     sudo systemctl enable master
     sudo systemctl enable screen
@@ -272,6 +279,22 @@ elif [[ $1 == "service" ]]; then
         echo "File master.service already."
     fi
 
+        # Check wifi.service already
+    if [ ! -f "$service_wifi" ]; then
+        sudo echo "File wifi.service not have already. Initiating the download and installation process..."
+        # Info master.service
+        sudo echo "[Unit]" > "$service_wifi"
+        sudo echo "Description=Hubscreen Wifi Service" >> "$service_wifi"
+        sudo echo "After=systend-user-sessions.service" >> "$service_wifi"
+        sudo echo "" >> "$service_wifi"
+        sudo echo "[Service]" >> "$service_wifi"
+        sudo echo "Type=simple" >> "$service_wifi"
+        sudo echo "ExecStart=/bin/bash -c \"$cmd_service_wifi\"" >> "$service_wifi"
+        sudo chmod 600 $service_wifi
+        sudo echo "Writed wifi.service to systemd succesfully."
+    else
+        echo "File wifi.service already."
+    fi
 
     # Check zigbee.service already
     if [ ! -f "$service_zigbee" ]; then

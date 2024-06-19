@@ -32,7 +32,7 @@ impl SystemIntergration {
                 "hub-master".to_string(),
                 "3.26.238.229".to_string(),
                 1883,
-                45,
+                3,
                 mac.clone(),
                 false,
             )
@@ -207,7 +207,7 @@ impl SystemIntergration {
                 }
 
                 BrLogicOut::SyncDevice => {
-                    //self.master.enable_hub().await;
+                    self.master.enable_hub().await;
                     let topic = format!("hub/master/{}",self.transport.mac);
                     let mut buffer = Buffer::new();
                     buffer.mac_hub = self.transport.mac.clone();
