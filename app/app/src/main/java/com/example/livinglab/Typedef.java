@@ -225,7 +225,13 @@ public final class Typedef {
         long getMac();
 
         /**
-         * <code>bool status = 18;</code>
+         * <code>uint32 ep = 18;</code>
+         * @return The ep.
+         */
+        int getEp();
+
+        /**
+         * <code>bool status = 19;</code>
          * @return The status.
          */
         boolean getStatus();
@@ -318,10 +324,21 @@ public final class Typedef {
             return mac_;
         }
 
-        public static final int STATUS_FIELD_NUMBER = 18;
+        public static final int EP_FIELD_NUMBER = 18;
+        private int ep_ = 0;
+        /**
+         * <code>uint32 ep = 18;</code>
+         * @return The ep.
+         */
+        @java.lang.Override
+        public int getEp() {
+            return ep_;
+        }
+
+        public static final int STATUS_FIELD_NUMBER = 19;
         private boolean status_ = false;
         /**
-         * <code>bool status = 18;</code>
+         * <code>bool status = 19;</code>
          * @return The status.
          */
         @java.lang.Override
@@ -349,8 +366,11 @@ public final class Typedef {
             if (mac_ != 0L) {
                 output.writeUInt64(17, mac_);
             }
+            if (ep_ != 0) {
+                output.writeUInt32(18, ep_);
+            }
             if (status_ != false) {
-                output.writeBool(18, status_);
+                output.writeBool(19, status_);
             }
             getUnknownFields().writeTo(output);
         }
@@ -368,9 +388,13 @@ public final class Typedef {
                 size += com.google.protobuf.CodedOutputStream
                         .computeUInt64Size(17, mac_);
             }
+            if (ep_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(18, ep_);
+            }
             if (status_ != false) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeBoolSize(18, status_);
+                        .computeBoolSize(19, status_);
             }
             size += getUnknownFields().getSerializedSize();
             memoizedSize = size;
@@ -391,6 +415,8 @@ public final class Typedef {
                     .equals(other.getName())) return false;
             if (getMac()
                     != other.getMac()) return false;
+            if (getEp()
+                    != other.getEp()) return false;
             if (getStatus()
                     != other.getStatus()) return false;
             if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -409,6 +435,8 @@ public final class Typedef {
             hash = (37 * hash) + MAC_FIELD_NUMBER;
             hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
                     getMac());
+            hash = (37 * hash) + EP_FIELD_NUMBER;
+            hash = (53 * hash) + getEp();
             hash = (37 * hash) + STATUS_FIELD_NUMBER;
             hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                     getStatus());
@@ -545,6 +573,7 @@ public final class Typedef {
                 bitField0_ = 0;
                 name_ = "";
                 mac_ = 0L;
+                ep_ = 0;
                 status_ = false;
                 return this;
             }
@@ -586,6 +615,9 @@ public final class Typedef {
                     result.mac_ = mac_;
                 }
                 if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.ep_ = ep_;
+                }
+                if (((from_bitField0_ & 0x00000008) != 0)) {
                     result.status_ = status_;
                 }
             }
@@ -609,6 +641,9 @@ public final class Typedef {
                 }
                 if (other.getMac() != 0L) {
                     setMac(other.getMac());
+                }
+                if (other.getEp() != 0) {
+                    setEp(other.getEp());
                 }
                 if (other.getStatus() != false) {
                     setStatus(other.getStatus());
@@ -650,10 +685,15 @@ public final class Typedef {
                                 break;
                             } // case 136
                             case 144: {
-                                status_ = input.readBool();
+                                ep_ = input.readUInt32();
                                 bitField0_ |= 0x00000004;
                                 break;
                             } // case 144
+                            case 152: {
+                                status_ = input.readBool();
+                                bitField0_ |= 0x00000008;
+                                break;
+                            } // case 152
                             default: {
                                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                     done = true; // was an endgroup tag
@@ -775,9 +815,41 @@ public final class Typedef {
                 return this;
             }
 
+            private int ep_ ;
+            /**
+             * <code>uint32 ep = 18;</code>
+             * @return The ep.
+             */
+            @java.lang.Override
+            public int getEp() {
+                return ep_;
+            }
+            /**
+             * <code>uint32 ep = 18;</code>
+             * @param value The ep to set.
+             * @return This builder for chaining.
+             */
+            public Builder setEp(int value) {
+
+                ep_ = value;
+                bitField0_ |= 0x00000004;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>uint32 ep = 18;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearEp() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                ep_ = 0;
+                onChanged();
+                return this;
+            }
+
             private boolean status_ ;
             /**
-             * <code>bool status = 18;</code>
+             * <code>bool status = 19;</code>
              * @return The status.
              */
             @java.lang.Override
@@ -785,23 +857,23 @@ public final class Typedef {
                 return status_;
             }
             /**
-             * <code>bool status = 18;</code>
+             * <code>bool status = 19;</code>
              * @param value The status to set.
              * @return This builder for chaining.
              */
             public Builder setStatus(boolean value) {
 
                 status_ = value;
-                bitField0_ |= 0x00000004;
+                bitField0_ |= 0x00000008;
                 onChanged();
                 return this;
             }
             /**
-             * <code>bool status = 18;</code>
+             * <code>bool status = 19;</code>
              * @return This builder for chaining.
              */
             public Builder clearStatus() {
-                bitField0_ = (bitField0_ & ~0x00000004);
+                bitField0_ = (bitField0_ & ~0x00000008);
                 status_ = false;
                 onChanged();
                 return this;
@@ -853,6 +925,587 @@ public final class Typedef {
 
         @java.lang.Override
         public Typedef.Led_t getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
+    }
+
+    public interface Sync_tOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:Sync_t)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <code>bool add = 16;</code>
+         * @return The add.
+         */
+        boolean getAdd();
+
+        /**
+         * <code>bool remove = 17;</code>
+         * @return The remove.
+         */
+        boolean getRemove();
+
+        /**
+         * <code>bool sync = 18;</code>
+         * @return The sync.
+         */
+        boolean getSync();
+    }
+    /**
+     * Protobuf type {@code Sync_t}
+     */
+    public static final class Sync_t extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:Sync_t)
+            Sync_tOrBuilder {
+        private static final long serialVersionUID = 0L;
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 26,
+                    /* patch= */ 1,
+                    /* suffix= */ "",
+                    Sync_t.class.getName());
+        }
+        // Use Sync_t.newBuilder() to construct.
+        private Sync_t(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+        }
+        private Sync_t() {
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return Typedef.internal_static_Sync_t_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return Typedef.internal_static_Sync_t_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            Typedef.Sync_t.class, Typedef.Sync_t.Builder.class);
+        }
+
+        public static final int ADD_FIELD_NUMBER = 16;
+        private boolean add_ = false;
+        /**
+         * <code>bool add = 16;</code>
+         * @return The add.
+         */
+        @java.lang.Override
+        public boolean getAdd() {
+            return add_;
+        }
+
+        public static final int REMOVE_FIELD_NUMBER = 17;
+        private boolean remove_ = false;
+        /**
+         * <code>bool remove = 17;</code>
+         * @return The remove.
+         */
+        @java.lang.Override
+        public boolean getRemove() {
+            return remove_;
+        }
+
+        public static final int SYNC_FIELD_NUMBER = 18;
+        private boolean sync_ = false;
+        /**
+         * <code>bool sync = 18;</code>
+         * @return The sync.
+         */
+        @java.lang.Override
+        public boolean getSync() {
+            return sync_;
+        }
+
+        private byte memoizedIsInitialized = -1;
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (add_ != false) {
+                output.writeBool(16, add_);
+            }
+            if (remove_ != false) {
+                output.writeBool(17, remove_);
+            }
+            if (sync_ != false) {
+                output.writeBool(18, sync_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (add_ != false) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(16, add_);
+            }
+            if (remove_ != false) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(17, remove_);
+            }
+            if (sync_ != false) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(18, sync_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Typedef.Sync_t)) {
+                return super.equals(obj);
+            }
+            Typedef.Sync_t other = (Typedef.Sync_t) obj;
+
+            if (getAdd()
+                    != other.getAdd()) return false;
+            if (getRemove()
+                    != other.getRemove()) return false;
+            if (getSync()
+                    != other.getSync()) return false;
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            hash = (37 * hash) + ADD_FIELD_NUMBER;
+            hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+                    getAdd());
+            hash = (37 * hash) + REMOVE_FIELD_NUMBER;
+            hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+                    getRemove());
+            hash = (37 * hash) + SYNC_FIELD_NUMBER;
+            hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+                    getSync());
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static Typedef.Sync_t parseFrom(
+                java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+        public static Typedef.Sync_t parseFrom(
+                java.nio.ByteBuffer data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static Typedef.Sync_t parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+        public static Typedef.Sync_t parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static Typedef.Sync_t parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+        public static Typedef.Sync_t parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static Typedef.Sync_t parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+        public static Typedef.Sync_t parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static Typedef.Sync_t parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static Typedef.Sync_t parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+        public static Typedef.Sync_t parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+        public static Typedef.Sync_t parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() { return newBuilder(); }
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+        public static Builder newBuilder(Typedef.Sync_t prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+        /**
+         * Protobuf type {@code Sync_t}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:Sync_t)
+                Typedef.Sync_tOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return Typedef.internal_static_Sync_t_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return Typedef.internal_static_Sync_t_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(
+                                Typedef.Sync_t.class, Typedef.Sync_t.Builder.class);
+            }
+
+            // Construct using Typedef.Sync_t.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(
+                    com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                add_ = false;
+                remove_ = false;
+                sync_ = false;
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return Typedef.internal_static_Sync_t_descriptor;
+            }
+
+            @java.lang.Override
+            public Typedef.Sync_t getDefaultInstanceForType() {
+                return Typedef.Sync_t.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public Typedef.Sync_t build() {
+                Typedef.Sync_t result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public Typedef.Sync_t buildPartial() {
+                Typedef.Sync_t result = new Typedef.Sync_t(this);
+                if (bitField0_ != 0) { buildPartial0(result); }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartial0(Typedef.Sync_t result) {
+                int from_bitField0_ = bitField0_;
+                if (((from_bitField0_ & 0x00000001) != 0)) {
+                    result.add_ = add_;
+                }
+                if (((from_bitField0_ & 0x00000002) != 0)) {
+                    result.remove_ = remove_;
+                }
+                if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.sync_ = sync_;
+                }
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof Typedef.Sync_t) {
+                    return mergeFrom((Typedef.Sync_t)other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(Typedef.Sync_t other) {
+                if (other == Typedef.Sync_t.getDefaultInstance()) return this;
+                if (other.getAdd() != false) {
+                    setAdd(other.getAdd());
+                }
+                if (other.getRemove() != false) {
+                    setRemove(other.getRemove());
+                }
+                if (other.getSync() != false) {
+                    setSync(other.getSync());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 128: {
+                                add_ = input.readBool();
+                                bitField0_ |= 0x00000001;
+                                break;
+                            } // case 128
+                            case 136: {
+                                remove_ = input.readBool();
+                                bitField0_ |= 0x00000002;
+                                break;
+                            } // case 136
+                            case 144: {
+                                sync_ = input.readBool();
+                                bitField0_ |= 0x00000004;
+                                break;
+                            } // case 144
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+            private int bitField0_;
+
+            private boolean add_ ;
+            /**
+             * <code>bool add = 16;</code>
+             * @return The add.
+             */
+            @java.lang.Override
+            public boolean getAdd() {
+                return add_;
+            }
+            /**
+             * <code>bool add = 16;</code>
+             * @param value The add to set.
+             * @return This builder for chaining.
+             */
+            public Builder setAdd(boolean value) {
+
+                add_ = value;
+                bitField0_ |= 0x00000001;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>bool add = 16;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearAdd() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                add_ = false;
+                onChanged();
+                return this;
+            }
+
+            private boolean remove_ ;
+            /**
+             * <code>bool remove = 17;</code>
+             * @return The remove.
+             */
+            @java.lang.Override
+            public boolean getRemove() {
+                return remove_;
+            }
+            /**
+             * <code>bool remove = 17;</code>
+             * @param value The remove to set.
+             * @return This builder for chaining.
+             */
+            public Builder setRemove(boolean value) {
+
+                remove_ = value;
+                bitField0_ |= 0x00000002;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>bool remove = 17;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearRemove() {
+                bitField0_ = (bitField0_ & ~0x00000002);
+                remove_ = false;
+                onChanged();
+                return this;
+            }
+
+            private boolean sync_ ;
+            /**
+             * <code>bool sync = 18;</code>
+             * @return The sync.
+             */
+            @java.lang.Override
+            public boolean getSync() {
+                return sync_;
+            }
+            /**
+             * <code>bool sync = 18;</code>
+             * @param value The sync to set.
+             * @return This builder for chaining.
+             */
+            public Builder setSync(boolean value) {
+
+                sync_ = value;
+                bitField0_ |= 0x00000004;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>bool sync = 18;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearSync() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                sync_ = false;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:Sync_t)
+        }
+
+        // @@protoc_insertion_point(class_scope:Sync_t)
+        private static final Typedef.Sync_t DEFAULT_INSTANCE;
+        static {
+            DEFAULT_INSTANCE = new Typedef.Sync_t();
+        }
+
+        public static Typedef.Sync_t getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<Sync_t>
+                PARSER = new com.google.protobuf.AbstractParser<Sync_t>() {
+            @java.lang.Override
+            public Sync_t parsePartialFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<Sync_t> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<Sync_t> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public Typedef.Sync_t getDefaultInstanceForType() {
             return DEFAULT_INSTANCE;
         }
 
@@ -2634,6 +3287,656 @@ public final class Typedef {
 
     }
 
+    public interface Timer_tOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:Timer_t)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <code>uint32 day = 15;</code>
+         * @return The day.
+         */
+        int getDay();
+
+        /**
+         * <code>uint32 month = 16;</code>
+         * @return The month.
+         */
+        int getMonth();
+
+        /**
+         * <code>uint32 hour = 17;</code>
+         * @return The hour.
+         */
+        int getHour();
+
+        /**
+         * <code>uint32 minute = 18;</code>
+         * @return The minute.
+         */
+        int getMinute();
+    }
+    /**
+     * Protobuf type {@code Timer_t}
+     */
+    public static final class Timer_t extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:Timer_t)
+            Timer_tOrBuilder {
+        private static final long serialVersionUID = 0L;
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 26,
+                    /* patch= */ 1,
+                    /* suffix= */ "",
+                    Timer_t.class.getName());
+        }
+        // Use Timer_t.newBuilder() to construct.
+        private Timer_t(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+        }
+        private Timer_t() {
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return Typedef.internal_static_Timer_t_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return Typedef.internal_static_Timer_t_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            Typedef.Timer_t.class, Typedef.Timer_t.Builder.class);
+        }
+
+        public static final int DAY_FIELD_NUMBER = 15;
+        private int day_ = 0;
+        /**
+         * <code>uint32 day = 15;</code>
+         * @return The day.
+         */
+        @java.lang.Override
+        public int getDay() {
+            return day_;
+        }
+
+        public static final int MONTH_FIELD_NUMBER = 16;
+        private int month_ = 0;
+        /**
+         * <code>uint32 month = 16;</code>
+         * @return The month.
+         */
+        @java.lang.Override
+        public int getMonth() {
+            return month_;
+        }
+
+        public static final int HOUR_FIELD_NUMBER = 17;
+        private int hour_ = 0;
+        /**
+         * <code>uint32 hour = 17;</code>
+         * @return The hour.
+         */
+        @java.lang.Override
+        public int getHour() {
+            return hour_;
+        }
+
+        public static final int MINUTE_FIELD_NUMBER = 18;
+        private int minute_ = 0;
+        /**
+         * <code>uint32 minute = 18;</code>
+         * @return The minute.
+         */
+        @java.lang.Override
+        public int getMinute() {
+            return minute_;
+        }
+
+        private byte memoizedIsInitialized = -1;
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (day_ != 0) {
+                output.writeUInt32(15, day_);
+            }
+            if (month_ != 0) {
+                output.writeUInt32(16, month_);
+            }
+            if (hour_ != 0) {
+                output.writeUInt32(17, hour_);
+            }
+            if (minute_ != 0) {
+                output.writeUInt32(18, minute_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (day_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(15, day_);
+            }
+            if (month_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(16, month_);
+            }
+            if (hour_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(17, hour_);
+            }
+            if (minute_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(18, minute_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Typedef.Timer_t)) {
+                return super.equals(obj);
+            }
+            Typedef.Timer_t other = (Typedef.Timer_t) obj;
+
+            if (getDay()
+                    != other.getDay()) return false;
+            if (getMonth()
+                    != other.getMonth()) return false;
+            if (getHour()
+                    != other.getHour()) return false;
+            if (getMinute()
+                    != other.getMinute()) return false;
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            hash = (37 * hash) + DAY_FIELD_NUMBER;
+            hash = (53 * hash) + getDay();
+            hash = (37 * hash) + MONTH_FIELD_NUMBER;
+            hash = (53 * hash) + getMonth();
+            hash = (37 * hash) + HOUR_FIELD_NUMBER;
+            hash = (53 * hash) + getHour();
+            hash = (37 * hash) + MINUTE_FIELD_NUMBER;
+            hash = (53 * hash) + getMinute();
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static Typedef.Timer_t parseFrom(
+                java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+        public static Typedef.Timer_t parseFrom(
+                java.nio.ByteBuffer data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static Typedef.Timer_t parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+        public static Typedef.Timer_t parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static Typedef.Timer_t parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+        public static Typedef.Timer_t parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static Typedef.Timer_t parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+        public static Typedef.Timer_t parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static Typedef.Timer_t parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static Typedef.Timer_t parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+        public static Typedef.Timer_t parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+        public static Typedef.Timer_t parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() { return newBuilder(); }
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+        public static Builder newBuilder(Typedef.Timer_t prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+        /**
+         * Protobuf type {@code Timer_t}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:Timer_t)
+                Typedef.Timer_tOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return Typedef.internal_static_Timer_t_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return Typedef.internal_static_Timer_t_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(
+                                Typedef.Timer_t.class, Typedef.Timer_t.Builder.class);
+            }
+
+            // Construct using Typedef.Timer_t.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(
+                    com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                day_ = 0;
+                month_ = 0;
+                hour_ = 0;
+                minute_ = 0;
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return Typedef.internal_static_Timer_t_descriptor;
+            }
+
+            @java.lang.Override
+            public Typedef.Timer_t getDefaultInstanceForType() {
+                return Typedef.Timer_t.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public Typedef.Timer_t build() {
+                Typedef.Timer_t result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public Typedef.Timer_t buildPartial() {
+                Typedef.Timer_t result = new Typedef.Timer_t(this);
+                if (bitField0_ != 0) { buildPartial0(result); }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartial0(Typedef.Timer_t result) {
+                int from_bitField0_ = bitField0_;
+                if (((from_bitField0_ & 0x00000001) != 0)) {
+                    result.day_ = day_;
+                }
+                if (((from_bitField0_ & 0x00000002) != 0)) {
+                    result.month_ = month_;
+                }
+                if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.hour_ = hour_;
+                }
+                if (((from_bitField0_ & 0x00000008) != 0)) {
+                    result.minute_ = minute_;
+                }
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof Typedef.Timer_t) {
+                    return mergeFrom((Typedef.Timer_t)other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(Typedef.Timer_t other) {
+                if (other == Typedef.Timer_t.getDefaultInstance()) return this;
+                if (other.getDay() != 0) {
+                    setDay(other.getDay());
+                }
+                if (other.getMonth() != 0) {
+                    setMonth(other.getMonth());
+                }
+                if (other.getHour() != 0) {
+                    setHour(other.getHour());
+                }
+                if (other.getMinute() != 0) {
+                    setMinute(other.getMinute());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 120: {
+                                day_ = input.readUInt32();
+                                bitField0_ |= 0x00000001;
+                                break;
+                            } // case 120
+                            case 128: {
+                                month_ = input.readUInt32();
+                                bitField0_ |= 0x00000002;
+                                break;
+                            } // case 128
+                            case 136: {
+                                hour_ = input.readUInt32();
+                                bitField0_ |= 0x00000004;
+                                break;
+                            } // case 136
+                            case 144: {
+                                minute_ = input.readUInt32();
+                                bitField0_ |= 0x00000008;
+                                break;
+                            } // case 144
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+            private int bitField0_;
+
+            private int day_ ;
+            /**
+             * <code>uint32 day = 15;</code>
+             * @return The day.
+             */
+            @java.lang.Override
+            public int getDay() {
+                return day_;
+            }
+            /**
+             * <code>uint32 day = 15;</code>
+             * @param value The day to set.
+             * @return This builder for chaining.
+             */
+            public Builder setDay(int value) {
+
+                day_ = value;
+                bitField0_ |= 0x00000001;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>uint32 day = 15;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearDay() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                day_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int month_ ;
+            /**
+             * <code>uint32 month = 16;</code>
+             * @return The month.
+             */
+            @java.lang.Override
+            public int getMonth() {
+                return month_;
+            }
+            /**
+             * <code>uint32 month = 16;</code>
+             * @param value The month to set.
+             * @return This builder for chaining.
+             */
+            public Builder setMonth(int value) {
+
+                month_ = value;
+                bitField0_ |= 0x00000002;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>uint32 month = 16;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearMonth() {
+                bitField0_ = (bitField0_ & ~0x00000002);
+                month_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int hour_ ;
+            /**
+             * <code>uint32 hour = 17;</code>
+             * @return The hour.
+             */
+            @java.lang.Override
+            public int getHour() {
+                return hour_;
+            }
+            /**
+             * <code>uint32 hour = 17;</code>
+             * @param value The hour to set.
+             * @return This builder for chaining.
+             */
+            public Builder setHour(int value) {
+
+                hour_ = value;
+                bitField0_ |= 0x00000004;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>uint32 hour = 17;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearHour() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                hour_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int minute_ ;
+            /**
+             * <code>uint32 minute = 18;</code>
+             * @return The minute.
+             */
+            @java.lang.Override
+            public int getMinute() {
+                return minute_;
+            }
+            /**
+             * <code>uint32 minute = 18;</code>
+             * @param value The minute to set.
+             * @return This builder for chaining.
+             */
+            public Builder setMinute(int value) {
+
+                minute_ = value;
+                bitField0_ |= 0x00000008;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>uint32 minute = 18;</code>
+             * @return This builder for chaining.
+             */
+            public Builder clearMinute() {
+                bitField0_ = (bitField0_ & ~0x00000008);
+                minute_ = 0;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:Timer_t)
+        }
+
+        // @@protoc_insertion_point(class_scope:Timer_t)
+        private static final Typedef.Timer_t DEFAULT_INSTANCE;
+        static {
+            DEFAULT_INSTANCE = new Typedef.Timer_t();
+        }
+
+        public static Typedef.Timer_t getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<Timer_t>
+                PARSER = new com.google.protobuf.AbstractParser<Timer_t>() {
+            @java.lang.Override
+            public Timer_t parsePartialFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<Timer_t> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<Timer_t> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public Typedef.Timer_t getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
+    }
+
     public interface BufferOrBuilder extends
             // @@protoc_insertion_point(interface_extends:Buffer)
             com.google.protobuf.MessageOrBuilder {
@@ -2706,6 +4009,21 @@ public final class Typedef {
          * @return The cotroller.
          */
         Typedef.User_t getCotroller();
+
+        /**
+         * <code>.Sync_t sync = 5;</code>
+         * @return Whether the sync field is set.
+         */
+        boolean hasSync();
+        /**
+         * <code>.Sync_t sync = 5;</code>
+         * @return The sync.
+         */
+        Typedef.Sync_t getSync();
+        /**
+         * <code>.Sync_t sync = 5;</code>
+         */
+        Typedef.Sync_tOrBuilder getSyncOrBuilder();
 
         /**
          * <code>.Ota_t ota = 16;</code>
@@ -2784,6 +4102,21 @@ public final class Typedef {
          */
         Typedef.Sw_tOrBuilder getSwOrBuilder(
                 int index);
+
+        /**
+         * <code>.Timer_t time = 20;</code>
+         * @return Whether the time field is set.
+         */
+        boolean hasTime();
+        /**
+         * <code>.Timer_t time = 20;</code>
+         * @return The time.
+         */
+        Typedef.Timer_t getTime();
+        /**
+         * <code>.Timer_t time = 20;</code>
+         */
+        Typedef.Timer_tOrBuilder getTimeOrBuilder();
     }
     /**
      * Protobuf type {@code Buffer}
@@ -2946,6 +4279,32 @@ public final class Typedef {
             return result == null ? Typedef.User_t.UNRECOGNIZED : result;
         }
 
+        public static final int SYNC_FIELD_NUMBER = 5;
+        private Typedef.Sync_t sync_;
+        /**
+         * <code>.Sync_t sync = 5;</code>
+         * @return Whether the sync field is set.
+         */
+        @java.lang.Override
+        public boolean hasSync() {
+            return ((bitField0_ & 0x00000001) != 0);
+        }
+        /**
+         * <code>.Sync_t sync = 5;</code>
+         * @return The sync.
+         */
+        @java.lang.Override
+        public Typedef.Sync_t getSync() {
+            return sync_ == null ? Typedef.Sync_t.getDefaultInstance() : sync_;
+        }
+        /**
+         * <code>.Sync_t sync = 5;</code>
+         */
+        @java.lang.Override
+        public Typedef.Sync_tOrBuilder getSyncOrBuilder() {
+            return sync_ == null ? Typedef.Sync_t.getDefaultInstance() : sync_;
+        }
+
         public static final int OTA_FIELD_NUMBER = 16;
         private Typedef.Ota_t ota_;
         /**
@@ -2954,7 +4313,7 @@ public final class Typedef {
          */
         @java.lang.Override
         public boolean hasOta() {
-            return ((bitField0_ & 0x00000001) != 0);
+            return ((bitField0_ & 0x00000002) != 0);
         }
         /**
          * <code>.Ota_t ota = 16;</code>
@@ -2980,7 +4339,7 @@ public final class Typedef {
          */
         @java.lang.Override
         public boolean hasVpn() {
-            return ((bitField0_ & 0x00000002) != 0);
+            return ((bitField0_ & 0x00000004) != 0);
         }
         /**
          * <code>.Vpn_t vpn = 17;</code>
@@ -3080,6 +4439,32 @@ public final class Typedef {
             return sw_.get(index);
         }
 
+        public static final int TIME_FIELD_NUMBER = 20;
+        private Typedef.Timer_t time_;
+        /**
+         * <code>.Timer_t time = 20;</code>
+         * @return Whether the time field is set.
+         */
+        @java.lang.Override
+        public boolean hasTime() {
+            return ((bitField0_ & 0x00000008) != 0);
+        }
+        /**
+         * <code>.Timer_t time = 20;</code>
+         * @return The time.
+         */
+        @java.lang.Override
+        public Typedef.Timer_t getTime() {
+            return time_ == null ? Typedef.Timer_t.getDefaultInstance() : time_;
+        }
+        /**
+         * <code>.Timer_t time = 20;</code>
+         */
+        @java.lang.Override
+        public Typedef.Timer_tOrBuilder getTimeOrBuilder() {
+            return time_ == null ? Typedef.Timer_t.getDefaultInstance() : time_;
+        }
+
         private byte memoizedIsInitialized = -1;
         @java.lang.Override
         public final boolean isInitialized() {
@@ -3107,9 +4492,12 @@ public final class Typedef {
                 output.writeEnum(4, cotroller_);
             }
             if (((bitField0_ & 0x00000001) != 0)) {
-                output.writeMessage(16, getOta());
+                output.writeMessage(5, getSync());
             }
             if (((bitField0_ & 0x00000002) != 0)) {
+                output.writeMessage(16, getOta());
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
                 output.writeMessage(17, getVpn());
             }
             for (int i = 0; i < led_.size(); i++) {
@@ -3117,6 +4505,9 @@ public final class Typedef {
             }
             for (int i = 0; i < sw_.size(); i++) {
                 output.writeMessage(19, sw_.get(i));
+            }
+            if (((bitField0_ & 0x00000008) != 0)) {
+                output.writeMessage(20, getTime());
             }
             getUnknownFields().writeTo(output);
         }
@@ -3144,9 +4535,13 @@ public final class Typedef {
             }
             if (((bitField0_ & 0x00000001) != 0)) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeMessageSize(16, getOta());
+                        .computeMessageSize(5, getSync());
             }
             if (((bitField0_ & 0x00000002) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(16, getOta());
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
                 size += com.google.protobuf.CodedOutputStream
                         .computeMessageSize(17, getVpn());
             }
@@ -3157,6 +4552,10 @@ public final class Typedef {
             for (int i = 0; i < sw_.size(); i++) {
                 size += com.google.protobuf.CodedOutputStream
                         .computeMessageSize(19, sw_.get(i));
+            }
+            if (((bitField0_ & 0x00000008) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(20, getTime());
             }
             size += getUnknownFields().getSerializedSize();
             memoizedSize = size;
@@ -3178,6 +4577,11 @@ public final class Typedef {
             if (sender_ != other.sender_) return false;
             if (receiver_ != other.receiver_) return false;
             if (cotroller_ != other.cotroller_) return false;
+            if (hasSync() != other.hasSync()) return false;
+            if (hasSync()) {
+                if (!getSync()
+                        .equals(other.getSync())) return false;
+            }
             if (hasOta() != other.hasOta()) return false;
             if (hasOta()) {
                 if (!getOta()
@@ -3192,6 +4596,11 @@ public final class Typedef {
                     .equals(other.getLedList())) return false;
             if (!getSwList()
                     .equals(other.getSwList())) return false;
+            if (hasTime() != other.hasTime()) return false;
+            if (hasTime()) {
+                if (!getTime()
+                        .equals(other.getTime())) return false;
+            }
             if (!getUnknownFields().equals(other.getUnknownFields())) return false;
             return true;
         }
@@ -3211,6 +4620,10 @@ public final class Typedef {
             hash = (53 * hash) + receiver_;
             hash = (37 * hash) + COTROLLER_FIELD_NUMBER;
             hash = (53 * hash) + cotroller_;
+            if (hasSync()) {
+                hash = (37 * hash) + SYNC_FIELD_NUMBER;
+                hash = (53 * hash) + getSync().hashCode();
+            }
             if (hasOta()) {
                 hash = (37 * hash) + OTA_FIELD_NUMBER;
                 hash = (53 * hash) + getOta().hashCode();
@@ -3226,6 +4639,10 @@ public final class Typedef {
             if (getSwCount() > 0) {
                 hash = (37 * hash) + SW_FIELD_NUMBER;
                 hash = (53 * hash) + getSwList().hashCode();
+            }
+            if (hasTime()) {
+                hash = (37 * hash) + TIME_FIELD_NUMBER;
+                hash = (53 * hash) + getTime().hashCode();
             }
             hash = (29 * hash) + getUnknownFields().hashCode();
             memoizedHashCode = hash;
@@ -3357,10 +4774,12 @@ public final class Typedef {
             private void maybeForceBuilderInitialization() {
                 if (com.google.protobuf.GeneratedMessage
                         .alwaysUseFieldBuilders) {
+                    getSyncFieldBuilder();
                     getOtaFieldBuilder();
                     getVpnFieldBuilder();
                     getLedFieldBuilder();
                     getSwFieldBuilder();
+                    getTimeFieldBuilder();
                 }
             }
             @java.lang.Override
@@ -3371,6 +4790,11 @@ public final class Typedef {
                 sender_ = 0;
                 receiver_ = 0;
                 cotroller_ = 0;
+                sync_ = null;
+                if (syncBuilder_ != null) {
+                    syncBuilder_.dispose();
+                    syncBuilder_ = null;
+                }
                 ota_ = null;
                 if (otaBuilder_ != null) {
                     otaBuilder_.dispose();
@@ -3387,14 +4811,19 @@ public final class Typedef {
                     led_ = null;
                     ledBuilder_.clear();
                 }
-                bitField0_ = (bitField0_ & ~0x00000040);
+                bitField0_ = (bitField0_ & ~0x00000080);
                 if (swBuilder_ == null) {
                     sw_ = java.util.Collections.emptyList();
                 } else {
                     sw_ = null;
                     swBuilder_.clear();
                 }
-                bitField0_ = (bitField0_ & ~0x00000080);
+                bitField0_ = (bitField0_ & ~0x00000100);
+                time_ = null;
+                if (timeBuilder_ != null) {
+                    timeBuilder_.dispose();
+                    timeBuilder_ = null;
+                }
                 return this;
             }
 
@@ -3429,18 +4858,18 @@ public final class Typedef {
 
             private void buildPartialRepeatedFields(Typedef.Buffer result) {
                 if (ledBuilder_ == null) {
-                    if (((bitField0_ & 0x00000040) != 0)) {
+                    if (((bitField0_ & 0x00000080) != 0)) {
                         led_ = java.util.Collections.unmodifiableList(led_);
-                        bitField0_ = (bitField0_ & ~0x00000040);
+                        bitField0_ = (bitField0_ & ~0x00000080);
                     }
                     result.led_ = led_;
                 } else {
                     result.led_ = ledBuilder_.build();
                 }
                 if (swBuilder_ == null) {
-                    if (((bitField0_ & 0x00000080) != 0)) {
+                    if (((bitField0_ & 0x00000100) != 0)) {
                         sw_ = java.util.Collections.unmodifiableList(sw_);
-                        bitField0_ = (bitField0_ & ~0x00000080);
+                        bitField0_ = (bitField0_ & ~0x00000100);
                     }
                     result.sw_ = sw_;
                 } else {
@@ -3464,16 +4893,28 @@ public final class Typedef {
                 }
                 int to_bitField0_ = 0;
                 if (((from_bitField0_ & 0x00000010) != 0)) {
-                    result.ota_ = otaBuilder_ == null
-                            ? ota_
-                            : otaBuilder_.build();
+                    result.sync_ = syncBuilder_ == null
+                            ? sync_
+                            : syncBuilder_.build();
                     to_bitField0_ |= 0x00000001;
                 }
                 if (((from_bitField0_ & 0x00000020) != 0)) {
+                    result.ota_ = otaBuilder_ == null
+                            ? ota_
+                            : otaBuilder_.build();
+                    to_bitField0_ |= 0x00000002;
+                }
+                if (((from_bitField0_ & 0x00000040) != 0)) {
                     result.vpn_ = vpnBuilder_ == null
                             ? vpn_
                             : vpnBuilder_.build();
-                    to_bitField0_ |= 0x00000002;
+                    to_bitField0_ |= 0x00000004;
+                }
+                if (((from_bitField0_ & 0x00000200) != 0)) {
+                    result.time_ = timeBuilder_ == null
+                            ? time_
+                            : timeBuilder_.build();
+                    to_bitField0_ |= 0x00000008;
                 }
                 result.bitField0_ |= to_bitField0_;
             }
@@ -3504,6 +4945,9 @@ public final class Typedef {
                 if (other.cotroller_ != 0) {
                     setCotrollerValue(other.getCotrollerValue());
                 }
+                if (other.hasSync()) {
+                    mergeSync(other.getSync());
+                }
                 if (other.hasOta()) {
                     mergeOta(other.getOta());
                 }
@@ -3514,7 +4958,7 @@ public final class Typedef {
                     if (!other.led_.isEmpty()) {
                         if (led_.isEmpty()) {
                             led_ = other.led_;
-                            bitField0_ = (bitField0_ & ~0x00000040);
+                            bitField0_ = (bitField0_ & ~0x00000080);
                         } else {
                             ensureLedIsMutable();
                             led_.addAll(other.led_);
@@ -3527,7 +4971,7 @@ public final class Typedef {
                             ledBuilder_.dispose();
                             ledBuilder_ = null;
                             led_ = other.led_;
-                            bitField0_ = (bitField0_ & ~0x00000040);
+                            bitField0_ = (bitField0_ & ~0x00000080);
                             ledBuilder_ =
                                     com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                                             getLedFieldBuilder() : null;
@@ -3540,7 +4984,7 @@ public final class Typedef {
                     if (!other.sw_.isEmpty()) {
                         if (sw_.isEmpty()) {
                             sw_ = other.sw_;
-                            bitField0_ = (bitField0_ & ~0x00000080);
+                            bitField0_ = (bitField0_ & ~0x00000100);
                         } else {
                             ensureSwIsMutable();
                             sw_.addAll(other.sw_);
@@ -3553,7 +4997,7 @@ public final class Typedef {
                             swBuilder_.dispose();
                             swBuilder_ = null;
                             sw_ = other.sw_;
-                            bitField0_ = (bitField0_ & ~0x00000080);
+                            bitField0_ = (bitField0_ & ~0x00000100);
                             swBuilder_ =
                                     com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                                             getSwFieldBuilder() : null;
@@ -3561,6 +5005,9 @@ public final class Typedef {
                             swBuilder_.addAllMessages(other.sw_);
                         }
                     }
+                }
+                if (other.hasTime()) {
+                    mergeTime(other.getTime());
                 }
                 this.mergeUnknownFields(other.getUnknownFields());
                 onChanged();
@@ -3608,18 +5055,25 @@ public final class Typedef {
                                 bitField0_ |= 0x00000008;
                                 break;
                             } // case 32
+                            case 42: {
+                                input.readMessage(
+                                        getSyncFieldBuilder().getBuilder(),
+                                        extensionRegistry);
+                                bitField0_ |= 0x00000010;
+                                break;
+                            } // case 42
                             case 130: {
                                 input.readMessage(
                                         getOtaFieldBuilder().getBuilder(),
                                         extensionRegistry);
-                                bitField0_ |= 0x00000010;
+                                bitField0_ |= 0x00000020;
                                 break;
                             } // case 130
                             case 138: {
                                 input.readMessage(
                                         getVpnFieldBuilder().getBuilder(),
                                         extensionRegistry);
-                                bitField0_ |= 0x00000020;
+                                bitField0_ |= 0x00000040;
                                 break;
                             } // case 138
                             case 146: {
@@ -3648,6 +5102,13 @@ public final class Typedef {
                                 }
                                 break;
                             } // case 154
+                            case 162: {
+                                input.readMessage(
+                                        getTimeFieldBuilder().getBuilder(),
+                                        extensionRegistry);
+                                bitField0_ |= 0x00000200;
+                                break;
+                            } // case 162
                             default: {
                                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                     done = true; // was an endgroup tag
@@ -3956,6 +5417,127 @@ public final class Typedef {
                 return this;
             }
 
+            private Typedef.Sync_t sync_;
+            private com.google.protobuf.SingleFieldBuilder<
+                    Typedef.Sync_t, Typedef.Sync_t.Builder, Typedef.Sync_tOrBuilder> syncBuilder_;
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             * @return Whether the sync field is set.
+             */
+            public boolean hasSync() {
+                return ((bitField0_ & 0x00000010) != 0);
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             * @return The sync.
+             */
+            public Typedef.Sync_t getSync() {
+                if (syncBuilder_ == null) {
+                    return sync_ == null ? Typedef.Sync_t.getDefaultInstance() : sync_;
+                } else {
+                    return syncBuilder_.getMessage();
+                }
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            public Builder setSync(Typedef.Sync_t value) {
+                if (syncBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    sync_ = value;
+                } else {
+                    syncBuilder_.setMessage(value);
+                }
+                bitField0_ |= 0x00000010;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            public Builder setSync(
+                    Typedef.Sync_t.Builder builderForValue) {
+                if (syncBuilder_ == null) {
+                    sync_ = builderForValue.build();
+                } else {
+                    syncBuilder_.setMessage(builderForValue.build());
+                }
+                bitField0_ |= 0x00000010;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            public Builder mergeSync(Typedef.Sync_t value) {
+                if (syncBuilder_ == null) {
+                    if (((bitField0_ & 0x00000010) != 0) &&
+                            sync_ != null &&
+                            sync_ != Typedef.Sync_t.getDefaultInstance()) {
+                        getSyncBuilder().mergeFrom(value);
+                    } else {
+                        sync_ = value;
+                    }
+                } else {
+                    syncBuilder_.mergeFrom(value);
+                }
+                if (sync_ != null) {
+                    bitField0_ |= 0x00000010;
+                    onChanged();
+                }
+                return this;
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            public Builder clearSync() {
+                bitField0_ = (bitField0_ & ~0x00000010);
+                sync_ = null;
+                if (syncBuilder_ != null) {
+                    syncBuilder_.dispose();
+                    syncBuilder_ = null;
+                }
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            public Typedef.Sync_t.Builder getSyncBuilder() {
+                bitField0_ |= 0x00000010;
+                onChanged();
+                return getSyncFieldBuilder().getBuilder();
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            public Typedef.Sync_tOrBuilder getSyncOrBuilder() {
+                if (syncBuilder_ != null) {
+                    return syncBuilder_.getMessageOrBuilder();
+                } else {
+                    return sync_ == null ?
+                            Typedef.Sync_t.getDefaultInstance() : sync_;
+                }
+            }
+            /**
+             * <code>.Sync_t sync = 5;</code>
+             */
+            private com.google.protobuf.SingleFieldBuilder<
+                    Typedef.Sync_t, Typedef.Sync_t.Builder, Typedef.Sync_tOrBuilder>
+            getSyncFieldBuilder() {
+                if (syncBuilder_ == null) {
+                    syncBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                            Typedef.Sync_t, Typedef.Sync_t.Builder, Typedef.Sync_tOrBuilder>(
+                            getSync(),
+                            getParentForChildren(),
+                            isClean());
+                    sync_ = null;
+                }
+                return syncBuilder_;
+            }
+
             private Typedef.Ota_t ota_;
             private com.google.protobuf.SingleFieldBuilder<
                     Typedef.Ota_t, Typedef.Ota_t.Builder, Typedef.Ota_tOrBuilder> otaBuilder_;
@@ -3964,7 +5546,7 @@ public final class Typedef {
              * @return Whether the ota field is set.
              */
             public boolean hasOta() {
-                return ((bitField0_ & 0x00000010) != 0);
+                return ((bitField0_ & 0x00000020) != 0);
             }
             /**
              * <code>.Ota_t ota = 16;</code>
@@ -3989,7 +5571,7 @@ public final class Typedef {
                 } else {
                     otaBuilder_.setMessage(value);
                 }
-                bitField0_ |= 0x00000010;
+                bitField0_ |= 0x00000020;
                 onChanged();
                 return this;
             }
@@ -4003,7 +5585,7 @@ public final class Typedef {
                 } else {
                     otaBuilder_.setMessage(builderForValue.build());
                 }
-                bitField0_ |= 0x00000010;
+                bitField0_ |= 0x00000020;
                 onChanged();
                 return this;
             }
@@ -4012,7 +5594,7 @@ public final class Typedef {
              */
             public Builder mergeOta(Typedef.Ota_t value) {
                 if (otaBuilder_ == null) {
-                    if (((bitField0_ & 0x00000010) != 0) &&
+                    if (((bitField0_ & 0x00000020) != 0) &&
                             ota_ != null &&
                             ota_ != Typedef.Ota_t.getDefaultInstance()) {
                         getOtaBuilder().mergeFrom(value);
@@ -4023,7 +5605,7 @@ public final class Typedef {
                     otaBuilder_.mergeFrom(value);
                 }
                 if (ota_ != null) {
-                    bitField0_ |= 0x00000010;
+                    bitField0_ |= 0x00000020;
                     onChanged();
                 }
                 return this;
@@ -4032,7 +5614,7 @@ public final class Typedef {
              * <code>.Ota_t ota = 16;</code>
              */
             public Builder clearOta() {
-                bitField0_ = (bitField0_ & ~0x00000010);
+                bitField0_ = (bitField0_ & ~0x00000020);
                 ota_ = null;
                 if (otaBuilder_ != null) {
                     otaBuilder_.dispose();
@@ -4045,7 +5627,7 @@ public final class Typedef {
              * <code>.Ota_t ota = 16;</code>
              */
             public Typedef.Ota_t.Builder getOtaBuilder() {
-                bitField0_ |= 0x00000010;
+                bitField0_ |= 0x00000020;
                 onChanged();
                 return getOtaFieldBuilder().getBuilder();
             }
@@ -4085,7 +5667,7 @@ public final class Typedef {
              * @return Whether the vpn field is set.
              */
             public boolean hasVpn() {
-                return ((bitField0_ & 0x00000020) != 0);
+                return ((bitField0_ & 0x00000040) != 0);
             }
             /**
              * <code>.Vpn_t vpn = 17;</code>
@@ -4110,7 +5692,7 @@ public final class Typedef {
                 } else {
                     vpnBuilder_.setMessage(value);
                 }
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000040;
                 onChanged();
                 return this;
             }
@@ -4124,7 +5706,7 @@ public final class Typedef {
                 } else {
                     vpnBuilder_.setMessage(builderForValue.build());
                 }
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000040;
                 onChanged();
                 return this;
             }
@@ -4133,7 +5715,7 @@ public final class Typedef {
              */
             public Builder mergeVpn(Typedef.Vpn_t value) {
                 if (vpnBuilder_ == null) {
-                    if (((bitField0_ & 0x00000020) != 0) &&
+                    if (((bitField0_ & 0x00000040) != 0) &&
                             vpn_ != null &&
                             vpn_ != Typedef.Vpn_t.getDefaultInstance()) {
                         getVpnBuilder().mergeFrom(value);
@@ -4144,7 +5726,7 @@ public final class Typedef {
                     vpnBuilder_.mergeFrom(value);
                 }
                 if (vpn_ != null) {
-                    bitField0_ |= 0x00000020;
+                    bitField0_ |= 0x00000040;
                     onChanged();
                 }
                 return this;
@@ -4153,7 +5735,7 @@ public final class Typedef {
              * <code>.Vpn_t vpn = 17;</code>
              */
             public Builder clearVpn() {
-                bitField0_ = (bitField0_ & ~0x00000020);
+                bitField0_ = (bitField0_ & ~0x00000040);
                 vpn_ = null;
                 if (vpnBuilder_ != null) {
                     vpnBuilder_.dispose();
@@ -4166,7 +5748,7 @@ public final class Typedef {
              * <code>.Vpn_t vpn = 17;</code>
              */
             public Typedef.Vpn_t.Builder getVpnBuilder() {
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000040;
                 onChanged();
                 return getVpnFieldBuilder().getBuilder();
             }
@@ -4201,9 +5783,9 @@ public final class Typedef {
             private java.util.List<Typedef.Led_t> led_ =
                     java.util.Collections.emptyList();
             private void ensureLedIsMutable() {
-                if (!((bitField0_ & 0x00000040) != 0)) {
+                if (!((bitField0_ & 0x00000080) != 0)) {
                     led_ = new java.util.ArrayList<Typedef.Led_t>(led_);
-                    bitField0_ |= 0x00000040;
+                    bitField0_ |= 0x00000080;
                 }
             }
 
@@ -4353,7 +5935,7 @@ public final class Typedef {
             public Builder clearLed() {
                 if (ledBuilder_ == null) {
                     led_ = java.util.Collections.emptyList();
-                    bitField0_ = (bitField0_ & ~0x00000040);
+                    bitField0_ = (bitField0_ & ~0x00000080);
                     onChanged();
                 } else {
                     ledBuilder_.clear();
@@ -4430,7 +6012,7 @@ public final class Typedef {
                     ledBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
                             Typedef.Led_t, Typedef.Led_t.Builder, Typedef.Led_tOrBuilder>(
                             led_,
-                            ((bitField0_ & 0x00000040) != 0),
+                            ((bitField0_ & 0x00000080) != 0),
                             getParentForChildren(),
                             isClean());
                     led_ = null;
@@ -4441,9 +6023,9 @@ public final class Typedef {
             private java.util.List<Typedef.Sw_t> sw_ =
                     java.util.Collections.emptyList();
             private void ensureSwIsMutable() {
-                if (!((bitField0_ & 0x00000080) != 0)) {
+                if (!((bitField0_ & 0x00000100) != 0)) {
                     sw_ = new java.util.ArrayList<Typedef.Sw_t>(sw_);
-                    bitField0_ |= 0x00000080;
+                    bitField0_ |= 0x00000100;
                 }
             }
 
@@ -4593,7 +6175,7 @@ public final class Typedef {
             public Builder clearSw() {
                 if (swBuilder_ == null) {
                     sw_ = java.util.Collections.emptyList();
-                    bitField0_ = (bitField0_ & ~0x00000080);
+                    bitField0_ = (bitField0_ & ~0x00000100);
                     onChanged();
                 } else {
                     swBuilder_.clear();
@@ -4670,12 +6252,133 @@ public final class Typedef {
                     swBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
                             Typedef.Sw_t, Typedef.Sw_t.Builder, Typedef.Sw_tOrBuilder>(
                             sw_,
-                            ((bitField0_ & 0x00000080) != 0),
+                            ((bitField0_ & 0x00000100) != 0),
                             getParentForChildren(),
                             isClean());
                     sw_ = null;
                 }
                 return swBuilder_;
+            }
+
+            private Typedef.Timer_t time_;
+            private com.google.protobuf.SingleFieldBuilder<
+                    Typedef.Timer_t, Typedef.Timer_t.Builder, Typedef.Timer_tOrBuilder> timeBuilder_;
+            /**
+             * <code>.Timer_t time = 20;</code>
+             * @return Whether the time field is set.
+             */
+            public boolean hasTime() {
+                return ((bitField0_ & 0x00000200) != 0);
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             * @return The time.
+             */
+            public Typedef.Timer_t getTime() {
+                if (timeBuilder_ == null) {
+                    return time_ == null ? Typedef.Timer_t.getDefaultInstance() : time_;
+                } else {
+                    return timeBuilder_.getMessage();
+                }
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            public Builder setTime(Typedef.Timer_t value) {
+                if (timeBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    time_ = value;
+                } else {
+                    timeBuilder_.setMessage(value);
+                }
+                bitField0_ |= 0x00000200;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            public Builder setTime(
+                    Typedef.Timer_t.Builder builderForValue) {
+                if (timeBuilder_ == null) {
+                    time_ = builderForValue.build();
+                } else {
+                    timeBuilder_.setMessage(builderForValue.build());
+                }
+                bitField0_ |= 0x00000200;
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            public Builder mergeTime(Typedef.Timer_t value) {
+                if (timeBuilder_ == null) {
+                    if (((bitField0_ & 0x00000200) != 0) &&
+                            time_ != null &&
+                            time_ != Typedef.Timer_t.getDefaultInstance()) {
+                        getTimeBuilder().mergeFrom(value);
+                    } else {
+                        time_ = value;
+                    }
+                } else {
+                    timeBuilder_.mergeFrom(value);
+                }
+                if (time_ != null) {
+                    bitField0_ |= 0x00000200;
+                    onChanged();
+                }
+                return this;
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            public Builder clearTime() {
+                bitField0_ = (bitField0_ & ~0x00000200);
+                time_ = null;
+                if (timeBuilder_ != null) {
+                    timeBuilder_.dispose();
+                    timeBuilder_ = null;
+                }
+                onChanged();
+                return this;
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            public Typedef.Timer_t.Builder getTimeBuilder() {
+                bitField0_ |= 0x00000200;
+                onChanged();
+                return getTimeFieldBuilder().getBuilder();
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            public Typedef.Timer_tOrBuilder getTimeOrBuilder() {
+                if (timeBuilder_ != null) {
+                    return timeBuilder_.getMessageOrBuilder();
+                } else {
+                    return time_ == null ?
+                            Typedef.Timer_t.getDefaultInstance() : time_;
+                }
+            }
+            /**
+             * <code>.Timer_t time = 20;</code>
+             */
+            private com.google.protobuf.SingleFieldBuilder<
+                    Typedef.Timer_t, Typedef.Timer_t.Builder, Typedef.Timer_tOrBuilder>
+            getTimeFieldBuilder() {
+                if (timeBuilder_ == null) {
+                    timeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                            Typedef.Timer_t, Typedef.Timer_t.Builder, Typedef.Timer_tOrBuilder>(
+                            getTime(),
+                            getParentForChildren(),
+                            isClean());
+                    time_ = null;
+                }
+                return timeBuilder_;
             }
 
             // @@protoc_insertion_point(builder_scope:Buffer)
@@ -6049,6 +7752,11 @@ public final class Typedef {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internal_static_Led_t_fieldAccessorTable;
     private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_Sync_t_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_Sync_t_fieldAccessorTable;
+    private static final com.google.protobuf.Descriptors.Descriptor
             internal_static_Sw_t_descriptor;
     private static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -6063,6 +7771,11 @@ public final class Typedef {
     private static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internal_static_KeepAlive_t_fieldAccessorTable;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_Timer_t_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_Timer_t_fieldAccessorTable;
     private static final com.google.protobuf.Descriptors.Descriptor
             internal_static_Buffer_descriptor;
     private static final
@@ -6087,22 +7800,27 @@ public final class Typedef {
             descriptor;
     static {
         java.lang.String[] descriptorData = {
-                "\n\rTypedef.proto\"2\n\005Led_t\022\014\n\004name\030\020 \001(\t\022\013" +
-                        "\n\003mac\030\021 \001(\004\022\016\n\006status\030\022 \001(\010\"=\n\004Sw_t\022\014\n\004n" +
-                        "ame\030\020 \001(\t\022\n\n\002ep\030\021 \001(\r\022\013\n\003mac\030\022 \001(\004\022\016\n\006st" +
-                        "atus\030\023 \001(\010\"7\n\005Ota_t\022\021\n\tcheck_ota\030\020 \001(\010\022\016" +
-                        "\n\006status\030\021 \001(\010\022\013\n\003ack\030\022 \001(\010\"&\n\013KeepAlive" +
-                        "_t\022\027\n\006sender\030\001 \001(\0162\007.User_t\"\273\001\n\006Buffer\022\017" +
-                        "\n\007mac_hub\030\001 \001(\t\022\027\n\006sender\030\002 \001(\0162\007.User_t" +
-                        "\022\031\n\010receiver\030\003 \001(\0162\007.User_t\022\032\n\tcotroller" +
-                        "\030\004 \001(\0162\007.User_t\022\023\n\003ota\030\020 \001(\0132\006.Ota_t\022\023\n\003" +
-                        "vpn\030\021 \001(\0132\006.Vpn_t\022\023\n\003led\030\022 \003(\0132\006.Led_t\022\021" +
-                        "\n\002sw\030\023 \003(\0132\005.Sw_t\"$\n\005Vpn_t\022\016\n\006status\030\001 \001" +
-                        "(\010\022\013\n\003mac\030\002 \001(\t\"9\n\010Vendor_t\022\017\n\007mac_ven\030\001" +
-                        " \001(\t\022\014\n\004data\030\002 \001(\t\022\016\n\006status\030\003 \001(\010*b\n\006Us" +
-                        "er_t\022\007\n\003App\020\000\022\n\n\006Server\020\001\022\007\n\003Hub\020\002\022\n\n\006Zi" +
-                        "gbee\020\003\022\007\n\003Ble\020\004\022\006\n\002Ai\020\005\022\010\n\004Wifi\020\006\022\n\n\006Scr" +
-                        "een\020\007\022\007\n\003Ota\020\010b\006proto3"
+                "\n\rTypedef.proto\">\n\005Led_t\022\014\n\004name\030\020 \001(\t\022\013" +
+                        "\n\003mac\030\021 \001(\004\022\n\n\002ep\030\022 \001(\r\022\016\n\006status\030\023 \001(\010\"" +
+                        "3\n\006Sync_t\022\013\n\003add\030\020 \001(\010\022\016\n\006remove\030\021 \001(\010\022\014" +
+                        "\n\004sync\030\022 \001(\010\"=\n\004Sw_t\022\014\n\004name\030\020 \001(\t\022\n\n\002ep" +
+                        "\030\021 \001(\r\022\013\n\003mac\030\022 \001(\004\022\016\n\006status\030\023 \001(\010\"7\n\005O" +
+                        "ta_t\022\021\n\tcheck_ota\030\020 \001(\010\022\016\n\006status\030\021 \001(\010\022" +
+                        "\013\n\003ack\030\022 \001(\010\"&\n\013KeepAlive_t\022\027\n\006sender\030\001 " +
+                        "\001(\0162\007.User_t\"C\n\007Timer_t\022\013\n\003day\030\017 \001(\r\022\r\n\005" +
+                        "month\030\020 \001(\r\022\014\n\004hour\030\021 \001(\r\022\016\n\006minute\030\022 \001(" +
+                        "\r\"\352\001\n\006Buffer\022\017\n\007mac_hub\030\001 \001(\t\022\027\n\006sender\030" +
+                        "\002 \001(\0162\007.User_t\022\031\n\010receiver\030\003 \001(\0162\007.User_" +
+                        "t\022\032\n\tcotroller\030\004 \001(\0162\007.User_t\022\025\n\004sync\030\005 " +
+                        "\001(\0132\007.Sync_t\022\023\n\003ota\030\020 \001(\0132\006.Ota_t\022\023\n\003vpn" +
+                        "\030\021 \001(\0132\006.Vpn_t\022\023\n\003led\030\022 \003(\0132\006.Led_t\022\021\n\002s" +
+                        "w\030\023 \003(\0132\005.Sw_t\022\026\n\004time\030\024 \001(\0132\010.Timer_t\"$" +
+                        "\n\005Vpn_t\022\016\n\006status\030\001 \001(\010\022\013\n\003mac\030\002 \001(\t\"9\n\010" +
+                        "Vendor_t\022\017\n\007mac_ven\030\001 \001(\t\022\014\n\004data\030\002 \001(\t\022" +
+                        "\016\n\006status\030\003 \001(\010*b\n\006User_t\022\007\n\003App\020\000\022\n\n\006Se" +
+                        "rver\020\001\022\007\n\003Hub\020\002\022\n\n\006Zigbee\020\003\022\007\n\003Ble\020\004\022\006\n\002" +
+                        "Ai\020\005\022\010\n\004Wifi\020\006\022\n\n\006Screen\020\007\022\007\n\003Ota\020\010b\006pro" +
+                        "to3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
                 .internalBuildGeneratedFileFrom(descriptorData,
@@ -6113,39 +7831,51 @@ public final class Typedef {
         internal_static_Led_t_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_Led_t_descriptor,
-                new java.lang.String[] { "Name", "Mac", "Status", });
-        internal_static_Sw_t_descriptor =
+                new java.lang.String[] { "Name", "Mac", "Ep", "Status", });
+        internal_static_Sync_t_descriptor =
                 getDescriptor().getMessageTypes().get(1);
+        internal_static_Sync_t_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+                internal_static_Sync_t_descriptor,
+                new java.lang.String[] { "Add", "Remove", "Sync", });
+        internal_static_Sw_t_descriptor =
+                getDescriptor().getMessageTypes().get(2);
         internal_static_Sw_t_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_Sw_t_descriptor,
                 new java.lang.String[] { "Name", "Ep", "Mac", "Status", });
         internal_static_Ota_t_descriptor =
-                getDescriptor().getMessageTypes().get(2);
+                getDescriptor().getMessageTypes().get(3);
         internal_static_Ota_t_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_Ota_t_descriptor,
                 new java.lang.String[] { "CheckOta", "Status", "Ack", });
         internal_static_KeepAlive_t_descriptor =
-                getDescriptor().getMessageTypes().get(3);
+                getDescriptor().getMessageTypes().get(4);
         internal_static_KeepAlive_t_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_KeepAlive_t_descriptor,
                 new java.lang.String[] { "Sender", });
+        internal_static_Timer_t_descriptor =
+                getDescriptor().getMessageTypes().get(5);
+        internal_static_Timer_t_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+                internal_static_Timer_t_descriptor,
+                new java.lang.String[] { "Day", "Month", "Hour", "Minute", });
         internal_static_Buffer_descriptor =
-                getDescriptor().getMessageTypes().get(4);
+                getDescriptor().getMessageTypes().get(6);
         internal_static_Buffer_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_Buffer_descriptor,
-                new java.lang.String[] { "MacHub", "Sender", "Receiver", "Cotroller", "Ota", "Vpn", "Led", "Sw", });
+                new java.lang.String[] { "MacHub", "Sender", "Receiver", "Cotroller", "Sync", "Ota", "Vpn", "Led", "Sw", "Time", });
         internal_static_Vpn_t_descriptor =
-                getDescriptor().getMessageTypes().get(5);
+                getDescriptor().getMessageTypes().get(7);
         internal_static_Vpn_t_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_Vpn_t_descriptor,
                 new java.lang.String[] { "Status", "Mac", });
         internal_static_Vendor_t_descriptor =
-                getDescriptor().getMessageTypes().get(6);
+                getDescriptor().getMessageTypes().get(8);
         internal_static_Vendor_t_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
                 internal_static_Vendor_t_descriptor,

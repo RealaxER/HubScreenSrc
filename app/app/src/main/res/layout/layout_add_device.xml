@@ -17,7 +17,12 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="mac" />
-
+    <EditText
+        android:id="@+id/device_endpoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="endpoint" />
     <Spinner
         android:id="@+id/device_type"
         android:layout_width="match_parent"

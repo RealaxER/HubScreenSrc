@@ -48,9 +48,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String BROKER = "tcp://broker.emqx.io:1883";
-    //private static final String BROKER = "tcp://54.253.168.98:1883";
-    private static final String CLIENT_ID = "living-lab";
+    //private static final String BROKER = "tcp://broker.emqx.io:1883";
+    private static final String BROKER = "tcp://3.26.238.229:1883";
+    private static final String CLIENT_ID = "livinglab-app";
     private static final String TOPIC_PUB = "hub/control/app/8xff";
     private static final String TOPIC_SUB = "hub/status/app/8xff";
     static GridView gv;
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
     private void addDevice(View addDeviceView, AlertDialog alertDialog) {
         EditText device_name = addDeviceView.findViewById(R.id.device_name);
         EditText device_mac = addDeviceView.findViewById(R.id.device_mac);
+        EditText device_endpoint = addDeviceView.findViewById(R.id.device_endpoint);
         Spinner spinner_controller = addDeviceView.findViewById(R.id.device_controller);
         Spinner spinner_device = addDeviceView.findViewById(R.id.device_type);
 
@@ -160,11 +161,13 @@ public class MainActivity extends AppCompatActivity {
         String deviceType = spinner_device.getSelectedItem().toString();
         String name = device_name.getText().toString();
         String macStr = device_mac.getText().toString();
+        String endpointStr = device_endpoint.getText().toString();
 
         if (isInputValid(name, macStr)) {
             long mac = Long.parseLong(macStr);
+            int endpoint = Integer.parseInt(endpointStr);
             if (isDeviceUnique(name, mac)) {
-                addDeviceToList(name, mac, controller, deviceType);
+                addDeviceToList(name, mac, controller, deviceType, endpoint);
                 alertDialog.dismiss();
             } else {
                 showToast("A device with the same name or mac already exists");
@@ -192,9 +195,35 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void addDeviceToList(String name, long mac, String controller, String deviceType) {
+    private void addDeviceToList(String name, long mac, String controller, String deviceType, int ep) {
         int imgRes = deviceType.equals("Led") ? R.drawable.led_off : R.drawable.switch_off;
-        deviceList.add(new Device(imgRes, name, mac, false, controller, deviceType));
+        Device newDevice = new Device(imgRes, name, mac, false, controller, deviceType, ep);
+        deviceList.add(newDevice);
+
+        Typedef.Sync_t syncT = Typedef.Sync_t.newBuilder().setAdd(true).build();
+        Typedef.Buffer.Builder bufferBuilder = Typedef.Buffer.newBuilder()
+                .setMacHub("8xff")
+                .setSender(Typedef.User_t.App)
+                .setReceiver(Typedef.User_t.Server)
+                .setSync(syncT)
+                .setCotroller(Typedef.User_t.Hub);
+
+        if (newDevice.getDevice_type().equals("Led")) {
+            Typedef.Led_t.Builder ledBuilder = Typedef.Led_t.newBuilder()
+                    .setName(newDevice.getName())
+                    .setMac(newDevice.getMac())
+                    .setEp(newDevice.getEp());
+            bufferBuilder.addLed(ledBuilder);
+        } else if (newDevice.getDevice_type().equals("Switch")) {
+            Typedef.Sw_t.Builder swBuilder = Typedef.Sw_t.newBuilder()
+                    .setName(newDevice.getName())
+                    .setMac(newDevice.getMac())
+                    .setEp(newDevice.getEp());
+            bufferBuilder.addSw(swBuilder);
+        }
+        System.out.println(bufferBuilder.build());
+        mqttHandler.publish(TOPIC_PUB, bufferBuilder.build().toByteArray());
+
         myAdapter.notifyDataSetChanged();
     }
 
@@ -221,6 +250,31 @@ public class MainActivity extends AppCompatActivity {
     private boolean removeDeviceFromList(String name) {
         for (int i = 0; i < deviceList.size(); i++) {
             if (deviceList.get(i).getName().equals(name)) {
+
+                Device device = deviceList.get(i);
+                Typedef.Sync_t syncT = Typedef.Sync_t.newBuilder().setRemove(true).build();
+                Typedef.Buffer.Builder bufferBuilder = Typedef.Buffer.newBuilder()
+                        .setMacHub("8xff")
+                        .setSender(Typedef.User_t.App)
+                        .setReceiver(Typedef.User_t.Server)
+                        .setSync(syncT)
+                        .setCotroller(Typedef.User_t.Hub);
+
+                if (device.getDevice_type().equals("Led")) {
+                    Typedef.Led_t.Builder ledBuilder = Typedef.Led_t.newBuilder()
+                            .setName(device.getName())
+                            .setMac(device.getMac())
+                            .setEp(device.getEp());
+                    bufferBuilder.addLed(ledBuilder);
+                } else if (device.getDevice_type().equals("Switch")) {
+                    Typedef.Sw_t.Builder swBuilder = Typedef.Sw_t.newBuilder()
+                            .setName(device.getName())
+                            .setMac(device.getMac())
+                            .setEp(device.getEp());
+                    bufferBuilder.addSw(swBuilder);
+                }
+                System.out.println(bufferBuilder.build());
+                mqttHandler.publish(TOPIC_PUB, bufferBuilder.build().toByteArray());
                 deviceList.remove(i);
                 myAdapter.notifyDataSetChanged();
                 return true;
@@ -267,7 +321,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         byte[] message = scan.toByteArray();
         System.out.println(scan);
-        mqttHandler.publish(TOPIC_PUB, message);
+        //mqttHandler.publish(TOPIC_PUB, message);
+        sendDeviceListToServer();
     }
 
     private void showToast(String message) {
@@ -297,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
         String minuteText = editTextMinute.getText().toString();
         String dayText = editTextDay.getText().toString();
         String monthText = editTextMonth.getText().toString();
-        String deviceName = editTextDeviceName.getText().toString();
+        String deviceNames = editTextDeviceName.getText().toString();
         String deviceStatusStr = spinnerDeviceStatus.getSelectedItem().toString();
         boolean deviceStatus = deviceStatusStr.equals("On");
 
@@ -305,11 +360,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid time or date", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!isValidDeviceName(deviceName)){
-            Toast.makeText(this, "Invalid device name", Toast.LENGTH_SHORT).show();
-            return;
+        String[] deviceNameArray = deviceNames.split(",");
+        for (String deviceName : deviceNameArray) {
+            deviceName = deviceName.trim();
+            if (!isValidDeviceName(deviceName)) {
+                Toast.makeText(this, "Invalid device name: " + "\"" + deviceName + "\"", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
-
         int hour = Integer.parseInt(hourText);
         int minute = Integer.parseInt(minuteText);
         int day = Integer.parseInt(dayText);
@@ -330,15 +388,52 @@ public class MainActivity extends AppCompatActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM", Locale.getDefault());
         System.out.println(dateFormat.format(calendar.getTime()));
-        System.out.println(deviceName);
-        System.out.println(deviceStatus);
 
-        handleTimeSelection(calendar, deviceName, deviceStatus);
+        Typedef.Timer_t time = Typedef.Timer_t.newBuilder()
+                .setHour(hour)
+                .setMinute(minute)
+                .setDay(day)
+                .setMonth(month)
+                .build();
+
+        Typedef.Buffer.Builder bufferBuilder = Typedef.Buffer.newBuilder()
+                .setMacHub("8xff")
+                .setSender(Typedef.User_t.valueOf("App"))
+                .setReceiver(Typedef.User_t.valueOf("Server"))
+                .setCotroller(Typedef.User_t.valueOf("Hub"))
+                .setTime(time);
+
+        for (String deviceName : deviceNameArray) {
+            deviceName = deviceName.trim();
+            for (Device device : deviceList){
+                if(device.getName().equals(deviceName)){
+                    if (device.getDevice_type().equals("Led")) {
+                        Typedef.Led_t.Builder ledBuilder = Typedef.Led_t.newBuilder()
+                                .setName(device.getName())
+                                .setMac(device.getMac())
+                                .setEp(device.getEp())
+                                .setStatus(deviceStatus);
+                        bufferBuilder.addLed(ledBuilder);
+                    }
+                    else if (device.getDevice_type().equals("Switch")){
+                        Typedef.Sw_t.Builder swBuilder = Typedef.Sw_t.newBuilder()
+                                .setName(device.getName())
+                                .setMac(device.getMac())
+                                .setEp(device.getEp())
+                                .setStatus(deviceStatus);
+                        bufferBuilder.addSw(swBuilder);
+                    }
+                }
+            }
+        }
+        Typedef.Buffer buffer = bufferBuilder.build();
+        System.out.println(buffer);
+        mqttHandler.publish(TOPIC_PUB, buffer.toByteArray());
         alertDialog.dismiss();
     }
     private boolean isValidDeviceName(String deviceName){
         for(Device device : deviceList){
-            if(device.getName().equals(deviceName)){
+            if(deviceName.equals(device.getName())){
                 return true;
             }
         }
@@ -361,20 +456,6 @@ public class MainActivity extends AppCompatActivity {
             return (day > 0 && day <= 31) && (month > 0 && month <= 12);
         } catch (NumberFormatException e) {
             return false;
-        }
-    }
-    private void handleTimeSelection(Calendar calendar, String deviceName, boolean deviceStatus) {
-        requestCode++;
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        intent.putExtra("deviceName", deviceName);
-        intent.putExtra("deviceStatus", deviceStatus);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_MUTABLE);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        if (alarmManager != null) {
-            Log.d("Alarm Debug", "Setting alarm for " + deviceName + " at " + calendar.getTime() + " with requestCode " + requestCode);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
     }
 
@@ -420,17 +501,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendDeviceListToServer(){
+        Typedef.Sync_t syncT = Typedef.Sync_t.newBuilder().setSync(true).build();
         Typedef.Buffer.Builder bufferBuilder = Typedef.Buffer.newBuilder()
                 .setMacHub("8xff")
-                .setSender(Typedef.User_t.valueOf("App"))
-                .setReceiver(Typedef.User_t.valueOf("Server"))
-                .setCotroller(Typedef.User_t.valueOf("Hub"));
+                .setSender(Typedef.User_t.App)
+                .setReceiver(Typedef.User_t.Server)
+                .setSync(syncT)
+                .setCotroller(Typedef.User_t.Hub);
 
         for (Device device : deviceList) {
             if (device.getDevice_type().equals("Led")) {
                 Typedef.Led_t.Builder ledBuilder = Typedef.Led_t.newBuilder()
                         .setName(device.getName())
                         .setMac(device.getMac())
+                        .setEp(device.getEp())
                         .setStatus(device.isStatus());
                 bufferBuilder.addLed(ledBuilder);
             }
@@ -438,6 +522,7 @@ public class MainActivity extends AppCompatActivity {
                 Typedef.Sw_t.Builder swBuilder = Typedef.Sw_t.newBuilder()
                         .setName(device.getName())
                         .setMac(device.getMac())
+                        .setEp(device.getEp())
                         .setStatus(device.isStatus());
                 bufferBuilder.addSw(swBuilder);
             }
@@ -461,7 +546,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean led_status = led.getStatus();
                 int led_img = led_status ? R.drawable.led_on : R.drawable.led_off;
                 runOnUiThread(() -> {
-                    Device newLed = new Device(led_img, led.getName(), led.getMac(), led.getStatus(), controller, "Led");
+                    Device newLed = new Device(led_img, led.getName(), led.getMac(), led.getStatus(), controller, "Led", led.getEp());
                     deviceList.add(newLed);
                     myAdapter.notifyDataSetChanged();
                 });
@@ -482,7 +567,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean sw_status = sw.getStatus();
                 int sw_img = sw_status ? R.drawable.switch_on : R.drawable.switch_off;
                 runOnUiThread(() -> {
-                    Device newSw = new Device(sw_img, sw.getName(), sw.getMac(), sw.getStatus(), controller, "Switch");
+                    Device newSw = new Device(sw_img, sw.getName(), sw.getMac(), sw.getStatus(), controller, "Switch", sw.getEp());
                     deviceList.add(newSw);
                     newSw.setEp(sw.getEp());
                     myAdapter.notifyDataSetChanged();
@@ -499,6 +584,7 @@ public class MainActivity extends AppCompatActivity {
                     device.setStatus(led.getStatus());
                     device.setImg(device.isStatus() ? imgOn : imgOff);
                     updateDeviceImageInGridView(i, device.getImg());
+                    mqttHandler.publish(TOPIC_PUB, device.toBuffer().toByteArray());
                 }
             }
         }
@@ -511,6 +597,7 @@ public class MainActivity extends AppCompatActivity {
                     device.setStatus(sw.getStatus());
                     device.setImg(device.isStatus() ? imgOn : imgOff);
                     updateDeviceImageInGridView(i, device.getImg());
+                    mqttHandler.publish(TOPIC_PUB, device.toBuffer().toByteArray());
                 }
             }
         }

@@ -10,13 +10,14 @@ public class Device {
     private String controller;
     private String device_type;
     private int ep;
-    public Device(int img, String name, long mac, boolean status, String controller, String device_type) {
+    public Device(int img, String name, long mac, boolean status, String controller, String device_type, int ep) {
         this.img = img;
         this.name = name;
         this.mac = mac;
         this.status = status;
         this.controller = controller;
         this.device_type = device_type;
+        this.ep = ep;
     }
 
     public int getEp() {
@@ -86,12 +87,14 @@ public class Device {
             Typedef.Led_t.Builder ledBuilder = Typedef.Led_t.newBuilder()
                     .setName(this.name)
                     .setMac(this.mac)
+                    .setEp(this.ep)
                     .setStatus(this.status);
             bufferBuilder.addLed(ledBuilder);
         } else if (this.device_type.equals("Switch")) {
             Typedef.Sw_t.Builder swBuilder = Typedef.Sw_t.newBuilder()
                     .setName(this.name)
                     .setMac(this.mac)
+                    .setEp(this.ep)
                     .setStatus(this.status);
             bufferBuilder.addSw(swBuilder);
         }

@@ -22,6 +22,8 @@ public class MqttHandler {
             // Set up the connection options
             MqttConnectOptions connectOptions = new MqttConnectOptions();
             connectOptions.setCleanSession(true);
+            connectOptions.setAutomaticReconnect(true); // Enable automatic reconnect
+            connectOptions.setKeepAliveInterval(10);
 
             // Connect to the broker
             client.connect(connectOptions);
