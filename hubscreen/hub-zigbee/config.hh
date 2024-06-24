@@ -2,7 +2,7 @@
 #include <iostream>
 
 #define DEVICE_NAME "hub-zigbee"
-#define PATH_SEZIAL "/dev/ttyAMA0"
+#define PATH_SEZIAL "/dev/serial0"
 #define BROKER "127.0.0.1"
 #define PORT 1883
 #define SUB "hub/zigbee"

@@ -1,7 +1,7 @@
 CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o: \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc \
  /usr/include/stdc-predef.h \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.h \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.h \
  /usr/include/c++/12/limits \
  /usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h \
  /usr/include/aarch64-linux-gnu/c++/12/bits/os_defines.h \

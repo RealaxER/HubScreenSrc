@@ -1,3 +1,4 @@
+
 #include <vector>
 #include <queue>
 #include <mutex>
@@ -39,21 +40,31 @@ public:
     }
 };
 
+HubDevice_t hub_zigbee(DEVICE_NAME, PATH_SEZIAL);
+
+
 std::vector<std::vector<uint8_t>> extract_uart(const uint8_t *input, size_t size) {
     std::vector<std::vector<uint8_t>> results;
     std::vector<uint8_t> current_message;
     bool in_message = false;
+    size_t consecutive_255_count = 0;
 
     for (size_t i = 0; i < size; ++i) {
-        if (input[i] == 0xFF && i + 1 < size && input[i + 1] == 0xFF) {
-            if (in_message && !current_message.empty()) {
-                results.push_back(current_message);
-                current_message.clear();
+        if (input[i] == 0xFF) {
+            consecutive_255_count++;
+            if (consecutive_255_count == 2) {
+                if (in_message && !current_message.empty()) {
+                    results.push_back(current_message);
+                    current_message.clear();
+                }
+                in_message = true;
+                consecutive_255_count = 0; // Reset đếm sau khi gặp cặp 255, 255
             }
-            in_message = true;
-            ++i; // Skip the next 0xFF
-        } else if (in_message) {
-            current_message.push_back(input[i]);
+        } else {
+            consecutive_255_count = 0;
+            if (in_message) {
+                current_message.push_back(input[i]);
+            }
         }
     }
 
@@ -62,7 +73,6 @@ std::vector<std::vector<uint8_t>> extract_uart(const uint8_t *input, size_t size
     }
     return results;
 }
-
 
 void uart_callback(const unsigned char *data, int length) {
     std::lock_guard<std::mutex> lock(mtx);
@@ -91,17 +101,10 @@ void convertBufferToZigbee(HubDevice_t device){
     }
 
     if(device.buff.sw_size() == 0){
-        Zigbee_t zigbee;
-        zigbee.set_sync(true);
-        zigbee.SerializeToArray(zigbee_arr, sizeof(zigbee_arr));
+	uint8_t sync[4] = {16, 1, 0xff, 0xff};
         LOG_INFO("Packet sync to zigbee");
-        LOG_INFO("--> " << "UART" << " : " << zigbee.DebugString() );
         // start byte data
-        device.uart.send(zigbee_arr, zigbee.ByteSizeLong());
-        for(int i =0;i<zigbee.ByteSizeLong(); i++){
-            printf("%d ", zigbee_arr[i]);
-        }
-	    printf("\n");
+        hub_zigbee.uart.send(sync, 4);
     }
 
     for (int i = 0; i < device.buff.sw_size(); ++i) {
@@ -116,10 +119,10 @@ void convertBufferToZigbee(HubDevice_t device){
 
         LOG_INFO("--> " << "UART" << " : " << zigbee.DebugString() );
         // start byte data
-        device.uart.send(zigbee_arr, zigbee.ByteSizeLong());
+        hub_zigbee.uart.send(zigbee_arr, zigbee.ByteSizeLong());
         // end byte data
         uint8_t end[2] = {0xff, 0xff};
-        device.uart.send(end, 2);
+        hub_zigbee.uart.send(end, 2);
     }
 }
 
@@ -153,17 +156,18 @@ int main(void) {
     __test_mqtt();
     // Test UART
 
-    // Setup HubDevice_t
-    HubDevice_t hub_zigbee(DEVICE_NAME, PATH_SEZIAL);
-
     // Set MQTT
     hub_zigbee.transport.set_callback(mqtt_callback);
     hub_zigbee.transport.setup(BROKER, PORT, 45);
     hub_zigbee.transport.subscribe(SUB , 1);
     hub_zigbee.transport.connect();
     // Set UART
-    std::vector<std::vector<uint8_t>> messages;
+        uint8_t sync[4] = {16, 1, 0xff, 0xff};
+        LOG_INFO("Packet sync to zigbee");
+        // start byte data
+        hub_zigbee.uart.send(sync, 4);
 
+    std::vector<std::vector<uint8_t>> messages;
     while (true) {
         std::unique_lock<std::mutex> lock(mtx);
         cv.wait(lock, []{ return !eventQueue.empty(); });

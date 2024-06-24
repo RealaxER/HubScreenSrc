@@ -5,6 +5,7 @@ use crate::transport::mqtt::MqttDriver;
 use crate::master::Master;
 use crate::timer::{SystemTimer, Timer};
 // use crate::sqlite::Sqlite;
+use std::thread;
 use protobuf::Message;
 use tokio::{
     select,
@@ -181,12 +182,19 @@ impl SystemIntergration {
 
                 BrLogicOut::UpgradeDevice { mut buffer } => {
                     log::info!("=======UPGRADE DEVICE===========");
-		            if buffer.sync.sync {
+		    if buffer.sync.sync {
                         let mut buff = Buffer::new();
                         buff.sender = User_t::Hub.into();
                         buff.receiver = User_t::Zigbee.into();
                         buff.cotroller = User_t::Zigbee.into();
                         let topic = format!("hub/zigbee");
+                        let message = buff.write_to_bytes().unwrap();
+                        let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
+
+                        buff.sender = User_t::Hub.into();
+                        buff.receiver = User_t::Wifi.into();
+                        buff.cotroller = User_t::Wifi.into();
+                        let topic = format!("hub/wifi");
                         let message = buff.write_to_bytes().unwrap();
                         let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                     }
@@ -208,6 +216,7 @@ impl SystemIntergration {
 
                 BrLogicOut::SyncDevice => {
                     self.master.enable_hub().await;
+		    thread::sleep(Duration::from_secs(10));
                     let topic = format!("hub/master/{}",self.transport.mac);
                     let mut buffer = Buffer::new();
                     buffer.mac_hub = self.transport.mac.clone();

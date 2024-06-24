@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/hub -I/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee -I/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt -I/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart
+CXX_INCLUDES = -I/root/HubScreenSrc/hubscreen/hub-zigbee/proto/hub -I/root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee -I/root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt -I/root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart
 
 CXX_FLAGS = 
 

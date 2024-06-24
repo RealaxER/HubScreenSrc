@@ -1,7 +1,7 @@
 CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o: \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc \
  /usr/include/stdc-predef.h \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.hh \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.hh \
  /usr/include/unistd.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/aarch64-linux-gnu/bits/wordsize.h \

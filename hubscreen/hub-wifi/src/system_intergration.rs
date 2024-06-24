@@ -83,9 +83,10 @@ impl SystemIntergration {
                     sw.ep = wifi.sw.endpoint;
                     sw.mac = wifi.sw.deviceID as u64;
                     sw.status = wifi.sw.status;
-                    buffer.sw.push(sw);
+                    sw.name = format!("wifi {}",sw.ep);
+		    buffer.sw.push(sw);
 
-                    let topic = format!("hub/wifi/{}",mac);
+                    let topic = format!("hub/wifi");
                     let message = buffer.write_to_bytes().unwrap();
                     let _ = self.transport.send(topic, message, rumqttc::QoS::AtMostOnce, false).await;
                 }

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bhien/HubScreenSrc/hubscreen/hub-zigbee
+CMAKE_SOURCE_DIR = /root/HubScreenSrc/hubscreen/hub-zigbee
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build
+CMAKE_BINARY_DIR = /root/HubScreenSrc/hubscreen/hub-zigbee/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/hub-zigbee.dir/depend.make
@@ -70,74 +70,74 @@ include CMakeFiles/hub-zigbee.dir/progress.make
 include CMakeFiles/hub-zigbee.dir/flags.make
 
 CMakeFiles/hub-zigbee.dir/main.cc.o: CMakeFiles/hub-zigbee.dir/flags.make
-CMakeFiles/hub-zigbee.dir/main.cc.o: /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/main.cc
+CMakeFiles/hub-zigbee.dir/main.cc.o: /root/HubScreenSrc/hubscreen/hub-zigbee/main.cc
 CMakeFiles/hub-zigbee.dir/main.cc.o: CMakeFiles/hub-zigbee.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hub-zigbee.dir/main.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/main.cc.o -MF CMakeFiles/hub-zigbee.dir/main.cc.o.d -o CMakeFiles/hub-zigbee.dir/main.cc.o -c /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/main.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hub-zigbee.dir/main.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/main.cc.o -MF CMakeFiles/hub-zigbee.dir/main.cc.o.d -o CMakeFiles/hub-zigbee.dir/main.cc.o -c /root/HubScreenSrc/hubscreen/hub-zigbee/main.cc
 
 CMakeFiles/hub-zigbee.dir/main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hub-zigbee.dir/main.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/main.cc > CMakeFiles/hub-zigbee.dir/main.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/HubScreenSrc/hubscreen/hub-zigbee/main.cc > CMakeFiles/hub-zigbee.dir/main.cc.i
 
 CMakeFiles/hub-zigbee.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hub-zigbee.dir/main.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/main.cc -o CMakeFiles/hub-zigbee.dir/main.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/HubScreenSrc/hubscreen/hub-zigbee/main.cc -o CMakeFiles/hub-zigbee.dir/main.cc.s
 
 CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o: CMakeFiles/hub-zigbee.dir/flags.make
-CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o: /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc
+CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o: /root/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc
 CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o: CMakeFiles/hub-zigbee.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o -MF CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o.d -o CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o -c /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o -MF CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o.d -o CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.o -c /root/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc
 
 CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc > CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc > CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.i
 
 CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc -o CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.cc -o CMakeFiles/hub-zigbee.dir/proto/hub/typedef.pb.cc.s
 
 CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o: CMakeFiles/hub-zigbee.dir/flags.make
-CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o: /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc
+CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o: /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc
 CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o: CMakeFiles/hub-zigbee.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o -MF CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o.d -o CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o -c /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o -MF CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o.d -o CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.o -c /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc
 
 CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc > CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc > CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.i
 
 CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc -o CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.cc -o CMakeFiles/hub-zigbee.dir/proto/zigbee/zigbee.pb.cc.s
 
 CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o: CMakeFiles/hub-zigbee.dir/flags.make
-CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o: /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc
+CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o: /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc
 CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o: CMakeFiles/hub-zigbee.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o -MF CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o.d -o CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o -c /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o -MF CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o.d -o CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o -c /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc
 
 CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc > CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc > CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.i
 
 CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc -o CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc -o CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.s
 
 CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o: CMakeFiles/hub-zigbee.dir/flags.make
-CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o: /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc
+CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o: /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc
 CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o: CMakeFiles/hub-zigbee.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o -MF CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o.d -o CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o -c /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o -MF CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o.d -o CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o -c /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc
 
 CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc > CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc > CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.i
 
 CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc -o CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.cc -o CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.s
 
 # Object files for target hub-zigbee
 hub__zigbee_OBJECTS = \
@@ -157,7 +157,7 @@ hub-zigbee: CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o
 hub-zigbee: CMakeFiles/hub-zigbee.dir/transport/uart/uart.cc.o
 hub-zigbee: CMakeFiles/hub-zigbee.dir/build.make
 hub-zigbee: CMakeFiles/hub-zigbee.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable hub-zigbee"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable hub-zigbee"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hub-zigbee.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -169,6 +169,6 @@ CMakeFiles/hub-zigbee.dir/clean:
 .PHONY : CMakeFiles/hub-zigbee.dir/clean
 
 CMakeFiles/hub-zigbee.dir/depend:
-	cd /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bhien/HubScreenSrc/hubscreen/hub-zigbee /home/bhien/HubScreenSrc/hubscreen/hub-zigbee /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles/hub-zigbee.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/HubScreenSrc/hubscreen/hub-zigbee/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/HubScreenSrc/hubscreen/hub-zigbee /root/HubScreenSrc/hubscreen/hub-zigbee /root/HubScreenSrc/hubscreen/hub-zigbee/build /root/HubScreenSrc/hubscreen/hub-zigbee/build /root/HubScreenSrc/hubscreen/hub-zigbee/build/CMakeFiles/hub-zigbee.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/hub-zigbee.dir/depend
 

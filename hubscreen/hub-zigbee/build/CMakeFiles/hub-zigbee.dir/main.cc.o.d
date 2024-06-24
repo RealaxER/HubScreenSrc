@@ -1,5 +1,5 @@
 CMakeFiles/hub-zigbee.dir/main.cc.o: \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/main.cc \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/main.cc \
  /usr/include/stdc-predef.h /usr/include/c++/12/vector \
  /usr/include/c++/12/bits/stl_algobase.h \
  /usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h \
@@ -156,9 +156,9 @@ CMakeFiles/hub-zigbee.dir/main.cc.o: \
  /usr/include/c++/12/ext/aligned_buffer.h \
  /usr/include/c++/12/ext/concurrence.h /usr/include/string.h \
  /usr/include/strings.h \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.hh \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.hh \
  /usr/include/mosquitto.h \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.hh \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/transport/uart/uart.hh \
  /usr/include/unistd.h /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
  /usr/include/aarch64-linux-gnu/bits/environments.h \
  /usr/include/aarch64-linux-gnu/bits/confname.h \
@@ -197,8 +197,8 @@ CMakeFiles/hub-zigbee.dir/main.cc.o: \
  /usr/include/c++/12/bits/basic_ios.tcc \
  /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
  /usr/include/c++/12/bits/istream.tcc \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/config.hh \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.h \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/config.hh \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/proto/zigbee/zigbee.pb.h \
  /usr/include/google/protobuf/port_def.inc \
  /usr/include/google/protobuf/port_undef.inc \
  /usr/include/google/protobuf/io/coded_stream.h /usr/include/assert.h \
@@ -284,4 +284,4 @@ CMakeFiles/hub-zigbee.dir/main.cc.o: \
  /usr/include/c++/12/compare \
  /usr/include/google/protobuf/map_type_handler.h \
  /usr/include/google/protobuf/extension_set.h /usr/include/c++/12/cassert \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.h
+ /root/HubScreenSrc/hubscreen/hub-zigbee/proto/hub/typedef.pb.h

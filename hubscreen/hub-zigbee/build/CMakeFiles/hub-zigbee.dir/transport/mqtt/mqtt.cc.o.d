@@ -1,5 +1,5 @@
 CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o: \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.cc \
  /usr/include/stdc-predef.h /usr/include/c++/12/iostream \
  /usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h \
  /usr/include/aarch64-linux-gnu/c++/12/bits/os_defines.h \
@@ -149,7 +149,7 @@ CMakeFiles/hub-zigbee.dir/transport/mqtt/mqtt.cc.o: \
  /usr/include/c++/12/bits/basic_ios.tcc \
  /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
  /usr/include/c++/12/bits/istream.tcc \
- /home/bhien/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.hh \
+ /root/HubScreenSrc/hubscreen/hub-zigbee/transport/mqtt/mqtt.hh \
  /usr/include/mosquitto.h /usr/include/unistd.h \
  /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
  /usr/include/aarch64-linux-gnu/bits/environments.h \

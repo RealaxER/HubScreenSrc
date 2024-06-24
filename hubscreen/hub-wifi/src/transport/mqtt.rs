@@ -75,40 +75,44 @@ impl MqttDriver {
                 Ok(v) => match v {
                     Event::Incoming(packet) => match packet {
                         rumqttc::Packet::Publish(publish) => {
-                            if let Ok(buff) = Buffer::parse_from_bytes(&publish.payload.to_vec()) {
-                                if buff.receiver == User_t::Wifi.into() {
+                            if publish.topic.contains("hub/wifi") {
+                                if let Ok(buff) = Buffer::parse_from_bytes(&publish.payload.to_vec()) {
+                                    if buff.receiver == User_t::Wifi.into() {
+                                        log::info!(
+                                            "<-- {} : {:?}",
+                                            publish.topic.clone(),
+                                            buff.clone()
+                                        );
+                                        self.tx
+                                            .send(Ok(TransportOut::ResponseBuffer(
+                                                buff
+                                            )))
+                                            .await
+                                            .unwrap();
+                                    }
+                                    else {
+                                        self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
+                                    }
+                                }
+                            }
+                            else {
+                                if let Ok(wifi) = Zigbee_t::parse_from_bytes(&publish.payload.to_vec()) {
                                     log::info!(
                                         "<-- {} : {:?}",
                                         publish.topic.clone(),
-                                        buff.clone()
+                                        wifi.clone()
                                     );
                                     self.tx
-                                        .send(Ok(TransportOut::ResponseBuffer(
-                                            buff
-                                        )))
-                                        .await
-                                        .unwrap();
+                                    .send(Ok(TransportOut::ResponseWifi(
+                                        publish.topic.clone(),
+                                        wifi,
+                                    )))
+                                    .await
+                                    .unwrap();
                                 }
                                 else {
                                     self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
                                 }
-                            }
-                            else if let Ok(wifi) = Zigbee_t::parse_from_bytes(&publish.payload.to_vec()) {
-                                log::info!(
-                                    "<-- {} : {:?}",
-                                    publish.topic.clone(),
-                                    wifi.clone()
-                                );
-                                self.tx
-                                .send(Ok(TransportOut::ResponseWifi(
-                                    publish.topic.clone(),
-                                    wifi,
-                                )))
-                                .await
-                                .unwrap();
-                            }
-                            else {
-                                self.tx.send(Err(BridgeIpErr::MqttErr)).await.unwrap();
                             }
                             return self.rx.recv().await.unwrap();
                         }

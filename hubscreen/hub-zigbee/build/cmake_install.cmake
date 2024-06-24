@@ -1,4 +1,4 @@
-# Install script for directory: /home/bhien/HubScreenSrc/hubscreen/hub-zigbee
+# Install script for directory: /root/HubScreenSrc/hubscreen/hub-zigbee
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/bhien/HubScreenSrc/hubscreen/hub-zigbee/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/root/HubScreenSrc/hubscreen/hub-zigbee/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
